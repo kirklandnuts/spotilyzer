@@ -5,6 +5,9 @@
 # Session Data files
 .RData
 
+# Node modules(use npm install)
+node_modules/
+
 # Example code in package build process
 *-Ex.R
 
