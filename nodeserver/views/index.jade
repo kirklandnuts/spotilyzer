@@ -1,0 +1,6 @@
+extends layout
+
+block content
+  p Welcome to #{title}
+  form(action="/authenticate" method="post")
+    input(type="submit" value="Login with Spotify")
