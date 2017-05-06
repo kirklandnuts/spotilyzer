@@ -2,5 +2,7 @@ extends layout
 
 block content
   p Welcome to #{title}
-  form(action="/authenticate" method="post")
+  form(action="/login" method="post")
     input(type="submit" value="Login with Spotify")
+  form(action="/logout" method="get")
+    input(type="submit" value="Log out")
