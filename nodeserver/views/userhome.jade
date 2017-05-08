@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  p Welcome to our project
+  button(@click="getInfo()") Get user info
+  form(action="/logout" method="get")
+    input(@click="logout()" type="submit" value="Log out")

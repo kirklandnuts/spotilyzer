@@ -2,12 +2,12 @@ var express = require('express');
 var router = express.Router();
 var request = require('request'); // "Request" library
 var querystring = require('querystring');
-var cookieParser = require('cookie-parser');
 
 const CLIENT_ID = 'fa7e7c8d114a487c81a31a32dd0c0ef5';
 const CLIENT_SECRET = '7df74727c0a846b1ba7bf042f9421f6c';
 const REDIRECT_URI = 'http://localhost:3000/callback';
 const APP_SCOPE = 'playlist-read-private';
+const LOGIN_KEY = 'login_status';
 
 const stateKey = 'spotify_auth_state';
 var generateState = function () {
@@ -16,17 +16,23 @@ var generateState = function () {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
+  if (req.cookies[LOGIN_KEY]) {
+    res.render('userhome');
+  } else {
+    res.render('index');
+  }
 });
 
 router.get('/logout', function(req, res, next) {
   res.clearCookie(stateKey);
-  res.render('index');
+  res.clearCookie(LOGIN_KEY);
+  res.redirect('/');
 });
 
 router.post('/login', function(req, res, next) {
   var state = generateState();
   res.cookie(stateKey, state);
+  res.cookie(LOGIN_KEY, "true");
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
@@ -64,7 +70,7 @@ router.get('/callback', function(req, res) {
           access_token: body.access_token,
           refresh_token: body.refresh_token
         }
-        res.render('index', { data: JSON.stringify(locals) } );
+        res.render('userhome', { data: JSON.stringify(locals) } );
       } else {
         res.redirect('/#'+
           querystring.stringify({

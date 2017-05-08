@@ -1,8 +1,8 @@
 extends layout
 
 block content
-  p Welcome to our project
-  button(@click="getInfo()") Get user info
+  p You are not logged in
   form(action="/login" method="post")
     input(type="submit" value="Login with Spotify")
-  button(@click="logout()") Log out
+  
+  

@@ -13,6 +13,7 @@ var app = new Vue({
   el: '#app',
   data: {
     message: 'Hello Vue!',
+    loggedIn: false,
     credentials: authStorage.fetch()
   },
   methods: {
