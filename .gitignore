@@ -34,3 +34,6 @@ vignettes/*.pdf
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+
+#ignore the OS X DS_Store file
+.DS_Store
