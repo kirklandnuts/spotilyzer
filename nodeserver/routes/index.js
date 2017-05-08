@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 const CLIENT_ID = 'fa7e7c8d114a487c81a31a32dd0c0ef5';
 const CLIENT_SECRET = '7df74727c0a846b1ba7bf042f9421f6c';
 const REDIRECT_URI = 'http://localhost:3000/callback';
+const APP_SCOPE = 'user-read-private user-read-email';
 
 const stateKey = 'spotify_auth_state';
 var generateState = function () {
@@ -15,7 +16,7 @@ var generateState = function () {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Data Daddies' });
+  res.render('index');
 });
 
 router.get('/logout', function(req, res, next) {
@@ -25,13 +26,12 @@ router.get('/logout', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
   var state = generateState();
-  var scope = 'user-read-private user-read-email';
   res.cookie(stateKey, state);
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
       client_id: CLIENT_ID,
-      scope: scope,
+      scope: APP_SCOPE,
       redirect_uri: REDIRECT_URI,
       state: state
     }));
@@ -42,10 +42,7 @@ router.get('/callback', function(req, res) {
   var state = req.query.state || null;
   var storedState = req.cookies ? req.cookies[stateKey] : null;
   if (state === null || state !== storedState) {
-    redirect('/#'+
-      querystring.stringify({
-        error: 'state_mismatch'
-      }));
+    res.redirect('/#'+querystring.stringify({error: 'state_mismatch'}));
   } else {
     res.clearCookie(stateKey);
     var authOptions = {
@@ -63,22 +60,11 @@ router.get('/callback', function(req, res) {
 
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
-        var access_token = body.access_token,
-          refresh_token = body.refresh_token;
-        var options = {
-          url: 'https://api/spotify.com/v1/me',
-          headers: { 'Authorization': 'Bearer '+access_token },
-          json: true
-        };
-
-        request.get(options, function(error, response, body) {
-          console.log(body);
-        });
-        res.redirect('/#'+
-          querystring.stringify({
-            access_token: access_token,
-            refresh_token: refresh_token
-          }));
+        var locals = {
+          access_token: body.access_token,
+          refresh_token: body.refresh_token
+        }
+        res.render('index', { data: JSON.stringify(locals) } );
       } else {
         res.redirect('/#'+
           querystring.stringify({

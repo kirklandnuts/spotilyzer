@@ -1,7 +1,8 @@
 extends layout
 
 block content
-  p Welcome to #{title}
+  p Welcome to our project
+  button(@click="getInfo()") Get user info
   form(action="/login" method="post")
     input(type="submit" value="Login with Spotify")
   form(action="/logout" method="get")
