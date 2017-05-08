@@ -4,6 +4,10 @@ block content
   #app
     p Welcome, {{ user.display_name }}
     button(@click="getInfo()") Get user info
+    button(@click="getPlaylists()") View playlists
+    ul
+      li(v-for="playlist in playlists")
+        a(:href="playlist.href") {{ playlist.name }}
     form(action="/logout" method="get")
       input(@click="logout()" type="submit" value="Log out")
 

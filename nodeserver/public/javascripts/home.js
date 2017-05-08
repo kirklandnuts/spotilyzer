@@ -14,6 +14,7 @@ var app = new Vue({
   data: {
     message: 'Hello Vue!',
     user: {},
+    playlists: [],
     credentials: authStorage.fetch()
   },
   methods: {
@@ -22,11 +23,21 @@ var app = new Vue({
       this.$http.get('https://api.spotify.com/v1/me',
         { headers: {'Authorization': 'Bearer '+this.credentials.access_token} })
         .then(response => {
-          console.log("success: "+JSON.stringify(response));
+          console.log("successfully retrieved info for "+response.body.display_name);
           this.user = response.body;
         }, response => {
           console.log("error: "+JSON.stringify(response));
       });
+    },
+    getPlaylists: async function () {
+      try {
+        var list = await this.$http.get('https://api.spotify.com/v1/users/'+this.user.id+'/playlists', {
+          headers: {'Authorization': 'Bearer '+this.credentials.access_token},
+        });
+        this.playlists = list.body.items;
+      } catch (error) {
+        console.log("ERROR: "+JSON.stringify(error));
+      }
     },
     logout: function () {
       this.credentials = {};
