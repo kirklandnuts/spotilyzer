@@ -33,12 +33,12 @@ var app = new Vue({
     }
   },
   mounted() {
-    this.getInfo();
     if (typeof locals !== 'undefined' && locals !== null) {
       if (locals.access_token) this.credentials.access_token = locals.access_token;
       if (locals.refresh_token) this.credentials.refresh_token = locals.refresh_token;
       authStorage.save(this.credentials);
     }
+    this.getInfo();
   },
   watch: {
     credentials: {
