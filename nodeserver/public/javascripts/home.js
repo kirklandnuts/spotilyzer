@@ -13,16 +13,17 @@ var app = new Vue({
   el: '#app',
   data: {
     message: 'Hello Vue!',
-    loggedIn: false,
+    user: {},
     credentials: authStorage.fetch()
   },
   methods: {
     getInfo: function () {
-      console.log(JSON.stringify(this.credentials));
+      //console.log(JSON.stringify(this.credentials));
       this.$http.get('https://api.spotify.com/v1/me',
         { headers: {'Authorization': 'Bearer '+this.credentials.access_token} })
         .then(response => {
           console.log("success: "+JSON.stringify(response));
+          this.user = response.body;
         }, response => {
           console.log("error: "+JSON.stringify(response));
       });
@@ -32,6 +33,7 @@ var app = new Vue({
     }
   },
   mounted() {
+    this.getInfo();
     if (typeof locals !== 'undefined' && locals !== null) {
       if (locals.access_token) this.credentials.access_token = locals.access_token;
       if (locals.refresh_token) this.credentials.refresh_token = locals.refresh_token;
