@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/logout', function(req, res, next) {
   res.clearCookie(stateKey);
-  res.render('index', { title: 'Data Daddies (logged out)' });
+  res.render('index');
 });
 
 router.post('/login', function(req, res, next) {

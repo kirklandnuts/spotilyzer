@@ -1,24 +1,47 @@
 const AUTH_STORAGE_KEY = 'data-daddies-auth';
 
+var authStorage = {
+  fetch: function () {
+    return JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || '{}');
+  },
+  save: function (credentials) {
+    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(credentials));
+  }
+}
+
 var app = new Vue({
   el: '#app',
   data: {
-    message: 'Hello Vue!'
+    message: 'Hello Vue!',
+    credentials: authStorage.fetch()
   },
   methods: {
     getInfo: function () {
-      console.log(JSON.stringify(locals));
+      console.log(JSON.stringify(this.credentials));
       //this.$http.get('https://api.spotify.com/v1/me').then(response => {
           // get body data
           //this.someData = response.body;
       //}, response => {
           // error callback
       //});
+    },
+    logout: function () {
+      this.credentials = {};
     }
   },
-  beforeMount() {
+  mounted() {
     if (typeof locals !== 'undefined' && locals !== null) {
-      console.log("locals exists! ");
+      if (locals.access_token) this.credentials.access_token = locals.access_token;
+      if (locals.refresh_token) this.credentials.refresh_token = locals.refresh_token;
+      authStorage.save(this.credentials);
+    }
+  },
+  watch: {
+    credentials: {
+      handler: function (creds) {
+        authStorage.save(creds);
+      },
+      deep: true
     }
   }
 })
