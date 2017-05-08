@@ -18,12 +18,13 @@ var app = new Vue({
   methods: {
     getInfo: function () {
       console.log(JSON.stringify(this.credentials));
-      this.$http.get('https://api.spotify.com/v1/me', { headers: "{Authorization: Bearer "+this.credentials.access_token+"}"})
+      this.$http.get('https://api.spotify.com/v1/me',
+        { headers: {'Authorization': 'Bearer '+this.credentials.access_token} })
         .then(response => {
-          console.log("success");
+          console.log("success: "+JSON.stringify(response));
         }, response => {
           console.log("error: "+JSON.stringify(response));
-        });
+      });
     },
     logout: function () {
       this.credentials = {};
