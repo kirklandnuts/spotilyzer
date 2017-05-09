@@ -13,7 +13,7 @@ function makeBarGraph(data) {
     .attr("transform", function(d, i) { return "translate("+i*barWidth+",0)"; });
 
   bar.append("rect")
-    .attr("width", barWidth)
+    .attr("width", barWidth - 2)
     .attr("height", x)
     .attr("transform", function(d, i) { return "translate(0,"+(height-x(d))+")"});
 
@@ -22,7 +22,7 @@ function makeBarGraph(data) {
     .attr("y", function(d) {
       var offset = -5;
       if (x(d) > (height/2)) offset = 24;
-      return height - x(d) + offset; 
+      return height - x(d) + offset;
     })
     .attr("dx", ".35em")
     .text(function(d) { return d; });
