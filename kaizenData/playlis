@@ -1,0 +1,533 @@
+{
+  "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists?offset=0&limit=20",
+  "items" : [ {
+    "collaborative" : false,
+    "external_urls" : {
+      "spotify" : "http://open.spotify.com/user/kaizentowfiq/playlist/7ahYIPIVmTtjgywD2qi9dc"
+    },
+    "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/7ahYIPIVmTtjgywD2qi9dc",
+    "id" : "7ahYIPIVmTtjgywD2qi9dc",
+    "images" : [ {
+      "height" : 640,
+      "url" : "https://mosaic.scdn.co/640/9faebdd4e34d61e1f800873ac95cb878e24b4bcd013313d6f49357548ff82cd5760169623162c458bdf7695c4c27ce12ad0ebd03d5917745c2b7c74f113048461b1c9fafc2609733eef37e49883353ba",
+      "width" : 640
+    }, {
+      "height" : 300,
+      "url" : "https://mosaic.scdn.co/300/9faebdd4e34d61e1f800873ac95cb878e24b4bcd013313d6f49357548ff82cd5760169623162c458bdf7695c4c27ce12ad0ebd03d5917745c2b7c74f113048461b1c9fafc2609733eef37e49883353ba",
+      "width" : 300
+    }, {
+      "height" : 60,
+      "url" : "https://mosaic.scdn.co/60/9faebdd4e34d61e1f800873ac95cb878e24b4bcd013313d6f49357548ff82cd5760169623162c458bdf7695c4c27ce12ad0ebd03d5917745c2b7c74f113048461b1c9fafc2609733eef37e49883353ba",
+      "width" : 60
+    } ],
+    "name" : "Trueflow",
+    "owner" : {
+      "external_urls" : {
+        "spotify" : "http://open.spotify.com/user/kaizentowfiq"
+      },
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq",
+      "id" : "kaizentowfiq",
+      "type" : "user",
+      "uri" : "spotify:user:kaizentowfiq"
+    },
+    "public" : false,
+    "snapshot_id" : "ioBstd7vqebnLEXsGcK5oLtLcH0vxbue2HyNEurBBdiGMpomsSaWpYx+JKKMz0Bs",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/7ahYIPIVmTtjgywD2qi9dc/tracks",
+      "total" : 23
+    },
+    "type" : "playlist",
+    "uri" : "spotify:user:kaizentowfiq:playlist:7ahYIPIVmTtjgywD2qi9dc"
+  }, {
+    "collaborative" : false,
+    "external_urls" : {
+      "spotify" : "http://open.spotify.com/user/kaizentowfiq/playlist/5aKVvDGXbeDiJn00abCvOz"
+    },
+    "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/5aKVvDGXbeDiJn00abCvOz",
+    "id" : "5aKVvDGXbeDiJn00abCvOz",
+    "images" : [ {
+      "height" : 640,
+      "url" : "https://mosaic.scdn.co/640/c6aaaa64d2ec42e817f164f1aed82cf4e0086db2fea2b9311ee54f9c2365184328fc5549208b1b191ba457e0633ac15ac52e329055784412511bf4fa96a1d68d84948f16591a0f1d7dd88c32e182a6a2",
+      "width" : 640
+    }, {
+      "height" : 300,
+      "url" : "https://mosaic.scdn.co/300/c6aaaa64d2ec42e817f164f1aed82cf4e0086db2fea2b9311ee54f9c2365184328fc5549208b1b191ba457e0633ac15ac52e329055784412511bf4fa96a1d68d84948f16591a0f1d7dd88c32e182a6a2",
+      "width" : 300
+    }, {
+      "height" : 60,
+      "url" : "https://mosaic.scdn.co/60/c6aaaa64d2ec42e817f164f1aed82cf4e0086db2fea2b9311ee54f9c2365184328fc5549208b1b191ba457e0633ac15ac52e329055784412511bf4fa96a1d68d84948f16591a0f1d7dd88c32e182a6a2",
+      "width" : 60
+    } ],
+    "name" : "Deathflow",
+    "owner" : {
+      "external_urls" : {
+        "spotify" : "http://open.spotify.com/user/kaizentowfiq"
+      },
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq",
+      "id" : "kaizentowfiq",
+      "type" : "user",
+      "uri" : "spotify:user:kaizentowfiq"
+    },
+    "public" : false,
+    "snapshot_id" : "puypSMp/MJoLHEBkKjaB5fnlbwrLUgOMnuMP3HJ435GrnfmfiKeWzups4Ag+zzQj",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/5aKVvDGXbeDiJn00abCvOz/tracks",
+      "total" : 19
+    },
+    "type" : "playlist",
+    "uri" : "spotify:user:kaizentowfiq:playlist:5aKVvDGXbeDiJn00abCvOz"
+  }, {
+    "collaborative" : false,
+    "external_urls" : {
+      "spotify" : "http://open.spotify.com/user/kaizentowfiq/playlist/58pEPKgTWAbL17ZvlCi5qM"
+    },
+    "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/58pEPKgTWAbL17ZvlCi5qM",
+    "id" : "58pEPKgTWAbL17ZvlCi5qM",
+    "images" : [ {
+      "height" : 640,
+      "url" : "https://mosaic.scdn.co/640/3cb41a2b9ca4a7d49522c0c80a6e413d7d588c992d2a6285f4341b004c44c0634feaf7e98714e7702b637b18de2af8136fa52b512a89b62ab6964178e187c9f0f99bfe6049b5f1790b39e1e801cdf9fe",
+      "width" : 640
+    }, {
+      "height" : 300,
+      "url" : "https://mosaic.scdn.co/300/3cb41a2b9ca4a7d49522c0c80a6e413d7d588c992d2a6285f4341b004c44c0634feaf7e98714e7702b637b18de2af8136fa52b512a89b62ab6964178e187c9f0f99bfe6049b5f1790b39e1e801cdf9fe",
+      "width" : 300
+    }, {
+      "height" : 60,
+      "url" : "https://mosaic.scdn.co/60/3cb41a2b9ca4a7d49522c0c80a6e413d7d588c992d2a6285f4341b004c44c0634feaf7e98714e7702b637b18de2af8136fa52b512a89b62ab6964178e187c9f0f99bfe6049b5f1790b39e1e801cdf9fe",
+      "width" : 60
+    } ],
+    "name" : "Fireflow",
+    "owner" : {
+      "external_urls" : {
+        "spotify" : "http://open.spotify.com/user/kaizentowfiq"
+      },
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq",
+      "id" : "kaizentowfiq",
+      "type" : "user",
+      "uri" : "spotify:user:kaizentowfiq"
+    },
+    "public" : false,
+    "snapshot_id" : "X+XT0jc8SUpuMB+rvh461wduLu1gBCBVuPHmL2H9GaMMS6qmy+JDOHwd8yJ6nhCR",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/58pEPKgTWAbL17ZvlCi5qM/tracks",
+      "total" : 24
+    },
+    "type" : "playlist",
+    "uri" : "spotify:user:kaizentowfiq:playlist:58pEPKgTWAbL17ZvlCi5qM"
+  }, {
+    "collaborative" : false,
+    "external_urls" : {
+      "spotify" : "http://open.spotify.com/user/kaizentowfiq/playlist/00iEGFqnxbRnKd2MoYmPhT"
+    },
+    "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/00iEGFqnxbRnKd2MoYmPhT",
+    "id" : "00iEGFqnxbRnKd2MoYmPhT",
+    "images" : [ {
+      "height" : 640,
+      "url" : "https://mosaic.scdn.co/640/2d2a6285f4341b004c44c0634feaf7e98714e7704ae5b9477a46dd41e7dbc3247af92c2c3ceb6e61eaee037152fe3684f24b31ec333af17b8db9a60dd329671363eb7826b5871eef978841c7db97c757",
+      "width" : 640
+    }, {
+      "height" : 300,
+      "url" : "https://mosaic.scdn.co/300/2d2a6285f4341b004c44c0634feaf7e98714e7704ae5b9477a46dd41e7dbc3247af92c2c3ceb6e61eaee037152fe3684f24b31ec333af17b8db9a60dd329671363eb7826b5871eef978841c7db97c757",
+      "width" : 300
+    }, {
+      "height" : 60,
+      "url" : "https://mosaic.scdn.co/60/2d2a6285f4341b004c44c0634feaf7e98714e7704ae5b9477a46dd41e7dbc3247af92c2c3ceb6e61eaee037152fe3684f24b31ec333af17b8db9a60dd329671363eb7826b5871eef978841c7db97c757",
+      "width" : 60
+    } ],
+    "name" : "Revolutionary Virus",
+    "owner" : {
+      "external_urls" : {
+        "spotify" : "http://open.spotify.com/user/kaizentowfiq"
+      },
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq",
+      "id" : "kaizentowfiq",
+      "type" : "user",
+      "uri" : "spotify:user:kaizentowfiq"
+    },
+    "public" : false,
+    "snapshot_id" : "Q1oXEygT6XpJAJcR8Kkwht8P3Xm+4Jg0lygccxAGxy9Gf2H0DuN8URZNHMZEMCza",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/00iEGFqnxbRnKd2MoYmPhT/tracks",
+      "total" : 43
+    },
+    "type" : "playlist",
+    "uri" : "spotify:user:kaizentowfiq:playlist:00iEGFqnxbRnKd2MoYmPhT"
+  }, {
+    "collaborative" : false,
+    "external_urls" : {
+      "spotify" : "http://open.spotify.com/user/kaizentowfiq/playlist/4Jw6h2Sb81ea1njCFtwJJn"
+    },
+    "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/4Jw6h2Sb81ea1njCFtwJJn",
+    "id" : "4Jw6h2Sb81ea1njCFtwJJn",
+    "images" : [ {
+      "height" : 640,
+      "url" : "https://mosaic.scdn.co/640/caf62001f392846ead7af5a1bf3be6d84a4a7acaa4be7d6da89ee5e7fbac9875d590fc16f7822faa0dddf5da44d023e3fcbf1931d2abe28e143a8ffa3fb6d333e5168131ca14a087afbbd30c6656e2bc",
+      "width" : 640
+    }, {
+      "height" : 300,
+      "url" : "https://mosaic.scdn.co/300/caf62001f392846ead7af5a1bf3be6d84a4a7acaa4be7d6da89ee5e7fbac9875d590fc16f7822faa0dddf5da44d023e3fcbf1931d2abe28e143a8ffa3fb6d333e5168131ca14a087afbbd30c6656e2bc",
+      "width" : 300
+    }, {
+      "height" : 60,
+      "url" : "https://mosaic.scdn.co/60/caf62001f392846ead7af5a1bf3be6d84a4a7acaa4be7d6da89ee5e7fbac9875d590fc16f7822faa0dddf5da44d023e3fcbf1931d2abe28e143a8ffa3fb6d333e5168131ca14a087afbbd30c6656e2bc",
+      "width" : 60
+    } ],
+    "name" : "good vibes save lives",
+    "owner" : {
+      "external_urls" : {
+        "spotify" : "http://open.spotify.com/user/kaizentowfiq"
+      },
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq",
+      "id" : "kaizentowfiq",
+      "type" : "user",
+      "uri" : "spotify:user:kaizentowfiq"
+    },
+    "public" : false,
+    "snapshot_id" : "JV69o3bG2Vbp0ogY3AWvwEE9y/rxQ7hU+g318vnou56DuXo8hSJaYvw+M/4I/3OJ",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/4Jw6h2Sb81ea1njCFtwJJn/tracks",
+      "total" : 24
+    },
+    "type" : "playlist",
+    "uri" : "spotify:user:kaizentowfiq:playlist:4Jw6h2Sb81ea1njCFtwJJn"
+  }, {
+    "collaborative" : false,
+    "external_urls" : {
+      "spotify" : "http://open.spotify.com/user/121952647/playlist/0KFfLXfigzU1ouGmgT1req"
+    },
+    "href" : "https://api.spotify.com/v1/users/121952647/playlists/0KFfLXfigzU1ouGmgT1req",
+    "id" : "0KFfLXfigzU1ouGmgT1req",
+    "images" : [ {
+      "height" : 640,
+      "url" : "https://mosaic.scdn.co/640/a809b53f724dab8416e399bda6c0fc2a16ab75edf88c231467b7f8d31d9e5b672edec04fb0c57075c83218edbd67e80799b65c1146938b517edba92fface587ddabd64a05686e1d1568a326563cd2b3d",
+      "width" : 640
+    }, {
+      "height" : 300,
+      "url" : "https://mosaic.scdn.co/300/a809b53f724dab8416e399bda6c0fc2a16ab75edf88c231467b7f8d31d9e5b672edec04fb0c57075c83218edbd67e80799b65c1146938b517edba92fface587ddabd64a05686e1d1568a326563cd2b3d",
+      "width" : 300
+    }, {
+      "height" : 60,
+      "url" : "https://mosaic.scdn.co/60/a809b53f724dab8416e399bda6c0fc2a16ab75edf88c231467b7f8d31d9e5b672edec04fb0c57075c83218edbd67e80799b65c1146938b517edba92fface587ddabd64a05686e1d1568a326563cd2b3d",
+      "width" : 60
+    } ],
+    "name" : "dataScience",
+    "owner" : {
+      "external_urls" : {
+        "spotify" : "http://open.spotify.com/user/121952647"
+      },
+      "href" : "https://api.spotify.com/v1/users/121952647",
+      "id" : "121952647",
+      "type" : "user",
+      "uri" : "spotify:user:121952647"
+    },
+    "public" : true,
+    "snapshot_id" : "ACz3w35pHp3DFpMge0z8gbgq7qCvNZGSKTOEJULusN9vfhXgjYa2TYwG01kIm5Dp",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/users/121952647/playlists/0KFfLXfigzU1ouGmgT1req/tracks",
+      "total" : 29
+    },
+    "type" : "playlist",
+    "uri" : "spotify:user:121952647:playlist:0KFfLXfigzU1ouGmgT1req"
+  }, {
+    "collaborative" : false,
+    "external_urls" : {
+      "spotify" : "http://open.spotify.com/user/spotify/playlist/37i9dQZEVXcK7F5q7PJqwA"
+    },
+    "href" : "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZEVXcK7F5q7PJqwA",
+    "id" : "37i9dQZEVXcK7F5q7PJqwA",
+    "images" : [ {
+      "height" : null,
+      "url" : "https://u.scdn.co/images/pl/default/3a2d65a3a2bebf281519125246f3f29178014d29",
+      "width" : null
+    } ],
+    "name" : "Discover Weekly",
+    "owner" : {
+      "external_urls" : {
+        "spotify" : "http://open.spotify.com/user/spotify"
+      },
+      "href" : "https://api.spotify.com/v1/users/spotify",
+      "id" : "spotify",
+      "type" : "user",
+      "uri" : "spotify:user:spotify"
+    },
+    "public" : false,
+    "snapshot_id" : "pdGJuWKjE8DiN6WXWsV2+dWhJpwjpCSZz12EJE7zydJwaFqs+FTAC1r3qzpkTf3UFa2j2GKvxUk=",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/users/spotify/playlists/37i9dQZEVXcK7F5q7PJqwA/tracks",
+      "total" : 30
+    },
+    "type" : "playlist",
+    "uri" : "spotify:user:spotify:playlist:37i9dQZEVXcK7F5q7PJqwA"
+  }, {
+    "collaborative" : false,
+    "external_urls" : {
+      "spotify" : "http://open.spotify.com/user/kaizentowfiq/playlist/4pOPhAserTqrP89LTSbHnS"
+    },
+    "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/4pOPhAserTqrP89LTSbHnS",
+    "id" : "4pOPhAserTqrP89LTSbHnS",
+    "images" : [ {
+      "height" : 640,
+      "url" : "https://mosaic.scdn.co/640/2ce71c9fdd3b6463fd7a3f44e1bb5dea3df53ad64ee261a4258806f3adaa924c37525621963c087864b1d7814ea502946487b3330201df74d01b427e714363ae1963cc716eaf374d11f0d32ab2013fb7",
+      "width" : 640
+    }, {
+      "height" : 300,
+      "url" : "https://mosaic.scdn.co/300/2ce71c9fdd3b6463fd7a3f44e1bb5dea3df53ad64ee261a4258806f3adaa924c37525621963c087864b1d7814ea502946487b3330201df74d01b427e714363ae1963cc716eaf374d11f0d32ab2013fb7",
+      "width" : 300
+    }, {
+      "height" : 60,
+      "url" : "https://mosaic.scdn.co/60/2ce71c9fdd3b6463fd7a3f44e1bb5dea3df53ad64ee261a4258806f3adaa924c37525621963c087864b1d7814ea502946487b3330201df74d01b427e714363ae1963cc716eaf374d11f0d32ab2013fb7",
+      "width" : 60
+    } ],
+    "name" : "Spring 2017",
+    "owner" : {
+      "external_urls" : {
+        "spotify" : "http://open.spotify.com/user/kaizentowfiq"
+      },
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq",
+      "id" : "kaizentowfiq",
+      "type" : "user",
+      "uri" : "spotify:user:kaizentowfiq"
+    },
+    "public" : false,
+    "snapshot_id" : "0s0IdbqdoFpxEKc9MfEbTycDLtlGNYSG28+jbIXDfO8Bi6pHdfIAyCToZdCCpDiT",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/4pOPhAserTqrP89LTSbHnS/tracks",
+      "total" : 6
+    },
+    "type" : "playlist",
+    "uri" : "spotify:user:kaizentowfiq:playlist:4pOPhAserTqrP89LTSbHnS"
+  }, {
+    "collaborative" : false,
+    "external_urls" : {
+      "spotify" : "http://open.spotify.com/user/kaizentowfiq/playlist/51Wk2GmYB3kcdjjWlJsOts"
+    },
+    "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/51Wk2GmYB3kcdjjWlJsOts",
+    "id" : "51Wk2GmYB3kcdjjWlJsOts",
+    "images" : [ {
+      "height" : 640,
+      "url" : "https://mosaic.scdn.co/640/de50d765933ffa20917c4fe4b632397151c8667e3d328b09b2fe920eb5f4811d48b83eaa64865f12f0c27cb2aabb028b78c1c8754ccc8f2497340ff28262b7a6beedd3c0e39d74a58e5e1d362ad8e748",
+      "width" : 640
+    }, {
+      "height" : 300,
+      "url" : "https://mosaic.scdn.co/300/de50d765933ffa20917c4fe4b632397151c8667e3d328b09b2fe920eb5f4811d48b83eaa64865f12f0c27cb2aabb028b78c1c8754ccc8f2497340ff28262b7a6beedd3c0e39d74a58e5e1d362ad8e748",
+      "width" : 300
+    }, {
+      "height" : 60,
+      "url" : "https://mosaic.scdn.co/60/de50d765933ffa20917c4fe4b632397151c8667e3d328b09b2fe920eb5f4811d48b83eaa64865f12f0c27cb2aabb028b78c1c8754ccc8f2497340ff28262b7a6beedd3c0e39d74a58e5e1d362ad8e748",
+      "width" : 60
+    } ],
+    "name" : "Winter2017",
+    "owner" : {
+      "external_urls" : {
+        "spotify" : "http://open.spotify.com/user/kaizentowfiq"
+      },
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq",
+      "id" : "kaizentowfiq",
+      "type" : "user",
+      "uri" : "spotify:user:kaizentowfiq"
+    },
+    "public" : false,
+    "snapshot_id" : "AFIzCKj3g1KUbd0t6dnxKJHmbpLMSw7hQoXL+2stma82eG7DbB79Ojq7hbnkhgcT",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/51Wk2GmYB3kcdjjWlJsOts/tracks",
+      "total" : 45
+    },
+    "type" : "playlist",
+    "uri" : "spotify:user:kaizentowfiq:playlist:51Wk2GmYB3kcdjjWlJsOts"
+  }, {
+    "collaborative" : false,
+    "external_urls" : {
+      "spotify" : "http://open.spotify.com/user/kaizentowfiq/playlist/5dOTeghw26mTZwzgxUWIRa"
+    },
+    "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/5dOTeghw26mTZwzgxUWIRa",
+    "id" : "5dOTeghw26mTZwzgxUWIRa",
+    "images" : [ {
+      "height" : 640,
+      "url" : "https://mosaic.scdn.co/640/fea2b9311ee54f9c2365184328fc5549208b1b19736db0f59731686c77fcf21516fee9ac3eeb1c309b7cc2351402ad796f065a567efda2413b9739aeda271ac0c4cc7b54303657c6cc52f25322a17690",
+      "width" : 640
+    }, {
+      "height" : 300,
+      "url" : "https://mosaic.scdn.co/300/fea2b9311ee54f9c2365184328fc5549208b1b19736db0f59731686c77fcf21516fee9ac3eeb1c309b7cc2351402ad796f065a567efda2413b9739aeda271ac0c4cc7b54303657c6cc52f25322a17690",
+      "width" : 300
+    }, {
+      "height" : 60,
+      "url" : "https://mosaic.scdn.co/60/fea2b9311ee54f9c2365184328fc5549208b1b19736db0f59731686c77fcf21516fee9ac3eeb1c309b7cc2351402ad796f065a567efda2413b9739aeda271ac0c4cc7b54303657c6cc52f25322a17690",
+      "width" : 60
+    } ],
+    "name" : "Summer 2016",
+    "owner" : {
+      "external_urls" : {
+        "spotify" : "http://open.spotify.com/user/kaizentowfiq"
+      },
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq",
+      "id" : "kaizentowfiq",
+      "type" : "user",
+      "uri" : "spotify:user:kaizentowfiq"
+    },
+    "public" : false,
+    "snapshot_id" : "vgg8Xc8vvoJkj/7rRy6DMBt+P3mZhTRMcsVv1VsX2U1M0kI4QmewlcpqagQUSeTG",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/5dOTeghw26mTZwzgxUWIRa/tracks",
+      "total" : 43
+    },
+    "type" : "playlist",
+    "uri" : "spotify:user:kaizentowfiq:playlist:5dOTeghw26mTZwzgxUWIRa"
+  }, {
+    "collaborative" : false,
+    "external_urls" : {
+      "spotify" : "http://open.spotify.com/user/kaizentowfiq/playlist/3UEG5q51Cvye6V1sncD8vR"
+    },
+    "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/3UEG5q51Cvye6V1sncD8vR",
+    "id" : "3UEG5q51Cvye6V1sncD8vR",
+    "images" : [ {
+      "height" : 640,
+      "url" : "https://mosaic.scdn.co/640/319b28a2dff3125ed22e67b6f65056bb971d0259fea2b9311ee54f9c2365184328fc5549208b1b19736db0f59731686c77fcf21516fee9ac3eeb1c30e11672f0635c588eaa424318d6f5ba820f2ecaca",
+      "width" : 640
+    }, {
+      "height" : 300,
+      "url" : "https://mosaic.scdn.co/300/319b28a2dff3125ed22e67b6f65056bb971d0259fea2b9311ee54f9c2365184328fc5549208b1b19736db0f59731686c77fcf21516fee9ac3eeb1c30e11672f0635c588eaa424318d6f5ba820f2ecaca",
+      "width" : 300
+    }, {
+      "height" : 60,
+      "url" : "https://mosaic.scdn.co/60/319b28a2dff3125ed22e67b6f65056bb971d0259fea2b9311ee54f9c2365184328fc5549208b1b19736db0f59731686c77fcf21516fee9ac3eeb1c30e11672f0635c588eaa424318d6f5ba820f2ecaca",
+      "width" : 60
+    } ],
+    "name" : "Recovery",
+    "owner" : {
+      "external_urls" : {
+        "spotify" : "http://open.spotify.com/user/kaizentowfiq"
+      },
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq",
+      "id" : "kaizentowfiq",
+      "type" : "user",
+      "uri" : "spotify:user:kaizentowfiq"
+    },
+    "public" : false,
+    "snapshot_id" : "NpP669X8ISWHKAbdYRcq9uDi/UNRArMxLzF9rz2xq+mqd+npp9sd1GlcoAGp1UeF",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/3UEG5q51Cvye6V1sncD8vR/tracks",
+      "total" : 9
+    },
+    "type" : "playlist",
+    "uri" : "spotify:user:kaizentowfiq:playlist:3UEG5q51Cvye6V1sncD8vR"
+  }, {
+    "collaborative" : false,
+    "external_urls" : {
+      "spotify" : "http://open.spotify.com/user/navidtsuba/playlist/2wOK7zErGtlitxNkJVUTpj"
+    },
+    "href" : "https://api.spotify.com/v1/users/navidtsuba/playlists/2wOK7zErGtlitxNkJVUTpj",
+    "id" : "2wOK7zErGtlitxNkJVUTpj",
+    "images" : [ {
+      "height" : 640,
+      "url" : "https://mosaic.scdn.co/640/c887e7f2cab3a493e911723a041258eb1093dc11d4b8ab3438e93a26db2bc6d0208b900044d9dc17f01587e00595ba40546cb393e9ea1ff55f637e9e5093e6b0b7355071bc7a0c619c970b24c1307847",
+      "width" : 640
+    }, {
+      "height" : 300,
+      "url" : "https://mosaic.scdn.co/300/c887e7f2cab3a493e911723a041258eb1093dc11d4b8ab3438e93a26db2bc6d0208b900044d9dc17f01587e00595ba40546cb393e9ea1ff55f637e9e5093e6b0b7355071bc7a0c619c970b24c1307847",
+      "width" : 300
+    }, {
+      "height" : 60,
+      "url" : "https://mosaic.scdn.co/60/c887e7f2cab3a493e911723a041258eb1093dc11d4b8ab3438e93a26db2bc6d0208b900044d9dc17f01587e00595ba40546cb393e9ea1ff55f637e9e5093e6b0b7355071bc7a0c619c970b24c1307847",
+      "width" : 60
+    } ],
+    "name" : "Melt Into Air",
+    "owner" : {
+      "external_urls" : {
+        "spotify" : "http://open.spotify.com/user/navidtsuba"
+      },
+      "href" : "https://api.spotify.com/v1/users/navidtsuba",
+      "id" : "navidtsuba",
+      "type" : "user",
+      "uri" : "spotify:user:navidtsuba"
+    },
+    "public" : false,
+    "snapshot_id" : "+qLTS8Vhyf+4aoDZ8/mBPjagq/2mUp+vSzRMHxyjTRVOQv2ltMaTLkO1uY8gsvNn",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/users/navidtsuba/playlists/2wOK7zErGtlitxNkJVUTpj/tracks",
+      "total" : 69
+    },
+    "type" : "playlist",
+    "uri" : "spotify:user:navidtsuba:playlist:2wOK7zErGtlitxNkJVUTpj"
+  }, {
+    "collaborative" : false,
+    "external_urls" : {
+      "spotify" : "http://open.spotify.com/user/1215694652/playlist/2qWM8W0C53t77t4RlLUdVu"
+    },
+    "href" : "https://api.spotify.com/v1/users/1215694652/playlists/2qWM8W0C53t77t4RlLUdVu",
+    "id" : "2qWM8W0C53t77t4RlLUdVu",
+    "images" : [ {
+      "height" : 640,
+      "url" : "https://mosaic.scdn.co/640/8df88f5caac8f42915b922a689c3481ce16b4d57f90898a1a5b8f30fd109a2cdc54a2f705175f7be2c5859f67f29b2c7a8862e1130d7487cd315d3a58affc7cd9030a386366d4de585b17273fcbfdf37",
+      "width" : 640
+    }, {
+      "height" : 300,
+      "url" : "https://mosaic.scdn.co/300/8df88f5caac8f42915b922a689c3481ce16b4d57f90898a1a5b8f30fd109a2cdc54a2f705175f7be2c5859f67f29b2c7a8862e1130d7487cd315d3a58affc7cd9030a386366d4de585b17273fcbfdf37",
+      "width" : 300
+    }, {
+      "height" : 60,
+      "url" : "https://mosaic.scdn.co/60/8df88f5caac8f42915b922a689c3481ce16b4d57f90898a1a5b8f30fd109a2cdc54a2f705175f7be2c5859f67f29b2c7a8862e1130d7487cd315d3a58affc7cd9030a386366d4de585b17273fcbfdf37",
+      "width" : 60
+    } ],
+    "name" : "Tilda Swinton that one time",
+    "owner" : {
+      "external_urls" : {
+        "spotify" : "http://open.spotify.com/user/1215694652"
+      },
+      "href" : "https://api.spotify.com/v1/users/1215694652",
+      "id" : "1215694652",
+      "type" : "user",
+      "uri" : "spotify:user:1215694652"
+    },
+    "public" : false,
+    "snapshot_id" : "2fluPX6vFBC6xQvoba2PzhEvW5heUAAObIUjbiKSohbrt7WikwhxU9oDnDU8BJJ4",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/users/1215694652/playlists/2qWM8W0C53t77t4RlLUdVu/tracks",
+      "total" : 17
+    },
+    "type" : "playlist",
+    "uri" : "spotify:user:1215694652:playlist:2qWM8W0C53t77t4RlLUdVu"
+  }, {
+    "collaborative" : false,
+    "external_urls" : {
+      "spotify" : "http://open.spotify.com/user/kaizentowfiq/playlist/2TwSL9NRnKR9SLnXX9YUXr"
+    },
+    "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/2TwSL9NRnKR9SLnXX9YUXr",
+    "id" : "2TwSL9NRnKR9SLnXX9YUXr",
+    "images" : [ {
+      "height" : 640,
+      "url" : "https://mosaic.scdn.co/640/2e5ac410123769d3ac2d6428e680d72c00b7fd1afc42fad3bb609b90278b19eccc56dc7ede28ad9f2e331986be31219dd923f04de00fc8146794b62a736db0f59731686c77fcf21516fee9ac3eeb1c30",
+      "width" : 640
+    }, {
+      "height" : 300,
+      "url" : "https://mosaic.scdn.co/300/2e5ac410123769d3ac2d6428e680d72c00b7fd1afc42fad3bb609b90278b19eccc56dc7ede28ad9f2e331986be31219dd923f04de00fc8146794b62a736db0f59731686c77fcf21516fee9ac3eeb1c30",
+      "width" : 300
+    }, {
+      "height" : 60,
+      "url" : "https://mosaic.scdn.co/60/2e5ac410123769d3ac2d6428e680d72c00b7fd1afc42fad3bb609b90278b19eccc56dc7ede28ad9f2e331986be31219dd923f04de00fc8146794b62a736db0f59731686c77fcf21516fee9ac3eeb1c30",
+      "width" : 60
+    } ],
+    "name" : "Liked from Radio",
+    "owner" : {
+      "external_urls" : {
+        "spotify" : "http://open.spotify.com/user/kaizentowfiq"
+      },
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq",
+      "id" : "kaizentowfiq",
+      "type" : "user",
+      "uri" : "spotify:user:kaizentowfiq"
+    },
+    "public" : false,
+    "snapshot_id" : "ys/hkwlW0A/GimnCBEjBVxFzjHz2ZM3r6qbheMb2UY0gcgIXluVskmbzaitqFtt1",
+    "tracks" : {
+      "href" : "https://api.spotify.com/v1/users/kaizentowfiq/playlists/2TwSL9NRnKR9SLnXX9YUXr/tracks",
+      "total" : 5
+    },
+    "type" : "playlist",
+    "uri" : "spotify:user:kaizentowfiq:playlist:2TwSL9NRnKR9SLnXX9YUXr"
+  } ],
+  "limit" : 20,
+  "next" : null,
+  "offset" : 0,
+  "previous" : null,
+  "total" : 14
+}
