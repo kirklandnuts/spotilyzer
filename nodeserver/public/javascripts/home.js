@@ -39,6 +39,11 @@ var app = new Vue({
         console.log("ERROR: "+JSON.stringify(error));
       }
     },
+    makePlaylistChart: function () {
+      return makeBarGraph(this.playlists.map(function(item) {
+        return item.tracks.total;
+      }));
+    },
     logout: function () {
       this.credentials = {};
     }
