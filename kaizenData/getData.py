@@ -1,18 +1,12 @@
 import requests
+import os
 import json
 
 accessToken = "BQA6UxOOy9OIY7QH8pa4nwaCpxtOGLzLiRZ23aXvTzxe8gkq2ZPvqLPjIHQG_yqrivJ8MT9UGkM7IAoofgX0FgW1Mdz1sk-Jh9caxGN9IwSi4qrvPM8tRz8Ra18bWsDRfX3aiVZODJ-31-R25_6q2LTx4tgbBVUYMAQ2xLRVRezMsmMMaTvnurXt9EzTcA"
 
 userID = "kaizentowfiq"
-#playlists = json.loads(os.system(request))
-#request = "curl -X GET 'https://api.spotify.com/v1/me/tracks' -H 'Authorization: Bearer " + accessToken +  "' > newData"
-#output playlist file that holds song ids
-#request = "curl -X GET 'https://api.spotify.com/v1/users/" + userID + "/playlists' -H 'Authorization: Bearer " + accessToken + "'"
-
-#https://api.spotify.com/v1/users/{user_id}/playlists/{playlist_id}/tracks
 
 #First we collect saved song ids
-
 savedTracks = []
 request = "https://api.spotify.com/v1/me/tracks?limit=50"
 s = requests.Session()
@@ -47,6 +41,19 @@ for i in playlistID.keys():
 		for j in messySongs:
 			playlistSongs[i].append(str(j["track"]["id"]))
 
-import pdb
-pdb.set_trace()
+# now we save our data to text files for further processing by the unauthorized requests
+dirName = userID + "Data"
+os.system("mkdir " + dirName)
+
+# we will create the saved Tracks data file first
+f = open(dirName + "/" + "savedTracks", 'w')
+for id in savedTracks:
+	f.write(id + ", ")
+f.close()
+
+for i in playlistID.keys():
+	f = open(dirName + "/" + i, 'w')
+	for id in playlistSongs[i]:
+		f.write(id + ", ")
+	f.close
 
