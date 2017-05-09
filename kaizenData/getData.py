@@ -22,17 +22,31 @@ messySavedTracks = resp.json()["items"]
 
 for i in messySavedTracks:
 	savedTracks.append(str(i["track"]["id"]))
-#now we collect playlist song ids
 
+# now we collect playlists and their ids
 request = "https://api.spotify.com/v1/users/" + userID + "/playlists"
 s = requests.Session()
 s.headers.update({'Authorization':'Bearer ' + accessToken})
 resp = s.get(request)
 
 messyPlaylists = resp.json()["items"]
-playlists = {}
+playlistSongs = {}
+playlistID = {}
 for i in messyPlaylists:
-	playlists[str(i["name"])] = []
+	playlistSongs[str(i["name"])] = []
+	playlistID[str(i["name"])] = str(i["id"])
 
+# now we collect the songs within each playlist
+for i in playlistID.keys():
+	request = "https://api.spotify.com/v1/users/" + userID + "/playlists/" + playlistID[i] + "/tracks"
+	s = requests.Session()
+	s.headers.update({'Authorization':'Bearer ' + accessToken})
+	resp = s.get(request)
+	if resp.status_code == 200:
+		messySongs = resp.json()["items"]
+		for j in messySongs:
+			playlistSongs[i].append(str(j["track"]["id"]))
 
+import pdb
+pdb.set_trace()
 
