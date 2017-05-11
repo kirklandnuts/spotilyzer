@@ -2,7 +2,7 @@ import requests
 import os
 import json
 
-accessToken = "BQA6UxOOy9OIY7QH8pa4nwaCpxtOGLzLiRZ23aXvTzxe8gkq2ZPvqLPjIHQG_yqrivJ8MT9UGkM7IAoofgX0FgW1Mdz1sk-Jh9caxGN9IwSi4qrvPM8tRz8Ra18bWsDRfX3aiVZODJ-31-R25_6q2LTx4tgbBVUYMAQ2xLRVRezMsmMMaTvnurXt9EzTcA"
+accessToken = "BQDpzz-Ai9UvNGRPfjG1vqUWhNx1zT1xq7iXCOxgxiTA49rIwDV6Ziw-DVR5LX8qJ8-4Oi90H2WwQ4wR4o435dWe_cAZJNNz-x2JQa15qfwv3SKIHatkv7ql82n2XR74RZ6Gz-CbezlgMxvjO65VkhF3B2qHYnEgnQnC-Ea6FzBOuXNXn94hO1iJfUT_MA"
 
 userID = "kaizentowfiq"
 
@@ -56,4 +56,3 @@ for i in playlistID.keys():
 	for id in playlistSongs[i]:
 		f.write(id + ", ")
 	f.close
-
