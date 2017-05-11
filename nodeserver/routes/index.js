@@ -6,7 +6,7 @@ var querystring = require('querystring');
 const CLIENT_ID = 'fa7e7c8d114a487c81a31a32dd0c0ef5';
 const CLIENT_SECRET = '7df74727c0a846b1ba7bf042f9421f6c';
 const REDIRECT_URI = 'http://localhost:3000/callback';
-const APP_SCOPE = 'playlist-read-private';
+const APP_SCOPE = 'playlist-read-private user-library-read';
 const LOGIN_KEY = 'login_status';
 
 const stateKey = 'spotify_auth_state';

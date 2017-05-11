@@ -15,6 +15,7 @@ var app = new Vue({
     message: 'Hello Vue!',
     user: {},
     playlists: [],
+    savedTracks: [],
     credentials: authStorage.fetch()
   },
   methods: {
@@ -46,6 +47,18 @@ var app = new Vue({
     },
     logout: function () {
       this.credentials = {};
+    },
+    getSavedTracks: async function () {
+      try {
+        var list = await this.$http.get('https://api.spotify.com/v1/me/tracks', {
+          headers: {'Authorization': 'Bearer '+this.credentials.access_token},
+        });
+        this.savedTracks = list.body.items;
+        console.log("retrieved savedTracks")
+        console.log(this.savedTracks)
+      } catch (error) {
+        console.log("ERROR: "+JSON.stringify(error));
+      }
     }
   },
   mounted() {
