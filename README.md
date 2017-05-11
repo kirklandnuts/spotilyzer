@@ -1,5 +1,15 @@
 # spotify-dashboard
+
 learn about your Spotify usage and behavior
+
+## Week 1 milestones
+* Machine learning to build sound profiles for genres
+* Run predictions of genre of new song
+* May not be done in a day--meet twice (Monday 15th, Friday 19th)
+
+## Week 2 milestones
+* Visualization day
+* Writing up inertia7 report
 
 ## Driving questions
 * How do I define my current musical taste?
