@@ -37,3 +37,6 @@ vignettes/*.pdf
 
 #ignore the OS X DS_Store file
 .DS_Store
+
+#ignore virtualenv VM
+spotifyDashboardVM
