@@ -7,6 +7,39 @@ learn about your Spotify usage and behavior
 * Run predictions of genre of new song
 * May not be done in a day--meet twice (Monday 15th, Friday 19th)
 
+### Week 1 discussion
+* Want: a generalized framework with all data for future features
+* Table that links playlists to songs and songs to playlists (all data that we could possibly need in the near future)
+* Make subsets of playlists/tracks and do analysis on other songs
+
+#### Database 
+* To Do Friday
+
+
+#### Defining musical profile
+Motivation: given some playlists (generally well defined categories) and a song determine where the song 'best fits'. Also try to deterimine how well a song fits into a playlist in general. 
+  
+Given a playlist P, and model its corresponding 'musical profile' as such:
+
+> Model each feature n as an independent normal random variable Xk for k = 1, 2, ... , n with mean and variation derived from all songs in the playlist with corresponding probability density function gk   
+> Call the probability density function of all the random variables f(v)= g1(v1)\*g2(v2)\* ... \*gn(vn), where v = \[v1, v2, ... , vn\] is a vector of the corresponding feature values. This is the 'musical profile' of P  
+> Define the 'musical fit' of a song v to a playlist x as f(v)  
+
+Let P1, P2, ... ,Pn be n different playlists, and let f1, f2, ... , fn be their corresponding musical profiles. Let v be the song that we wish to match to a playlist. Then:
+
+> The playlist that v fits best in is then defined as max(fi(v)) for all i = 1, 2, ... , n.  
+> Define also 'close fits' for all j = 1, 2, ... , n as fj(v) >= r*fi(v) for some ratio 0 < r < 1  
+> We can furthermore define confidence of best fit based off how close the next nearest fit(s) are  
+> Also define fit into playlist based off of ratio of f(v) compared to max f(x), i.e. the 'peak' of the probability distribution function f.   
+
+Based off this analysis, we can determine which playlist(s) most fit the profile of a song (e.g. genre) 
+
+  
+### Week 1 results
+* Dataframe set up 
+	* masterFrame['trackslist'][playlist index][song index][feature]
+	* Gives feature value for song in playlist.
+
 ## Week 2 milestones
 * Visualization day
 * Writing up inertia7 report
@@ -26,7 +59,7 @@ learn about your Spotify usage and behavior
 
 ### 
 
-###After (summer)
+### After (summer)
 * Use get-audio-analysis with unsupervised machine learning to get deeper insights on data
 * Cluster analysis with audio features and playlists
 * Website
