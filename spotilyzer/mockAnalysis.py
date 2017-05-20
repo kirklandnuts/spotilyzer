@@ -24,5 +24,5 @@ for i in featuredPlaylists:
 		tracksList.append(j["track"]["id"])
 	allFeaturedPlaylistData[i["id"]] = gd.getSongs(tracksList)
 elapsed = timeit.default_timer() - start_time
-print("Duration: " + elapsed)
+print("Duration: " + str(elapsed))
 asdf = gd.getSongs(["3eqEq53sUsaukd560hw7Dh","3n41HT8DnPHOBb1zcliJOD"])
