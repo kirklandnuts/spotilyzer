@@ -13,7 +13,9 @@ learn about your Spotify usage and behavior
 * Make subsets of playlists/tracks and do analysis on other songs
 
 #### Database 
-* To Do Friday
+* getData module usage
+once postgresql is installed on the machine you will be using, make sure to add a postgres user spotilyzer
+with password spotipass that has permission to create databases.  Then, use getData to your heart's content.`
 
 
 #### Defining musical profile
