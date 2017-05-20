@@ -48,8 +48,13 @@ def getSongs(songList):
 			print("Got data for song: " + songData["song_title"] + " : " + songData["songid"])
 	else:
 		print("No connection to database")
-
 	return data
+
+def getArtists(artistList):
+	return
+
+def getAlbums(albumList):
+	return
 
 def getAccessHeader():
 	TOKEN_URL = "https://accounts.spotify.com/api/token"
