@@ -12,8 +12,6 @@ DBUSER = "spotilyzer"
 DBPASS = "spotipass"
 DBNAME = "spotilyzerdb"
 
-#yes, this module is the zesty zsechuan sauce.
-#enjoy it with maximum flavor.
 #user functions
 def getSongs(songList):
 	#INPUT: takes a list of song id's
