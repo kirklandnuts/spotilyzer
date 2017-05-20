@@ -1,3 +1,4 @@
+#The purpose of this module is to handle the retrieval of all necessary data for the analysis programs
 import requests
 import base64
 import pdb
@@ -35,7 +36,9 @@ def getSongs(songList):
 				 featureData.append({}) #append the feature dctionary for the song
 			else:
 				songFeatures = getSongFeatures(songID, access_header)
-				songAnalysis = getSongAnalysis(songID, access_header)
+				#songAnalysis = getSongAnalysis(songID, access_header)
+				trackInfo = getTrack(songID, access_header)
+				pdb.set_trace()
 				featureData.append({})
 				#insert data into db
 	else:
@@ -73,6 +76,19 @@ def getSongAnalysis(sid, access_header):
 	resp = requests.get(url, headers=access_header)
 	songAnalysis = resp.json()
 	return songAnalysis
+
+def getTrack(sid, access_header):
+	url = "https://api.spotify.com/v1/tracks/" + sid
+	resp = requests.get(url, headers=access_header)
+	trackInfo = resp.json()
+	track = {}
+	track["name"] = trackInfo["name"]
+	#currently only getting the first artist, may need to change later to handle multiple
+	track["artistid"] = trackInfo["artists"][0]["id"]
+	track["albumid"] = trackInfo["album"]["id"]
+	track["available_markets"] = trackInfo["available_markets"]
+	track["popularity"] = trackInfo["popularity"]
+	return track
 	
 def dbHasSong(con, sid):
 	cur = con.cursor()
@@ -94,7 +110,7 @@ def createSongsTable():
 	con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 	cur = con.cursor()
 	query = """CREATE TABLE songs(songID char(22) PRIMARY KEY NOT NULL,
-			artistID char(22) NOT NULL,
+			artistIDs char(22) NOT NULL,
 			albumID char(22) NOT NULL,
 			song_title text NOT NULL,
 			available_markets char(2)[],
