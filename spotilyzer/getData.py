@@ -38,13 +38,25 @@ def getSongs(songList):
 				songFeatures = getSongFeatures(songID, access_header)
 				#songAnalysis = getSongAnalysis(songID, access_header)
 				trackInfo = getTrack(songID, access_header)
-				pdb.set_trace()
+				songData = {**trackInfo, **songFeatures}
+				insertSong(songData, con)
 				featureData.append({})
-				#insert data into db
 	else:
 		print("No connection to database")
 
 	return featureData
+
+def insertSong(songData, con):
+	con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+	cur = con.cursor()
+	sd = songData
+	values = "('%s', '%s', '%s', '%s', '{%s}', %d, %d, %f, %f, %d, %f, %d, %f, %f, %f, %f, %f, %f, %d)" % \
+				(sd["id"], sd["artistid"], sd["albumid"], sd["name"], ','.join(sd["available_markets"]),sd["duration_ms"], sd["popularity"], sd["danceability"], sd["energy"], sd["key"], sd["loudness"], sd["mode"], sd["speechiness"], sd["acousticness"], sd["instrumentalness"], sd["liveness"], sd["valence"], sd["tempo"], sd["time_signature"])
+	insertCommand = "INSERT INTO songs (songid, artistids, albumid, song_title, available_markets, duration, popularity, danceability, energy, key, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, time_signature) VALUES " + values
+	pdb.set_trace()
+	cur.execute(insertCommand)
+	cur.close()
+	
 
 def getAccessHeader():
 	TOKEN_URL = "https://accounts.spotify.com/api/token"
@@ -91,10 +103,11 @@ def getTrack(sid, access_header):
 	return track
 	
 def dbHasSong(con, sid):
-	cur = con.cursor()
 	con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-	cur.execute("SELECT * FROM songs WHERE songid='" + sid + "';")
+	cur = con.cursor()
+	cur.execute("SELECT * FROM songs WHERE songid='" + sid + "'")
 	row = cur.fetchone()
+	cur.close()
 	return row is not None
 
 def createDB():
@@ -144,7 +157,6 @@ def createArtistsTable():
 	cur.execute(query)
 	cur.close()
 	con.close()
-	return
 
 def createAlbumsTable():
 	con = connect(dbname=DBNAME, user=DBUSER, host='localhost', password=DBPASS)
@@ -164,4 +176,3 @@ def createAlbumsTable():
 	cur.execute(query)
 	cur.close()
 	con.close()
-	return
