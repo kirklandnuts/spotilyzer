@@ -62,8 +62,27 @@ def querySong(sid, con):
 	query = "SELECT * FROM songs WHERE songid='" + sid + "'"
 	cur.execute(query)
 	songQuery = cur.fetchone()
-	return songQuery
-	
+	sd = {}
+	sd["songid"] = songQuery[0]
+	sd["artistids"] = songQuery[1]
+	sd["arbumid"] = songQuery[2]
+	sd["song_title"] = songQuery[3]
+	sd["available_markets"] = songQuery[4]
+	sd["duration"] = songQuery[5]
+	sd["popularity"] = songQuery[6]
+	sd["danceability"] = songQuery[7]
+	sd["energy"] = songQuery[8]
+	sd["key"] = songQuery[9]
+	sd["loudness"] = songQuery[10]
+	sd["mode"] = songQuery[11]
+	sd["speechiness"] = songQuery[12]
+	sd["acousticness"] = songQuery[13]
+	sd["instrumentalness"] = songQuery[14]
+	sd["liveness"] = songQuery[15]
+	sd["valence"] = songQuery[16]
+	sd["tempo"] = songQuery[17]
+	sd["time_signature"] = songQuery[18]
+	return sd
 
 def getAccessHeader():
 	TOKEN_URL = "https://accounts.spotify.com/api/token"
