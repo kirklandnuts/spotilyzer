@@ -12,6 +12,7 @@ DBUSER = "spotilyzer"
 DBPASS = "spotipass"
 DBNAME = "spotilyzerdb"
 
+#user functions
 def getSongs(songList):
 	#INPUT: takes a list of song id's
 	#OUTPUT: returns a list
@@ -34,23 +35,39 @@ def getSongs(songList):
 		con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 		data = [] #using a list because we want to preserve order
 		for songID in songList:
-			if dbHasSong(con, songID):
-				songData = querySong(songID, con)
+			if __dbHasSong(con, songID):
+				songData = __querySong(songID, con)
 				data.append(songData) #append the feature dctionary for the song
 			else:
-				songFeatures = getSongFeatures(songID, access_header)
+				songFeatures = __getSongFeatures(songID, access_header)
 				#songAnalysis = getSongAnalysis(songID, access_header)
-				trackInfo = getTrack(songID, access_header)
+				trackInfo = __getTrack(songID, access_header)
 				songData = {**trackInfo, **songFeatures}
 				print("Got data for song: " + songData["song_title"] + " : " + songData["songid"])
-				insertSong(songData, con)
+				__insertSong(songData, con)
 				data.append(songData)
 	else:
 		print("No connection to database")
 
 	return data
 
-def insertSong(songData, con):
+def getAccessHeader():
+	TOKEN_URL = "https://accounts.spotify.com/api/token"
+	CLIENT_ID = "fa7e7c8d114a487c81a31a32dd0c0ef5"
+	CLIENT_SECRET = "7df74727c0a846b1ba7bf042f9421f6c"
+	DATA = {"grant_type":"client_credentials"}
+	temp1 = CLIENT_ID+":"+CLIENT_SECRET
+	temp2 = temp1.encode('utf-8','strict')
+	HEADER_64_STRING = base64.b64encode(temp2)
+	HEADERS = {"Authorization":b"Basic "+HEADER_64_STRING}
+	response = requests.post(TOKEN_URL, data=DATA, headers=HEADERS)
+	response.content
+	access_token = response.json()['access_token']
+	access_header = {"Authorization":"Bearer "+access_token}
+	return access_header
+
+#Helper functions
+def __insertSong(songData, con):
 	cur = con.cursor()
 	sd = songData
 	sd['song_title'] = re.sub("'", "", sd['song_title'])
@@ -63,7 +80,7 @@ def insertSong(songData, con):
 	cur.execute(insertCommand)
 	cur.close()
 
-def querySong(sid, con):
+def __querySong(sid, con):
 	cur = con.cursor()
 	query = "SELECT * FROM songs WHERE songid='" + sid + "'"
 	cur.execute(query)
@@ -88,24 +105,10 @@ def querySong(sid, con):
 	sd["valence"] = songQuery[16]
 	sd["tempo"] = songQuery[17]
 	sd["time_signature"] = songQuery[18]
+	cur.close()
 	return sd
 
-def getAccessHeader():
-	TOKEN_URL = "https://accounts.spotify.com/api/token"
-	CLIENT_ID = "fa7e7c8d114a487c81a31a32dd0c0ef5"
-	CLIENT_SECRET = "7df74727c0a846b1ba7bf042f9421f6c"
-	DATA = {"grant_type":"client_credentials"}
-	temp1 = CLIENT_ID+":"+CLIENT_SECRET
-	temp2 = temp1.encode('utf-8','strict')
-	HEADER_64_STRING = base64.b64encode(temp2)
-	HEADERS = {"Authorization":b"Basic "+HEADER_64_STRING}
-	response = requests.post(TOKEN_URL, data=DATA, headers=HEADERS)
-	response.content
-	access_token = response.json()['access_token']
-	access_header = {"Authorization":"Bearer "+access_token}
-	return access_header
-
-def getSongFeatures(sid, access_header):
+def __getSongFeatures(sid, access_header):
 	url = "https://api.spotify.com/v1/audio-features/" + sid
 	resp = requests.get(url, headers=access_header)
 	songFeatures = resp.json()
@@ -119,13 +122,13 @@ def getSongFeatures(sid, access_header):
 	del songFeatures["id"]
 	return songFeatures
 
-def getSongAnalysis(sid, access_header):
+def __getSongAnalysis(sid, access_header):
 	url = "https://api.spotify.com/v1/audio-analysis/" + sid
 	resp = requests.get(url, headers=access_header)
 	songAnalysis = resp.json()
 	return songAnalysis
 
-def getTrack(sid, access_header):
+def __getTrack(sid, access_header):
 	url = "https://api.spotify.com/v1/tracks/" + sid
 	resp = requests.get(url, headers=access_header)
 	trackInfo = resp.json()
@@ -140,7 +143,7 @@ def getTrack(sid, access_header):
 	track["popularity"] = trackInfo["popularity"]
 	return track
 	
-def dbHasSong(con, sid):
+def __dbHasSong(con, sid):
 	con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 	cur = con.cursor()
 	cur.execute("SELECT * FROM songs WHERE songid='" + sid + "'")
@@ -148,7 +151,7 @@ def dbHasSong(con, sid):
 	cur.close()
 	return row is not None
 
-def createDB():
+def __createDB():
 	con = connect(dbname='postgres', user=DBUSER, host='localhost', password=DBPASS)
 	con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 	cur = con.cursor()
@@ -156,7 +159,7 @@ def createDB():
 	cur.close()
 	con.close()
 
-def createSongsTable():
+def __createSongsTable():
 	con = connect(dbname=DBNAME, user=DBUSER, host='localhost', password=DBPASS)
 	con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 	cur = con.cursor()
@@ -182,7 +185,7 @@ def createSongsTable():
 	cur.close()
 	con.close()
 
-def createArtistsTable():
+def __createArtistsTable():
 	con = connect(dbname=DBNAME, user=DBUSER, host='localhost', password=DBPASS)
 	con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 	cur = con.cursor()
@@ -196,7 +199,7 @@ def createArtistsTable():
 	cur.close()
 	con.close()
 
-def createAlbumsTable():
+def __createAlbumsTable():
 	con = connect(dbname=DBNAME, user=DBUSER, host='localhost', password=DBPASS)
 	con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 	cur = con.cursor()
