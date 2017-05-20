@@ -44,56 +44,28 @@ def createDataFrame(afpd, features):
 		df[i] = pd.DataFrame(min_max_scaler.fit_transform(df[i]))
 	return df.set_index("songid")
 
-df = createDataFrame(allFeaturedPlaylistData, ["danceability", "instrumentalness", "speechiness"])
-# plot songs on a 3D graph with variables danceability, instrumentalness, speechiness
-# looks like the 3 features are on the same scale 0-1
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
+def graph3DAllNodes(features):
+	if len(features) == 3:
+		df = createDataFrame(allFeaturedPlaylistData, features)
+		fig = plt.figure()
+		ax = fig.add_subplot(111, projection='3d')
+		
+		xs = df[features[0]]
+		ys = df[features[1]]
+		zs = df[features[2]]
+		ax.scatter(xs, ys, zs, c='g', marker='o')
+		
+		
+		ax.set_xlabel(features[0])
+		ax.set_ylabel(features[1])
+		ax.set_zlabel(features[2])
+		plt.show()
+	else:
+		print("need 3 features to do 3D graph")
 
-xs = df["danceability"]
-ys = df["instrumentalness"]
-zs = df["speechiness"]
-ax.scatter(xs, ys, zs, c='r', marker='o')
-
-
-ax.set_xlabel('danceability')
-ax.set_ylabel('instrumentalness')
-ax.set_zlabel('speechiness')
-plt.show()
-
-df = createDataFrame(allFeaturedPlaylistData, ["", "", ""])
-# plot songs on a 3D graph with variables danceability, instrumentalness, speechiness
-# looks like the 3 features are on the same scale 0-1
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-
-xs = df[""]
-ys = df[""]
-zs = df[""]
-ax.scatter(xs, ys, zs, c='r', marker='o')
-
-
-ax.set_xlabel('')
-ax.set_ylabel('')
-ax.set_zlabel('')
-plt.show()
-
-df = createDataFrame(allFeaturedPlaylistData, ["", "", ""])
-# plot songs on a 3D graph with variables danceability, instrumentalness, speechiness
-# looks like the 3 features are on the same scale 0-1
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-
-xs = df[""]
-ys = df[""]
-zs = df[""]
-ax.scatter(xs, ys, zs, c='r', marker='o')
-
-
-ax.set_xlabel('')
-ax.set_ylabel('')
-ax.set_zlabel('')
-plt.show()
-
+graph3DAllNodes(["danceability", "instrumentalness", "speechiness"])
+graph3DAllNodes(["popularity", "energy", "loudness"])
+graph3DAllNodes(["acousticness", "liveness", "valence"])
+	
 import pdb
 pdb.set_trace()
