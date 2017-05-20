@@ -41,6 +41,7 @@ def getSongs(songList):
 				#songAnalysis = getSongAnalysis(songID, access_header)
 				trackInfo = getTrack(songID, access_header)
 				songData = {**trackInfo, **songFeatures}
+				print("Got data for song: " + songData["song_title"] + " : " + songData["songid"])
 				insertSong(songData, con)
 				data.append(songData)
 	else:
