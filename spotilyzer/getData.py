@@ -171,7 +171,7 @@ def __createSongsTable():
 	query = """CREATE TABLE songs(songID char(22) PRIMARY KEY NOT NULL,
 			artistIDs char(22)[] NOT NULL,
 			albumID char(22) NOT NULL,
-			song_title text NOT NULL,
+			song_title varchar NOT NULL,
 			available_markets char(2)[],
 			duration int,
 			popularity int,
@@ -197,8 +197,8 @@ def __createArtistsTable():
 	query = """CREATE TABLE artists(
     	ArtistID char[22] NOT NULL PRIMARY KEY,
     	followers int,
-    	genres text[],
-    	name text,
+    	genres varchar[],
+    	name varchar,
     	popularity int)"""
 	cur.execute(query)
 	cur.close()
@@ -212,13 +212,13 @@ def __createAlbumsTable():
   		albumID char(22) PRIMARY KEY NOT NULL,
   		artistIDs char(22)[] NOT NULL,
   		songIDs char(22)[] NOT NULL,
-   		album_title text NOT NULL,
+   		album_title varchar NOT NULL,
   		available_markets char(2)[],
    		popularity int,
-  		genres text[],
-  		release_date text,
-  	 	release_date_precision text,
-   		label text);"""
+  		genres varchar[],
+  		release_date varchar,
+  	 	release_date_precision varchar,
+   		label varchar);"""
 	cur.execute(query)
 	cur.close()
 	con.close()
