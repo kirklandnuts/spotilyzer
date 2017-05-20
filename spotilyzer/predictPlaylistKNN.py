@@ -22,7 +22,7 @@ for i in featuredPlaylists:
 #The goal of this analysis is to predict which playlist a given song belongs to using KNN
 #will use 3 features of the songs, randomly choosing danceability, instrumentalness, speechiness
 
-def createDataFrame(afpd):
+def createDataFrame(afpd, features):
 	preFrameDict = {"songid":[],
 					"danceability":[],
 					"instrumentalness":[],
@@ -38,6 +38,22 @@ def createDataFrame(afpd):
 	df = pd.DataFrame(preFrameDict)
 	return df.set_index("songid")
 
-df = createDataFrame(allFeaturedPlaylistData)
+df = createDataFrame(allFeaturedPlaylistData, ["danceability", "instrumentalness", "speechiness"])
+# plot songs on a 3D graph with variables danceability, instrumentalness, speechiness
+# looks like the 3 features are on the same scale 0-1
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+xs = df["danceability"]
+ys = df["instrumentalness"]
+zs = df["speechiness"]
+ax.scatter(xs, ys, zs, c='r', marker='o')
+
+
+ax.set_xlabel('danceability')
+ax.set_ylabel('instrumentalness')
+ax.set_zlabel('speechiness')
+plt.show()
+
 import pdb
 pdb.set_trace()

@@ -78,7 +78,7 @@ def __insertSong(songData, con):
 	sd['song_title'] = re.sub("'", "", sd['song_title'])
 	for i in sd.keys():
 		if sd[i] is None:
-			sd[i] = -9999999
+			sd[i] = 0 
 	values = "('%s', '{%s}', '%s', '%s', '{%s}', %d, %d, %f, %f, %d, %f, %d, %f, %f, %f, %f, %f, %f, %d)" % \
 				(sd["songid"], ','.join(sd["artistids"]), sd["albumid"], sd["song_title"], ','.join(sd["available_markets"]),sd["duration"], sd["popularity"], sd["danceability"], sd["energy"], sd["key"], sd["loudness"], sd["mode"], sd["speechiness"], sd["acousticness"], sd["instrumentalness"], sd["liveness"], sd["valence"], sd["tempo"], sd["time_signature"])
 	insertCommand = "INSERT INTO songs (songid, artistids, albumid, song_title, available_markets, duration, popularity, danceability, energy, key, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, time_signature) VALUES " + values
