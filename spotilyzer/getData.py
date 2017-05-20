@@ -10,8 +10,8 @@ DBUSER = "spotilyzer"
 DBPASS = "spotipass"
 DBNAME = "spotilyzerdb"
 
-def getSongs(songList, **kwargs):
-	#INPUT: takes a list of song id's, kwargs: accessToken, userID
+def getSongs(songList):
+	#INPUT: takes a list of song id's
 	#OUTPUT: returns a list
 	con = None
 	try:
@@ -21,9 +21,14 @@ def getSongs(songList, **kwargs):
 		createSongsTable()
 		createArtistsTable()
 		createAlbumsTable()
+
+	try:
+		con = connect(dbname=DBNAME, user=DBUSER, host='localhost', password=DBPASS)
+	except:
+		print("Failed to create DB")
 	
 	access_header = getAccessHeader()
-	if con:
+	if con is not None:
 		featureData = []
 		for songID in songList:
 			if dbHasSong(con, songID):
@@ -53,8 +58,13 @@ def getAccessHeader():
 	return access_header
 
 def getSongFeatures(sid, access_header):
-	url = "https://api.spotify.com/v1/audio-features/"
-	resp = requests.get(url+sid, headers=access_header)
+	url = "https://api.spotify.com/v1/audio-features/" + sid
+	resp = requests.get(url, headers=access_header)
+	return resp.json()
+
+def getSongAnalysis(sid, access_header):
+	url = "https://api.spotify.com/v1/audio-analysis/" + sid
+	resp = requests.get(url, headers=access_header)
 	return resp.json()
 	
 def dbHasSong(con, sid):
