@@ -1,3 +1,9 @@
-import getData
+#!/usr/bin/env python3
+######################
 
-playlist = getSongs(["","",""])
+import getData as gd
+
+gd.createDB()
+gd.createSongsTable()
+gd.createArtistsTable()
+gd.createAlbumsTable()
