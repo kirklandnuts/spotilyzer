@@ -22,10 +22,10 @@ def getSongs(songList):
 	try:
 		con = connect(dbname=DBNAME, user=DBUSER, host='localhost', password=DBPASS)
 	except:
-		createDB()
-		createSongsTable()
-		createArtistsTable()
-		createAlbumsTable()
+		__createDB()
+		__createSongsTable()
+		__createArtistsTable()
+		__createAlbumsTable()
 
 	try:
 		con = connect(dbname=DBNAME, user=DBUSER, host='localhost', password=DBPASS)
