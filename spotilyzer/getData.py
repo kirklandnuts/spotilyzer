@@ -35,6 +35,7 @@ def getSongs(songList):
 				 featureData.append({}) #append the feature dctionary for the song
 			else:
 				songFeatures = getSongFeatures(songID, access_header)
+				songAnalysis = getSongAnalysis(songID, access_header)
 				featureData.append({})
 				#insert data into db
 	else:
@@ -60,12 +61,18 @@ def getAccessHeader():
 def getSongFeatures(sid, access_header):
 	url = "https://api.spotify.com/v1/audio-features/" + sid
 	resp = requests.get(url, headers=access_header)
-	return resp.json()
+	songFeatures = resp.json()
+	del songFeatures["type"]
+	del songFeatures["uri"]
+	del songFeatures["track_href"]
+	del songFeatures["analysis_url"]
+	return songFeatures
 
 def getSongAnalysis(sid, access_header):
 	url = "https://api.spotify.com/v1/audio-analysis/" + sid
 	resp = requests.get(url, headers=access_header)
-	return resp.json()
+	songAnalysis = resp.json()
+	return songAnalysis
 	
 def dbHasSong(con, sid):
 	cur = con.cursor()
@@ -87,7 +94,7 @@ def createSongsTable():
 	con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 	cur = con.cursor()
 	query = """CREATE TABLE songs(songID char(22) PRIMARY KEY NOT NULL,
-			artistIDs char(22) NOT NULL,
+			artistID char(22) NOT NULL,
 			albumID char(22) NOT NULL,
 			song_title text NOT NULL,
 			available_markets char(2)[],
