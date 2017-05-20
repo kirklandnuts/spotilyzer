@@ -51,10 +51,9 @@ def getSongs(songList):
 def insertSong(songData, con):
 	cur = con.cursor()
 	sd = songData
-	values = "('%s', '%s', '%s', '%s', '{%s}', %d, %d, %f, %f, %d, %f, %d, %f, %f, %f, %f, %f, %f, %d)" % \
-				(sd["id"], sd["artistid"], sd["albumid"], sd["name"], ','.join(sd["available_markets"]),sd["duration_ms"], sd["popularity"], sd["danceability"], sd["energy"], sd["key"], sd["loudness"], sd["mode"], sd["speechiness"], sd["acousticness"], sd["instrumentalness"], sd["liveness"], sd["valence"], sd["tempo"], sd["time_signature"])
+	values = "('%s', '{%s}', '%s', '%s', '{%s}', %d, %d, %f, %f, %d, %f, %d, %f, %f, %f, %f, %f, %f, %d)" % \
+				(sd["songid"], ','.join(sd["artistids"]), sd["albumid"], sd["song_title"], ','.join(sd["available_markets"]),sd["duration"], sd["popularity"], sd["danceability"], sd["energy"], sd["key"], sd["loudness"], sd["mode"], sd["speechiness"], sd["acousticness"], sd["instrumentalness"], sd["liveness"], sd["valence"], sd["tempo"], sd["time_signature"])
 	insertCommand = "INSERT INTO songs (songid, artistids, albumid, song_title, available_markets, duration, popularity, danceability, energy, key, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, time_signature) VALUES " + values
-	pdb.set_trace()
 	cur.execute(insertCommand)
 	cur.close()
 
@@ -62,8 +61,8 @@ def querySong(sid, con):
 	cur = con.cursor()
 	query = "SELECT * FROM songs WHERE songid='" + sid + "'"
 	cur.execute(query)
-	songData = cur.fetchone()
-	return songData
+	songQuery = cur.fetchone()
+	return songQuery
 	
 
 def getAccessHeader():
@@ -89,6 +88,10 @@ def getSongFeatures(sid, access_header):
 	del songFeatures["uri"]
 	del songFeatures["track_href"]
 	del songFeatures["analysis_url"]
+	songFeatures["duration"] = songFeatures["duration_ms"]
+	del songFeatures["duration_ms"]
+	songFeatures["songid"] = songFeatures["id"]
+	del songFeatures["id"]
 	return songFeatures
 
 def getSongAnalysis(sid, access_header):
@@ -102,9 +105,11 @@ def getTrack(sid, access_header):
 	resp = requests.get(url, headers=access_header)
 	trackInfo = resp.json()
 	track = {}
-	track["name"] = trackInfo["name"]
+	track["song_title"] = trackInfo["name"]
 	#currently only getting the first artist, may need to change later to handle multiple
-	track["artistid"] = trackInfo["artists"][0]["id"]
+	track["artistids"] = []
+	for i in trackInfo["artists"]:
+		track["artistids"].append(i["id"])
 	track["albumid"] = trackInfo["album"]["id"]
 	track["available_markets"] = trackInfo["available_markets"]
 	track["popularity"] = trackInfo["popularity"]
@@ -131,7 +136,7 @@ def createSongsTable():
 	con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 	cur = con.cursor()
 	query = """CREATE TABLE songs(songID char(22) PRIMARY KEY NOT NULL,
-			artistIDs char(22) NOT NULL,
+			artistIDs char(22)[] NOT NULL,
 			albumID char(22) NOT NULL,
 			song_title text NOT NULL,
 			available_markets char(2)[],
