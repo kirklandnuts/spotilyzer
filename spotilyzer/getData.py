@@ -30,24 +30,25 @@ def getSongs(songList):
 	
 	access_header = getAccessHeader()
 	if con is not None:
-		featureData = []
+		con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+		data = [] #using a list because we want to preserve order
 		for songID in songList:
 			if dbHasSong(con, songID):
-				 featureData.append({}) #append the feature dctionary for the song
+				songData = querySong(songID, con)
+				data.append(songData) #append the feature dctionary for the song
 			else:
 				songFeatures = getSongFeatures(songID, access_header)
 				#songAnalysis = getSongAnalysis(songID, access_header)
 				trackInfo = getTrack(songID, access_header)
 				songData = {**trackInfo, **songFeatures}
 				insertSong(songData, con)
-				featureData.append({})
+				data.append(songData)
 	else:
 		print("No connection to database")
 
-	return featureData
+	return data
 
 def insertSong(songData, con):
-	con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 	cur = con.cursor()
 	sd = songData
 	values = "('%s', '%s', '%s', '%s', '{%s}', %d, %d, %f, %f, %d, %f, %d, %f, %f, %f, %f, %f, %f, %d)" % \
@@ -56,6 +57,13 @@ def insertSong(songData, con):
 	pdb.set_trace()
 	cur.execute(insertCommand)
 	cur.close()
+
+def querySong(sid, con):
+	cur = con.cursor()
+	query = "SELECT * FROM songs WHERE songid='" + sid + "'"
+	cur.execute(query)
+	songData = cur.fetchone()
+	return songData
 	
 
 def getAccessHeader():

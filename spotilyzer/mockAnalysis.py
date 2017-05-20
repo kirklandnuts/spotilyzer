@@ -10,4 +10,6 @@ import getData as gd
 #gd.createAlbumsTable()
 
 #getSongs test
-gd.getSongs(["3eqEq53sUsaukd560hw7Dh","3n41HT8DnPHOBb1zcliJOD"])
+asdf = gd.getSongs(["3eqEq53sUsaukd560hw7Dh","3n41HT8DnPHOBb1zcliJOD"])
+import pdb
+pdb.set_trace()
