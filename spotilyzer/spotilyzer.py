@@ -154,6 +154,7 @@ def playlistDataFramesToAveragedDataFrame(playlists):
 	return df.set_index("Playlist")
 
 averagedPlaylistsFrame = playlistDataFramesToAveragedDataFrame(playlists)
+
 def nearestPlaylistForSong(song, averagedPlaylistsFrame, playlists):
 	nn = NearestNeighbors(3)
 	nn.fit(averagedPlaylistsFrame)

@@ -3,7 +3,4 @@
 
 import getData as gd
 
-gd.createDB()
-gd.createSongsTable()
-gd.createArtistsTable()
-gd.createAlbumsTable()
+gd.getSongs(["3eqEq53sUsaukd560hw7Dh","3n41HT8DnPHOBb1zcliJOD"])
