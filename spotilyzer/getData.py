@@ -45,9 +45,9 @@ def getSongs(songList):
 				#songAnalysis = getSongAnalysis(songID, access_header)
 				trackInfo = __getTrack(songID, access_header)
 				songData = {**trackInfo, **songFeatures}
-				print("Got data for song: " + songData["song_title"] + " : " + songData["songid"])
 				__insertSong(songData, con)
 				data.append(songData)
+			print("Got data for song: " + songData["song_title"] + " : " + songData["songid"])
 	else:
 		print("No connection to database")
 
