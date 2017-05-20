@@ -24,11 +24,9 @@ for i in featuredPlaylists:
 #will use 3 features of the songs, randomly choosing danceability, instrumentalness, speechiness
 
 def createDataFrame(afpd, features):
-	preFrameDict = {"songid":[],
-					"danceability":[],
-					"instrumentalness":[],
-					"speechiness":[],
-					"playlist":[],}
+	preFrameDict = {}
+	for i in features:
+		preFrameDict[i] = []
 	for i in sorted(afpd.keys()):
 		for j in afpd[i]:
 			preFrameDict["playlist"].append(i) 
@@ -37,8 +35,6 @@ def createDataFrame(afpd, features):
 				preFrameDict[q].append(j[q])
 	df = pd.DataFrame(preFrameDict)
 	#normalize data
-	import pdb
-	pdb.set_trace()
 	min_max_scaler = preprocessing.MinMaxScaler()
 	for i in features:
 		df[i] = pd.DataFrame(min_max_scaler.fit_transform(df[i]))
