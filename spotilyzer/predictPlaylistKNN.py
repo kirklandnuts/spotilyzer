@@ -27,8 +27,8 @@ def createDataFrame(afpd, features):
 	preFrameDict = {}
 	for i in features:
 		preFrameDict[i] = []
-	preFramgeDict["songid"] = []
-	preFramgeDict["playlist"] = []
+	preFrameDict["songid"] = []
+	preFrameDict["playlist"] = []
 	for i in sorted(afpd.keys()):
 		for j in afpd[i]:
 			preFrameDict["playlist"].append(i) 
