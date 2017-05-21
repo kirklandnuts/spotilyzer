@@ -8,6 +8,17 @@ from mpl_toolkits.mplot3d import Axes3D
 import pandas as pd
 from sklearn import preprocessing
 from sklearn.decomposition import PCA
+from matplotlib import style
+import itertools
+import numpy as np
+
+style.use("ggplot")
+
+#20 different colors for graphing
+COLORS = itertools.cycle(["#f4c242", "#61a323", "#161efc", "#cc37c7", 
+			"#ff0000", "#f6ff05", "#000000", "#706c6c",
+			"#7200ff", "#4d8e82", "#c1fff3", "#7a89e8",
+			"#82689b", "b", "g", "r", "c", "m", "y", "w",])
 
 #getSongs test
 access_header = gd.getAccessHeader()
@@ -61,6 +72,51 @@ def graph3DAllNodes(df, features):
 	else:
 		print("need 3 features to do 3D graph")
 
+def graph2DAllNodes(df, features):
+	if len(features) == 2:
+		
+		xs = df[features[0]]
+		ys = df[features[1]]
+		plt.scatter(xs, ys, c='g', marker='o')
+		
+		
+		plt.xlabel = features[0]
+		plt.ylabel = features[1]
+		plt.show()
+	else:
+		print("need 2 features to do 3D graph")
+
+def graph2DPlaylistsDifferentColors(df, features, playlists):
+	if len(features) == 2:
+		for i in list(range(0,len(playlists))):
+			pdf = df[df["playlist"] == playlists[i]]
+			xs = pdf[features[0]]
+			ys = pdf[features[1]]
+			plt.scatter(xs, ys, color=next(COLORS), marker='o')
+		plt.xlabel = features[0]
+		plt.ylabel = features[1]
+		plt.show()
+	else:
+		print("need 2 features to do 3D graph")
+
+def graph3DPlaylistsDifferentColors(df, features, playlists):
+	if len(features) == 3:
+		fig = plt.figure()
+		ax = fig.add_subplot(111, projection='3d')
+		for i in list(range(0,len(playlists))):
+			pdf = df[df["playlist"] == playlists[i]]
+			xs = pdf[features[0]]
+			ys = pdf[features[1]]
+			zs = pdf[features[2]]
+			ax.scatter(xs, ys, zs, c=next(COLORS), marker='o')
+		
+		ax.set_xlabel(features[0])
+		ax.set_ylabel(features[1])
+		ax.set_zlabel(features[2])
+		plt.show()
+	else:
+		print("need 3 features to do 3D graph")
+
 def PCAOnDataFrame(df, features, components):
 	pca = PCA(n_components=components)
 	pca.fit(df[features])
@@ -78,13 +134,18 @@ def PCAOnDataFrame(df, features, components):
 	newDataFrame = pd.DataFrame(preFrameDict)	
 	return newDataFrame.set_index("songid")
 
-#graph3DAllNodes(df, ["danceability", "instrumentalness", "speechiness"])
-#graph3DAllNodes(df, ["popularity", "energy", "loudness"])
-#graph3DAllNodes(df, ["acousticness", "liveness", "valence"])
 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
+playlists = sorted(list(allFeaturedPlaylistData.keys()))
 df = createDataFrame(allFeaturedPlaylistData, allFeatures)	
+#pcadf = PCAOnDataFrame(df, allFeatures, 2)
+#graph2DPlaylistsDifferentColors(pcadf, ['1','2'], playlists)
 pcadf = PCAOnDataFrame(df, allFeatures, 3)
-graph3DAllNodes(pcadf, ['1','2','3'])
+graph3DPlaylistsDifferentColors(pcadf, ['1','2', '3'], playlists)
+graph3DPlaylistsDifferentColors(df, ['popularity','danceability', 'loudness'], playlists)
+graph3DPlaylistsDifferentColors(df, ['acousticness','instrumentalness', 'valence'], playlists)
+
+import pdb
+pdb.set_trace()
