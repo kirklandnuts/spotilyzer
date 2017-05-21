@@ -84,6 +84,7 @@ def getAllSongsInDB():
 			sd["tempo"] = songQuery[17]
 			sd["time_signature"] = songQuery[18]
 			songs.append(sd)
+		cur.close()
 		
 	return songs
 
