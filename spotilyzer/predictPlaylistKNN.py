@@ -132,6 +132,10 @@ def PCAOnDataFrame(df, features, components):
 		for j in list(range(0,components)):
 			preFrameDict[str(j+1)].append(newData[i][j])
 	newDataFrame = pd.DataFrame(preFrameDict)	
+	#normalize data
+	min_max_scaler = preprocessing.MinMaxScaler()
+	for i in list(range(1,components+1)):
+		newDataFrame[str(i)] = pd.DataFrame(min_max_scaler.fit_transform(newDataFrame[str(i)]))
 	return newDataFrame.set_index("songid")
 
 
@@ -142,10 +146,13 @@ playlists = sorted(list(allFeaturedPlaylistData.keys()))
 df = createDataFrame(allFeaturedPlaylistData, allFeatures)	
 #pcadf = PCAOnDataFrame(df, allFeatures, 2)
 #graph2DPlaylistsDifferentColors(pcadf, ['1','2'], playlists)
-pcadf = PCAOnDataFrame(df, allFeatures, 3)
-graph3DPlaylistsDifferentColors(pcadf, ['1','2', '3'], playlists)
-graph3DPlaylistsDifferentColors(df, ['popularity','danceability', 'loudness'], playlists)
-graph3DPlaylistsDifferentColors(df, ['acousticness','instrumentalness', 'valence'], playlists)
+#pcadf = PCAOnDataFrame(df, allFeatures, 3)
+#graph3DPlaylistsDifferentColors(pcadf, ['1','2', '3'], playlists)
+#graph3DPlaylistsDifferentColors(df, ['popularity','danceability', 'loudness'], playlists)
+#graph3DPlaylistsDifferentColors(df, ['acousticness','instrumentalness', 'valence'], playlists)
 
-import pdb
-pdb.set_trace()
+pcadf = PCAOnDataFrame(df, allFeatures, 2)
+graph2DPlaylistsDifferentColors(pcadf, ['1','2'], playlists[0:5])
+
+pcadf = PCAOnDataFrame(df, allFeatures, 3)
+graph3DPlaylistsDifferentColors(pcadf, ['1','2', '3'], playlists[0:5])
