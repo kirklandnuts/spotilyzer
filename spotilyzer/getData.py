@@ -50,6 +50,43 @@ def getSongs(songList):
 		print("No connection to database")
 	return data
 
+def getAllSongsInDB():
+	try:
+		con = connect(dbname=DBNAME, user=DBUSER, host='localhost', password=DBPASS)
+	except:
+		print("Can't connect to DB. does it exist?")
+	songs = []
+	if con is not None:
+		con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+		cur = con.cursor()
+		query = "SELECT * FROM songs"
+		cur.execute(query)
+		resp = cur.fetchall()
+		for songQuery in resp:
+			sd = {}
+			sd["songid"] = songQuery[0]
+			sd["artistids"] = songQuery[1]
+			sd["arbumid"] = songQuery[2]
+			sd["song_title"] = songQuery[3]
+			sd["available_markets"] = songQuery[4]
+			sd["duration"] = songQuery[5]
+			sd["popularity"] = songQuery[6]
+			sd["danceability"] = songQuery[7]
+			sd["energy"] = songQuery[8]
+			sd["key"] = songQuery[9]
+			sd["loudness"] = songQuery[10]
+			sd["mode"] = songQuery[11]
+			sd["speechiness"] = songQuery[12]
+			sd["acousticness"] = songQuery[13]
+			sd["instrumentalness"] = songQuery[14]
+			sd["liveness"] = songQuery[15]
+			sd["valence"] = songQuery[16]
+			sd["tempo"] = songQuery[17]
+			sd["time_signature"] = songQuery[18]
+			songs.append(sd)
+		
+	return songs
+
 def getArtists(artistList):
 	return
 
