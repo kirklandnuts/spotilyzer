@@ -43,9 +43,8 @@ def createDataFrame(afpd, features):
 		df[i] = pd.DataFrame(min_max_scaler.fit_transform(df[i]))
 	return df.set_index("songid")
 
-def graph3DAllNodes(features):
+def graph3DAllNodes(df, features):
 	if len(features) == 3:
-		df = createDataFrame(allFeaturedPlaylistData, features)
 		fig = plt.figure()
 		ax = fig.add_subplot(111, projection='3d')
 		
@@ -70,26 +69,22 @@ def PCAOnDataFrame(df, features, components):
 	preFrameDict["songid"] = []
 	preFrameDict["playlist"] = []
 	for i in list(range(1,components+1)):
-		preFrameDict[i] = []
-	import pdb
-	pdb.set_trace()
+		preFrameDict[str(i)] = []
 	for i in list(range(0, len(newData))):
 		preFrameDict["songid"].append(df.index.tolist()[i])
-		preFrameDict["playlist"].append(["playlist"][i])
+		preFrameDict["playlist"].append(df["playlist"][i])
 		for j in list(range(0,components)):
-			preFrameDict[j+1].append(newData[i][j])
+			preFrameDict[str(j+1)].append(newData[i][j])
 	newDataFrame = pd.DataFrame(preFrameDict)	
 	return newDataFrame.set_index("songid")
 
-#graph3DAllNodes(["danceability", "instrumentalness", "speechiness"])
-#graph3DAllNodes(["popularity", "energy", "loudness"])
-#graph3DAllNodes(["acousticness", "liveness", "valence"])
+#graph3DAllNodes(df, ["danceability", "instrumentalness", "speechiness"])
+#graph3DAllNodes(df, ["popularity", "energy", "loudness"])
+#graph3DAllNodes(df, ["acousticness", "liveness", "valence"])
 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
 df = createDataFrame(allFeaturedPlaylistData, allFeatures)	
 pcadf = PCAOnDataFrame(df, allFeatures, 3)
-
-import pdb
-pdb.set_trace()
+graph3DAllNodes(pcadf, ['1','2','3'])
