@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import pandas as pd
 from sklearn import preprocessing
+from sklearn.decomposition import PCA
 
 #getSongs test
 access_header = gd.getAccessHeader()
@@ -61,9 +62,34 @@ def graph3DAllNodes(features):
 	else:
 		print("need 3 features to do 3D graph")
 
-graph3DAllNodes(["danceability", "instrumentalness", "speechiness"])
-graph3DAllNodes(["popularity", "energy", "loudness"])
-graph3DAllNodes(["acousticness", "liveness", "valence"])
-	
+def PCAOnDataFrame(df, features, components):
+	pca = PCA(n_components=components)
+	pca.fit(df[features])
+	newData = pca.transform(df[features])
+	preFrameDict = {}
+	preFrameDict["songid"] = []
+	preFrameDict["playlist"] = []
+	for i in list(range(1,components+1)):
+		preFrameDict[i] = []
+	import pdb
+	pdb.set_trace()
+	for i in list(range(0, len(newData))):
+		preFrameDict["songid"].append(df.index.tolist()[i])
+		preFrameDict["playlist"].append(["playlist"][i])
+		for j in list(range(0,components)):
+			preFrameDict[j+1].append(newData[i][j])
+	newDataFrame = pd.DataFrame(preFrameDict)	
+	return newDataFrame.set_index("songid")
+
+#graph3DAllNodes(["danceability", "instrumentalness", "speechiness"])
+#graph3DAllNodes(["popularity", "energy", "loudness"])
+#graph3DAllNodes(["acousticness", "liveness", "valence"])
+
+allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
+				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
+
+df = createDataFrame(allFeaturedPlaylistData, allFeatures)	
+pcadf = PCAOnDataFrame(df, allFeatures, 3)
+
 import pdb
 pdb.set_trace()
