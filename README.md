@@ -41,10 +41,33 @@ Based off this analysis, we can determine which playlist(s) most fit the profile
 * Dataframe set up 
 	* masterFrame['trackslist'][playlist index][song index][feature]
 	* Gives feature value for song in playlist.
+* Now that we have data week 2 will be fucking around with visualization and obtaining useful insights 
 
 ## Week 2 milestones
 * Visualization day
+	* Use pca to reduce to 3 dimensions
+	* ^Sidenote, could we use some sort of coloring scheme to 'increase' the amount of dimensions
 * Writing up inertia7 report
+
+### Data modelling - Dimension reduction (PCA)
+* Will need to talk with Kaisen about theory -Alex
+* Reduces music data to 3d (magic)
+
+
+### Drawing playlist/genre insights (Graphing)
+* In progress, do on your own and do individual presentations wed.
+* Use existing python code to use (Maybe Kaisen/Arthur write detailed explanations of methods? Will look at comments later to maybe do this part)
+
+
+### Genre prediction
+* In progress, maybe not this week
+	* Good for once we have insights/some intuition about how music clustering works
+
+
+## Future plans
+* Endgame, after this quarter
+* Create an api of sorts for artists?
+
 
 ## Driving questions
 * How do I define my current musical taste?
@@ -71,6 +94,8 @@ Based off this analysis, we can determine which playlist(s) most fit the profile
 
 ## Instructions
 * The first time you run the node server, make sure to run 'npm install' before doing anything
+* Will be updated and moved to top at the end of this project
+
 
 ## Architecture Overview
 
