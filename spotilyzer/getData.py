@@ -51,6 +51,7 @@ def getSongs(songList):
 	return data
 
 def getAllSongsInDB():
+	con = None
 	try:
 		con = connect(dbname=DBNAME, user=DBUSER, host='localhost', password=DBPASS)
 	except:
