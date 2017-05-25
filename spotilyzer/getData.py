@@ -31,7 +31,7 @@ def getSongs(songList):
 		print("Failed to create DB")
 	
 	access_header = getAccessHeader()
-		data = [] #using a list because we want to preserve order
+	data = [] #using a list because we want to preserve order
 	if con is not None:
 		con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 		for songID in songList:
