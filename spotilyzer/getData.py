@@ -50,6 +50,14 @@ def getSongs(songList):
 		print("No connection to database")
 	return data
 
+def getSongsInCategory(category):
+	access_header = getAccessHeader()
+	categoryIDs = __getCategories(access_header)
+	categoryPlaylistIDs = __getCategoryPlaylists(categoryIDs[category], access_header)
+	songs = __getPlaylistSongIDs(categoryPlaylistIDs[0], access_header)
+	data = getSongs(songs)
+	return data
+
 def getAllSongsInDB():
 	con = None
 	try:
@@ -151,6 +159,30 @@ def __querySong(sid, con):
 	sd["time_signature"] = songQuery[18]
 	cur.close()
 	return sd
+
+def __getCategories(access_header):
+	url = "https://api.spotify.com/v1/browse/categories"
+	resp = requests.get(url, headers=access_header).json()
+	categoryToID = {}
+	for i in resp["categories"]["items"]:
+		categoryToID[i["name"]] = i["id"]
+	return categoryToID
+
+def __getCategoryPlaylists(cid, access_header):
+	url = "https://api.spotify.com/v1/browse/categories/" + cid +"/playlists"
+	resp = requests.get(url, headers=access_header).json()
+	pids = []
+	for i in resp["playlists"]["items"]:
+		pids.append(i["id"])
+	return pids
+
+def __getPlaylistSongIDs(pid, access_header):
+	url = "https://api.spotify.com/v1/users/spotify/playlists/" + pid
+	resp = requests.get(url, headers=access_header).json()
+	songIDs = []
+	for i in resp["tracks"]["items"]:
+		songIDs.append(i["track"]["id"])
+	return songIDs
 
 def __getSongFeatures(sid, access_header):
 	url = "https://api.spotify.com/v1/audio-features/" + sid

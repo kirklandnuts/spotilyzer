@@ -20,20 +20,12 @@ COLORS = itertools.cycle(["#f4c242", "#61a323", "#161efc", "#cc37c7",
 			"#7200ff", "#4d8e82", "#c1fff3", "#7a89e8",
 			"#82689b", "b", "g", "r", "c", "m", "y", "w",])
 
-#getSongs test
-access_header = gd.getAccessHeader()
-
-featuredPlaylists = requests.get("https://api.spotify.com/v1/browse/featured-playlists", headers=access_header).json()["playlists"]["items"]
-allFeaturedPlaylistData = {}
-for i in featuredPlaylists:
-	tracks = requests.get(i["href"] + "/tracks", headers=access_header).json()["items"]
-	tracksList = []
-	for j in tracks:
-		tracksList.append(j["track"]["id"])
-	allFeaturedPlaylistData[i["id"]] = gd.getSongs(tracksList)
 
 #The goal of this analysis is to predict which playlist a given song belongs to using KNN
 #will use 3 features of the songs, randomly choosing danceability, instrumentalness, speechiness
+
+#add getPlayist(pid)
+#add getGenre("Genre")
 
 def createDataFrame(afpd, features):
 	preFrameDict = {}
@@ -138,6 +130,17 @@ def PCAOnDataFrame(df, features, components):
 		newDataFrame[str(i)] = pd.DataFrame(min_max_scaler.fit_transform(newDataFrame[str(i)]))
 	return newDataFrame.set_index("songid")
 
+#getSongs test
+access_header = gd.getAccessHeader()
+
+featuredPlaylists = requests.get("https://api.spotify.com/v1/browse/featured-playlists", headers=access_header).json()["playlists"]["items"]
+allFeaturedPlaylistData = {}
+for i in featuredPlaylists:
+	tracks = requests.get(i["href"] + "/tracks", headers=access_header).json()["items"]
+	tracksList = []
+	for j in tracks:
+		tracksList.append(j["track"]["id"])
+	allFeaturedPlaylistData[i["id"]] = gd.getSongs(tracksList)
 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
