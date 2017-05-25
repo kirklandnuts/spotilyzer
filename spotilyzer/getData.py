@@ -54,8 +54,16 @@ def getSongsInCategory(category):
 	access_header = getAccessHeader()
 	categoryIDs = __getCategories(access_header)
 	categoryPlaylistIDs = __getCategoryPlaylists(categoryIDs[category], access_header)
-	songs = __getPlaylistSongIDs(categoryPlaylistIDs[0], access_header)
-	data = getSongs(songs)
+	data = []
+	songIDCollection = []
+	for i in categoryPlaylistIDs:
+		songs = __getPlaylistSongIDs(i, access_header)
+		preData = getSongs(songs)
+		for j in preData:
+			if j["songid"] not in songIDCollection:
+				data.append(j)
+			else:
+				continue
 	return data
 
 def getAllSongsInDB():
