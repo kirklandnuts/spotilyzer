@@ -32,5 +32,13 @@ import timeit
 #print("Loaded all data for " + str(count) + " songs")
 #allSongs = gd.getAllSongsInDB()
 popSongs = gd.getSongsInCategory("Pop")
+moodSongs = gd.getSongsInCategory("Mood") 
+hipHopSongs = gd.getSongsInCategory("Hip Hop")
+latinoSongs = gd.getSongsInCategory("Latino")
+rockSongs = gd.getSongsInCategory("Rock")
+rnbSongs = gd.getSongsInCategory("RnB")
+focusSongs = gd.getSongsInCategory("Focus")
+workoutSongs = gd.getSongsInCategory("Workout")
+gamingSongs = gd.getSongsInCategory("Gaming")
 import pdb
 pdb.set_trace()
