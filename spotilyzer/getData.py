@@ -70,15 +70,12 @@ def getSongsInCategory(category):
 	if con is not None:
 		categoryIDs = __getCategories(access_header)
 		categoryPlaylistIDs = __getCategoryPlaylists(categoryIDs[category], access_header)
-		songIDCollection = []
+		allSongIDs = []
 		for i in categoryPlaylistIDs:
 			songs = __getPlaylistSongIDs(i, access_header)
-			preData = getSongs(songs)
-			for j in preData:
-				if j["songid"] not in songIDCollection:
-					data.append(j)
-				else:
-					continue
+			allSongIDs = allSongIDs + songs
+		uniqueSongIDs = set(allSongIDs)
+		data = getSongs(uniqueSongIDs)
 	else:
 		print("No connection to database")
 	return data
