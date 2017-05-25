@@ -31,9 +31,9 @@ def getSongs(songList):
 		print("Failed to create DB")
 	
 	access_header = getAccessHeader()
+		data = [] #using a list because we want to preserve order
 	if con is not None:
 		con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-		data = [] #using a list because we want to preserve order
 		for songID in songList:
 			if __dbHasSong(con, songID):
 				songData = __querySong(songID, con)
@@ -51,19 +51,36 @@ def getSongs(songList):
 	return data
 
 def getSongsInCategory(category):
-	access_header = getAccessHeader()
-	categoryIDs = __getCategories(access_header)
-	categoryPlaylistIDs = __getCategoryPlaylists(categoryIDs[category], access_header)
+	con = None
+	try:
+		con = connect(dbname=DBNAME, user=DBUSER, host='localhost', password=DBPASS)
+	except:
+		__createDB()
+		__createSongsTable()
+		__createArtistsTable()
+		__createAlbumsTable()
+
+	try:
+		con = connect(dbname=DBNAME, user=DBUSER, host='localhost', password=DBPASS)
+	except:
+		print("Failed to create DB")
+	
 	data = []
-	songIDCollection = []
-	for i in categoryPlaylistIDs:
-		songs = __getPlaylistSongIDs(i, access_header)
-		preData = getSongs(songs)
-		for j in preData:
-			if j["songid"] not in songIDCollection:
-				data.append(j)
-			else:
-				continue
+	access_header = getAccessHeader()
+	if con is not None:
+		categoryIDs = __getCategories(access_header)
+		categoryPlaylistIDs = __getCategoryPlaylists(categoryIDs[category], access_header)
+		songIDCollection = []
+		for i in categoryPlaylistIDs:
+			songs = __getPlaylistSongIDs(i, access_header)
+			preData = getSongs(songs)
+			for j in preData:
+				if j["songid"] not in songIDCollection:
+					data.append(j)
+				else:
+					continue
+	else:
+		print("No connection to database")
 	return data
 
 def getAllSongsInDB():
