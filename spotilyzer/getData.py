@@ -200,10 +200,11 @@ def __getCategoryPlaylists(cid, access_header):
 
 def __getPlaylistSongIDs(pid, access_header):
 	url = "https://api.spotify.com/v1/users/spotify/playlists/" + pid
-	resp = requests.get(url, headers=access_header).json()
+	resp = requests.get(url, headers=access_header)
 	songIDs = []
-	for i in resp["tracks"]["items"]:
-		songIDs.append(i["track"]["id"])
+	if resp.status_code == 200:
+		for i in resp.json()["tracks"]["items"]:
+			songIDs.append(i["track"]["id"])
 	return songIDs
 
 def __getSongFeatures(sid, access_header):
