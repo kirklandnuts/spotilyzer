@@ -52,10 +52,10 @@ def graph2DAllNodes(df, features):
 	else:
 		print("need 2 features to do 3D graph")
 
-def graph2DPlaylistsDifferentColors(df, features, playlists):
+def graph2DCategoriesDifferentColors(df, features, categories):
 	if len(features) == 2:
-		for i in list(range(0,len(playlists))):
-			pdf = df[df["playlist"] == playlists[i]]
+		for i in list(range(0,len(categories))):
+			pdf = df[df["category"] == categories[i]]
 			xs = pdf[features[0]]
 			ys = pdf[features[1]]
 			plt.scatter(xs, ys, color=next(COLORS), marker='o')
@@ -65,12 +65,12 @@ def graph2DPlaylistsDifferentColors(df, features, playlists):
 	else:
 		print("need 2 features to do 3D graph")
 
-def graph3DPlaylistsDifferentColors(df, features, playlists):
+def graph3DCategoriesDifferentColors(df, features, categories):
 	if len(features) == 3:
 		fig = plt.figure()
 		ax = fig.add_subplot(111, projection='3d')
-		for i in list(range(0,len(playlists))):
-			pdf = df[df["playlist"] == playlists[i]]
+		for i in list(range(0,len(categories))):
+			pdf = df[df["category"] == categories[i]]
 			xs = pdf[features[0]]
 			ys = pdf[features[1]]
 			zs = pdf[features[2]]
@@ -89,19 +89,15 @@ def PCAOnDataFrame(df, features, components):
 	newData = pca.transform(df[features])
 	preFrameDict = {}
 	preFrameDict["songid"] = []
-	preFrameDict["playlist"] = []
+	preFrameDict["category"] = []
 	for i in list(range(1,components+1)):
 		preFrameDict[str(i)] = []
 	for i in list(range(0, len(newData))):
 		preFrameDict["songid"].append(df.index.tolist()[i])
-		preFrameDict["playlist"].append(df["playlist"][i])
+		preFrameDict["category"].append(df["category"][i])
 		for j in list(range(0,components)):
 			preFrameDict[str(j+1)].append(newData[i][j])
 	newDataFrame = pd.DataFrame(preFrameDict)	
-	#normalize data
-	min_max_scaler = preprocessing.MinMaxScaler()
-	for i in list(range(1,components+1)):
-		newDataFrame[str(i)] = pd.DataFrame(min_max_scaler.fit_transform(newDataFrame[str(i)]))
 	return newDataFrame.set_index("songid")
 
 def createCategoriesDataFrame(categories, features):
@@ -111,27 +107,25 @@ def createCategoriesDataFrame(categories, features):
 	preFrameDict["songid"] = []
 	preFrameDict["category"] = []
 	for i in categories:
-		songs = gd.getSongsInCategories(i)
+		songs = gd.getSongsInCategory(i)
 		for j in songs:
 			preFrameDict["category"].append(i)
 			preFrameDict["songid"].append(j["songid"])
 			for q in features:
-				preFrameDict[q].append(j[p])
+				preFrameDict[q].append(j[q])
 	df = pd.DataFrame(preFrameDict)
-	min_max_scaler = preprocessing.MinMaxScaler()
-	for i in features:
-		df[i] = pd.DataFrame(min_max_scaler.fit_transform(df[i]))
+	import pdb
+	pdb.set_trace()
+	std_scale = preprocessing.StandardScaler().fit(df[features])
+	df_std = std_scale.transform(df[features])
 	return df.set_index("songid")
 
-jazzSongs = gd.getSongsInCategory("Jazz")
-
-categories = ["Jazz", "Hip Hop", "Rock", "RnB", "Party", "Chill", "Soul", "Mood", "Romance"]
+categories = ["Jazz", "Rock", "Chill", "Pop", "Mood"] 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
 cdf = createCategoriesDataFrame(categories, allFeatures)
-
-pcadf = PCAOnDataFrame(df, allFeatures, 2)
-graph2DPlaylistsDifferentColors(pcadf, ['1','2'], playlists[0:5])
-pcadf = PCAOnDataFrame(df, allFeatures, 3)
-graph3DPlaylistsDifferentColors(pcadf, ['1','2', '3'], playlists[0:5])
+pcadf = PCAOnDataFrame(cdf, allFeatures, 2)
+graph2DCategoriesDifferentColors(pcadf, ['1','2'], categories)
+pcadf = PCAOnDataFrame(cdf, allFeatures, 3)
+graph3DCategoriesDifferentColors(pcadf, ['1','2', '3'], categories)
