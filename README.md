@@ -6,11 +6,20 @@ Note: the top part will be a report on what this does and how.
 **To do (5/31/2017)**
 
 ## Introduction
-Use Spotify API to obtain song information (e.g. tempo, popularity, key, energy, danceability, etc.) and 
+Use Spotify API to obtain song information (e.g. tempo, popularity, key, energy, danceability, etc.)
+
+
+## Usage
+Dependencies in requirements.txt  
+(Not too sure of how much detail we need, could make slow walkthrough of installation of dependencies and getting data. Also could make a template for people to get started -Alex)
+
+
+## Spotify API
+Getting audio features, (basically getData.py)  
 
 
 ## Database 
-PostgreSQL database, api calls to get song data
+PostgreSQL database, api calls to get song data (also getData.py)
 
 
 ## Data Visualization 
@@ -24,7 +33,7 @@ KNN
 # Spring 2017 
 Reverse chronological log of project evolution. Missing week 3 (whoops). 
 ## Future plans
-All unrealized ideas to date that can segue into main project well
+All unrealized ideas to date that can segue into main project well (add everything we've missed)
    
 * Playlist generation from set of playlists
 * Build a 'musical profile'
@@ -40,7 +49,7 @@ All unrealized ideas to date that can segue into main project well
 
 
 ### Analysis/Graphing
-Have used PCA to plot data, see spotilyzer. Motivation of following programs
+Have used PCA to reduce dimensions, then plot data - see spotilyzer. Motivation of following programs:
 
 * graphFeaturedPlaylists.py  
 	* **Motivation:** First plotting code, shows that dataframe and plotting behaves as expected. Attempts to use PCA to make data understandable.
