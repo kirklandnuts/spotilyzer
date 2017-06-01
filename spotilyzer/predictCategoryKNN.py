@@ -12,6 +12,7 @@ from matplotlib import style
 import itertools
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
 
 style.use("ggplot")
 
@@ -122,15 +123,15 @@ def createCategoriesDataFrame(categories, features):
 	return df.set_index("songid")
 
 def predictCategoryKNN(sid, df, componentsList):
-	classifier = KNeighborsClassifier(n_neighbors=3, metric='minkowski')
-	train = df[componentsList]
-	target = df['category']
-	classifier.fit(train, target)
+	classifier = KNeighborsClassifier(n_neighbors=100, metric='minkowski')
+	train, test = train_test_split(df, test_size = 0.2)
+	target = train['category']
 	import pdb
 	pdb.set_trace()
-	return classifier.predict(df.loc[sid][componentsList])[0]
+	classifier.fit(train[componentsList], target)
+	return classifier.predict(test[componentsList])
 
-categories = ["Jazz", "Rock", "Chill", "Pop", "Mood"] 
+categories = ["Jazz", "Rock", "Chill"] 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
@@ -140,8 +141,6 @@ cdf = createCategoriesDataFrame(categories, allFeatures)
 pcadf = PCAOnDataFrame(cdf, allFeatures, 3)
 #graph3DCategoriesDifferentColors(pcadf, ['1','2', '3'], categories)
 sid = pcadf.index.tolist()[7]
-print("predicting song: " + sid)
-print(pcadf.loc[sid])
 predictCategoryKNN(sid, pcadf, ['1', '2', '3'])
 import pdb
 pdb.set_trace()

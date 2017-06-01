@@ -29,7 +29,7 @@ def getSongs(songList):
 		con = connect(dbname=DBNAME, user=DBUSER, host='localhost', password=DBPASS)
 	except:
 		print("Failed to create DB")
-	
+
 	access_header = getAccessHeader()
 	data = [] #using a list because we want to preserve order
 	if con is not None:
@@ -64,7 +64,7 @@ def getSongsInCategory(category):
 		con = connect(dbname=DBNAME, user=DBUSER, host='localhost', password=DBPASS)
 	except:
 		print("Failed to create DB")
-	
+
 	data = []
 	access_header = getAccessHeader()
 	if con is not None:
@@ -116,7 +116,7 @@ def getAllSongsInDB():
 			sd["time_signature"] = songQuery[18]
 			songs.append(sd)
 		cur.close()
-		
+
 	return songs
 
 def getArtists(artistList):
@@ -147,7 +147,7 @@ def __insertSong(songData, con):
 	sd['song_title'] = re.sub("'", "", sd['song_title'])
 	for i in sd.keys():
 		if sd[i] is None:
-			sd[i] = 0 
+			sd[i] = 0
 	values = "('%s', '{%s}', '%s', '%s', '{%s}', %d, %d, %f, %f, %d, %f, %d, %f, %f, %f, %f, %f, %f, %d)" % \
 				(sd["songid"], ','.join(sd["artistids"]), sd["albumid"], sd["song_title"], ','.join(sd["available_markets"]),sd["duration"], sd["popularity"], sd["danceability"], sd["energy"], sd["key"], sd["loudness"], sd["mode"], sd["speechiness"], sd["acousticness"], sd["instrumentalness"], sd["liveness"], sd["valence"], sd["tempo"], sd["time_signature"])
 	insertCommand = "INSERT INTO songs (songid, artistids, albumid, song_title, available_markets, duration, popularity, danceability, energy, key, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, time_signature) VALUES " + values
@@ -241,7 +241,7 @@ def __getTrack(sid, access_header):
 	track["available_markets"] = trackInfo["available_markets"]
 	track["popularity"] = trackInfo["popularity"]
 	return track
-	
+
 def __dbHasSong(con, sid):
 	con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 	cur = con.cursor()
