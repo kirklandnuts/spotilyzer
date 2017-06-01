@@ -11,6 +11,7 @@ from sklearn.decomposition import PCA
 from matplotlib import style
 import itertools
 import numpy as np
+from sklearn.neighbors import KNeighborsClassifier
 
 style.use("ggplot")
 
@@ -114,21 +115,33 @@ def createCategoriesDataFrame(categories, features):
 			for q in features:
 				preFrameDict[q].append(j[q])
 	df = pd.DataFrame(preFrameDict)
-	std_scale = preprocessing.StandardScaler().fit(df[features])
-	df_std = std_scale.transform(df[features])
+	#normalize data
+	for feature in features:
+		std_scale = preprocessing.StandardScaler().fit(df[feature])
+		df[feature] = pd.DataFrame(std_scale.transform(df[feature]))
+	return df.set_index("songid")
+
+def predictCategoryKNN(sid, df, componentsList):
+	classifier = KNeighborsClassifier(n_neighbors=3, metric='minkowski')
+	train = df[componentsList]
+	target = df['category']
+	classifier.fit(train, target)
 	import pdb
 	pdb.set_trace()
-	return df.set_index("songid")
+	return classifier.predict(df.loc[sid][componentsList])[0]
 
 categories = ["Jazz", "Rock", "Chill", "Pop", "Mood"] 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
 cdf = createCategoriesDataFrame(categories, allFeatures)
+#pcadf = PCAOnDataFrame(cdf, allFeatures, 2)
+#graph2DCategoriesDifferentColors(pcadf, ['1','2'], categories)
+pcadf = PCAOnDataFrame(cdf, allFeatures, 3)
+#graph3DCategoriesDifferentColors(pcadf, ['1','2', '3'], categories)
+sid = pcadf.index.tolist()[7]
+print("predicting song: " + sid)
+print(pcadf.loc[sid])
+predictCategoryKNN(sid, pcadf, ['1', '2', '3'])
 import pdb
 pdb.set_trace()
-
-pcadf = PCAOnDataFrame(cdf, allFeatures, 2)
-graph2DCategoriesDifferentColors(pcadf, ['1','2'], categories)
-pcadf = PCAOnDataFrame(cdf, allFeatures, 3)
-graph3DCategoriesDifferentColors(pcadf, ['1','2', '3'], categories)
