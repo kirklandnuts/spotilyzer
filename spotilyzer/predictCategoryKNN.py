@@ -126,10 +126,8 @@ def predictCategoryKNN(sid, df, componentsList):
 	classifier = KNeighborsClassifier(n_neighbors=100, metric='minkowski')
 	train, test = train_test_split(df, test_size = 0.2)
 	target = train['category']
-	import pdb
-	pdb.set_trace()
 	classifier.fit(train[componentsList], target)
-	return classifier.predict(test[componentsList])
+	return classifier.predict(test[componentsList]), classifier.score(test[componentsList], test['category'])
 
 categories = ["Jazz", "Rock", "Chill"] 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
@@ -141,6 +139,6 @@ cdf = createCategoriesDataFrame(categories, allFeatures)
 pcadf = PCAOnDataFrame(cdf, allFeatures, 3)
 #graph3DCategoriesDifferentColors(pcadf, ['1','2', '3'], categories)
 sid = pcadf.index.tolist()[7]
-predictCategoryKNN(sid, pcadf, ['1', '2', '3'])
+predictions, score = predictCategoryKNN(sid, pcadf, ['1', '2', '3'])
 import pdb
 pdb.set_trace()
