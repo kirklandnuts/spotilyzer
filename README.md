@@ -1,6 +1,87 @@
+
 # spotify-dashboard
 
-learn about your Spotify usage and behavior
+learn about your Spotify usage and behavior  
+Note: the top part will be a report on what this does and how.  
+**To do (5/31/2017)**
+
+## Introduction
+Use Spotify API to obtain song information (e.g. tempo, popularity, key, energy, danceability, etc.) and 
+
+
+## Database 
+PostgreSQL database, api calls to get song data
+
+
+## Data Visualization 
+PCA and ggplot
+
+
+## Machine learning
+KNN  
+
+
+# Spring 2017 
+Reverse chronological log of project evolution. Missing week 3 (whoops). 
+## Future plans
+All unrealized ideas to date that can segue into main project well
+   
+* Playlist generation from set of playlists
+* Build a 'musical profile'
+* Analyse song order in a playlist, define metrics/features for playlists 
+
+
+## Final update (milestones) - 5/31/2017
+
+### Getting data
+* Now able to obtain 15,000+ songs (Takes forever beware)
+* Categorized by song category (similar to spotify)
+* To do: Make SQL Dump of data (Kaizen)
+
+
+### Analysis/Graphing
+Have used PCA to plot data, see spotilyzer. Motivation of following programs
+
+* graphFeaturedPlaylists.py  
+	* **Motivation:** First plotting code, shows that dataframe and plotting behaves as expected. Attempts to use PCA to make data understandable.
+	* **Methods:** Implementation of pandas dataframe for song data. PCA on dataframe and reformatting (normalisation) of new data for creation of a PCA'd dataframe. Use of ggplot to visualize data, with methods for 2D and 3D graphing (cycles through different colors for different playlists).
+	* **Results:** Showed that we could begin visualizing data. Opened the door for general data-fuckery.
+	* **To do:** Reuse code on new stuff to fuck with data. Implementation of more robust coloring scheme.
+
+
+* relationAnalysis.py 
+	* **Motivation:** Graphing playlists via PCA on songs is ineffective. Trying to PCA where we only consider variation between playlists may yield better results
+	* **Methods:** Takes the mean of each feature in each playlist, and does PCA on that set. Then uses the same PCA and transforms the original dataframe. Returns the transformed dataframe.
+	* **Results:** Somewhat more clear clustering. Some playlists were still all over the place. Unsure whether from ambiguous data or ineffective PCA
+	* **To do:** More distinctions between playlists/categories in final graph, e.g. Nice sexy plot with little overlap between tight clusters
+
+* predictCategoryKNN.py 
+	* **Motivation:** Begin attempting proof of concept for music genre prediction via K-nearest neighbors(KNN). 
+	* **Methods:** Uses scikit-learn KNN module. Currently running with default settings and n_neighbors=500 on categories jazz, rock, chill. 
+	* **Results:** Can get ~70% accuracy with 3 categories, ~90% accuracy with 2. 
+	* **To do:** Use different modifiers to train algorithm better. Perhaps find categories with larger differences to see how it does. Goal: See how well KNN can do optimally, and under what modifiers/datasets. 
+
+
+## Week 2 milestones
+* Visualization day
+	* Use pca to reduce to 3 dimensions
+	* ^Sidenote, could we use some sort of coloring scheme to 'increase' the amount of dimensions
+* Writing up inertia7 report
+
+### Data modelling - Dimension reduction (PCA)
+* Will need to talk with Kaisen about theory -Alex
+* Reduces music data to 3d (magic)
+
+
+### Drawing playlist/genre insights (Graphing)
+* In progress, do on your own and do individual presentations wed.
+* Use existing python code to use (Maybe Kaisen/Arthur write detailed explanations of methods? Will look at comments later to maybe do this part)
+
+
+### Genre prediction
+* In progress, maybe not this week
+	* Good for once we have insights/some intuition about how music clustering works
+
 
 ## Week 1 milestones
 * Machine learning to build sound profiles for genres
@@ -43,33 +124,9 @@ Based off this analysis, we can determine which playlist(s) most fit the profile
 	* Gives feature value for song in playlist.
 * Now that we have data week 2 will be fucking around with visualization and obtaining useful insights 
 
-## Week 2 milestones
-* Visualization day
-	* Use pca to reduce to 3 dimensions
-	* ^Sidenote, could we use some sort of coloring scheme to 'increase' the amount of dimensions
-* Writing up inertia7 report
-
-### Data modelling - Dimension reduction (PCA)
-* Will need to talk with Kaisen about theory -Alex
-* Reduces music data to 3d (magic)
 
 
-### Drawing playlist/genre insights (Graphing)
-* In progress, do on your own and do individual presentations wed.
-* Use existing python code to use (Maybe Kaisen/Arthur write detailed explanations of methods? Will look at comments later to maybe do this part)
-
-
-### Genre prediction
-* In progress, maybe not this week
-	* Good for once we have insights/some intuition about how music clustering works
-
-
-## Future plans
-* Endgame, after this quarter
-* Create an api of sorts for artists?
-
-
-## Driving questions
+## Driving questions (Planning)
 * How do I define my current musical taste?
 * What's my next favorite band/artist?
 
@@ -91,17 +148,3 @@ Based off this analysis, we can determine which playlist(s) most fit the profile
 * Generate a playlist given a set of user profiles based off of analysis of individual musical taste (say for party)
 	* Take a facebook event and match with spotify profiles and generate playlist for event
 
-
-## Instructions
-* The first time you run the node server, make sure to run 'npm install' before doing anything
-* Will be updated and moved to top at the end of this project
-
-
-## Architecture Overview
-
-### Server
-The server uses a cookie to figure out if the user is logged in.  If login cookie is present, it sends the userhome page. Otherwise, sends a basic splash page with a login button.  When a user logs in, the server relays the Spotify authorization tokens to the client, then adds the login cookie.  Authorization tokens are not stored serverside, simply sent to the client(through an object that's stringified and sent as an Express template local).  In general, you probably want to avoid changing any of the current routes.  Adding new ones is fine, though.
-
-### Client
-Every page(so far, at least) follows the basic template in layout.jade.  Vue.js is library of choice for our frontend because it's light, readable, and easy to learn with great documentation.  Authorization tokens are stored in the credentials object and are saved/updated to HTML5 localstorage automatically.
-`
