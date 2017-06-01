@@ -123,11 +123,11 @@ def createCategoriesDataFrame(categories, features):
 	return df.set_index("songid")
 
 def predictCategoryKNN(sid, df, componentsList):
-	classifier = KNeighborsClassifier(n_neighbors=100, metric='minkowski')
+	classifier = KNeighborsClassifier(n_neighbors=500, metric='minkowski')
 	train, test = train_test_split(df, test_size = 0.2)
 	target = train['category']
 	classifier.fit(train[componentsList], target)
-	return classifier.predict(test[componentsList]), classifier.score(test[componentsList], test['category'])
+	return test, classifier.predict(test[componentsList]), classifier.score(test[componentsList], test['category'])
 
 categories = ["Jazz", "Rock", "Chill"] 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
@@ -139,6 +139,14 @@ cdf = createCategoriesDataFrame(categories, allFeatures)
 pcadf = PCAOnDataFrame(cdf, allFeatures, 3)
 #graph3DCategoriesDifferentColors(pcadf, ['1','2', '3'], categories)
 sid = pcadf.index.tolist()[7]
-predictions, score = predictCategoryKNN(sid, pcadf, ['1', '2', '3'])
+testdf, predictions, score = predictCategoryKNN(sid, pcadf, ['1', '2', '3'])
+correct = 0
+wrong = 0
+for i in list(range(0, len(predictions))):
+	if testdf['category'].tolist()[i] == predictions[i]:
+		correct += 1
+	else:
+		wrong += 1
+	#print(testdf['category'].tolist()[i] + "	" + predictions[i])
 import pdb
 pdb.set_trace()
