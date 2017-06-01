@@ -114,10 +114,10 @@ def createCategoriesDataFrame(categories, features):
 			for q in features:
 				preFrameDict[q].append(j[q])
 	df = pd.DataFrame(preFrameDict)
-	import pdb
-	pdb.set_trace()
 	std_scale = preprocessing.StandardScaler().fit(df[features])
 	df_std = std_scale.transform(df[features])
+	import pdb
+	pdb.set_trace()
 	return df.set_index("songid")
 
 categories = ["Jazz", "Rock", "Chill", "Pop", "Mood"] 
@@ -125,6 +125,9 @@ allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speec
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
 cdf = createCategoriesDataFrame(categories, allFeatures)
+import pdb
+pdb.set_trace()
+
 pcadf = PCAOnDataFrame(cdf, allFeatures, 2)
 graph2DCategoriesDifferentColors(pcadf, ['1','2'], categories)
 pcadf = PCAOnDataFrame(cdf, allFeatures, 3)
