@@ -11,6 +11,7 @@ from sklearn.decomposition import PCA
 from matplotlib import style
 import itertools
 import numpy as np
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 
@@ -129,6 +130,13 @@ def predictCategoryKNN(df, componentsList, k):
 	classifier.fit(train[componentsList], target)
 	return test, classifier.predict(test[componentsList]), classifier.score(test[componentsList], test['category'])
 
+def predictCategoryRF(df, componentsList):
+	clf = RandomForestClassifier(n_jobs=2)
+	train, test = train_test_split(df, test_size = 0.2)
+	target = train['category']
+	clf.fit(train[componentsList], target)
+	return test, clf.predict(test[componentsList]), clf.score(test[componentsList], test['category'])
+
 categories = ["Jazz", "Rock"] 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
@@ -150,9 +158,7 @@ pcadf = PCAOnDataFrame(cdf, allFeatures, 3)
 #	#print(testdf['category'].tolist()[i] + "	" + predictions[i])
 #Test different K values:
 scores = []
-for k in list(range(1,100)):
-	testdf, predictions, score = predictCategoryKNN(pcadf, ['1', '2', '3'], k)
-	scores.append(score)
-	print("k-value: " + str(k) + "	" +"score: " + str(score))
+testdf, predictions, score = predictCategoryRF(pcadf, ['1', '2', '3'])
+scores.append(score)
 import pdb
 pdb.set_trace()
