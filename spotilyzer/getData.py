@@ -97,7 +97,7 @@ def getAllSongsInDB():
 			sd = {}
 			sd["songid"] = songQuery[0]
 			sd["artistids"] = songQuery[1]
-			sd["arbumid"] = songQuery[2]
+			sd["albumid"] = songQuery[2]
 			sd["song_title"] = songQuery[3]
 			sd["available_markets"] = songQuery[4]
 			sd["duration"] = songQuery[5]
@@ -162,7 +162,7 @@ def __querySong(sid, con):
 	sd = {}
 	sd["songid"] = songQuery[0]
 	sd["artistids"] = songQuery[1]
-	sd["arbumid"] = songQuery[2]
+	sd["albumid"] = songQuery[2]
 	sd["song_title"] = songQuery[3]
 	sd["available_markets"] = songQuery[4]
 	sd["duration"] = songQuery[5]

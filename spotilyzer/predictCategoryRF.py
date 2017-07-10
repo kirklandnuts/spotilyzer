@@ -11,6 +11,8 @@ from sklearn.decomposition import PCA
 from matplotlib import style
 import itertools
 import numpy as np
+from sklearn.svm import SVC
+from sklearn.ensemble import AdaBoostClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
@@ -131,13 +133,20 @@ def predictCategoryKNN(df, componentsList, k):
 	return test, classifier.predict(test[componentsList]), classifier.score(test[componentsList], test['category'])
 
 def predictCategoryRF(df, componentsList):
-	clf = RandomForestClassifier(n_jobs=2)
+	clf = RandomForestClassifier(n_estimators=100)
 	train, test = train_test_split(df, test_size = 0.2)
 	target = train['category']
 	clf.fit(train[componentsList], target)
 	return test, clf.predict(test[componentsList]), clf.score(test[componentsList], test['category'])
 
-categories = ["Jazz", "Rock"] 
+def predictCategoryAdaboost(df, componentsList):
+	train, test = train_test_split(df, test_size = 0.2)
+	target = train['category']
+	clf=AdaBoostClassifier(algorithm='SAMME.R',base_estimator=SVC(probability=True,random_state=1),random_state=1,n_estimators=10)
+	clf.fit(train[componentsList], target)
+	return test, clf.predict(test[componentsList]), clf.score(test[componentsList], test['category'])
+
+categories = ["Jazz", "Rock", "Pop", "Hip Hop"] 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
@@ -159,6 +168,8 @@ pcadf = PCAOnDataFrame(cdf, allFeatures, 3)
 #Test different K values:
 scores = []
 testdf, predictions, score = predictCategoryRF(pcadf, ['1', '2', '3'])
+#testdf, predictions, score = predictCategoryAdaboost(pcadf, ['1', '2', '3'])
 scores.append(score)
+print(scores)
 import pdb
 pdb.set_trace()
