@@ -122,7 +122,7 @@ def graph3DPlotlyCategoriesDifferentColors(df, features, categories):
 		    )
 		)
 		fig = go.Figure(data=data, layout=layout)
-		py.plot(fig, filename='asdf')
+		py.plot(fig, filename='3D-features-spotify-3cats')
 	else:
 		print("need 3 features to do 3D graph")
 

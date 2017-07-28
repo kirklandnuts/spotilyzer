@@ -40,11 +40,14 @@ def getSongs(songList):
 				data.append(songData) #append the feature dctionary for the song
 			else:
 				songFeatures = __getSongFeatures(songID, access_header)
-				#songAnalysis = getSongAnalysis(songID, access_header)
-				trackInfo = __getTrack(songID, access_header)
-				songData = {**trackInfo, **songFeatures}
-				__insertSong(songData, con)
-				data.append(songData)
+				if songFeatures is not None:
+					#songAnalysis = getSongAnalysis(songID, access_header)
+					trackInfo = __getTrack(songID, access_header)
+					songData = {**trackInfo, **songFeatures}
+					__insertSong(songData, con)
+					data.append(songData)
+				else:
+					continue
 			print("Got data for song: " + songData["song_title"] + " : " + songData["songid"])
 	else:
 		print("No connection to database")
@@ -211,15 +214,19 @@ def __getSongFeatures(sid, access_header):
 	url = "https://api.spotify.com/v1/audio-features/" + sid
 	resp = requests.get(url, headers=access_header)
 	songFeatures = resp.json()
-	del songFeatures["type"]
-	del songFeatures["uri"]
-	del songFeatures["track_href"]
-	del songFeatures["analysis_url"]
-	songFeatures["duration"] = songFeatures["duration_ms"]
-	del songFeatures["duration_ms"]
-	songFeatures["songid"] = songFeatures["id"]
-	del songFeatures["id"]
-	return songFeatures
+	try:
+		del songFeatures["type"]
+		del songFeatures["uri"]
+		del songFeatures["track_href"]
+		del songFeatures["analysis_url"]
+		del songFeatures["duration_ms"]
+		del songFeatures["id"]
+		songFeatures["duration"] = songFeatures["duration_ms"]
+		songFeatures["songid"] = songFeatures["id"]
+		return songFeatures
+	except:
+		print("nothing to delete")
+		return None
 
 def __getSongAnalysis(sid, access_header):
 	url = "https://api.spotify.com/v1/audio-analysis/" + sid
