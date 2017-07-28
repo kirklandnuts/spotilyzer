@@ -90,8 +90,6 @@ def graph3DCategoriesDifferentColors(df, features, categories):
 
 def graph3DPlotlyCategoriesDifferentColors(df, features, categories):
 	if len(features) == 3:
-		import pdb
-		pdb.set_trace()
 		traces = []
 		for i in list(range(0,len(categories))):
 			pdf = df[df["category"] == categories[i]]
@@ -102,6 +100,7 @@ def graph3DPlotlyCategoriesDifferentColors(df, features, categories):
 			    x=x,
 			    y=y,
 			    z=z,
+				name=categories[i],
 			    mode='markers',
 			    marker=dict(
 			        size=12,
@@ -170,7 +169,7 @@ def predictCategoryKNN(df, componentsList, k):
 	classifier.fit(train[componentsList], target)
 	return test, classifier.predict(test[componentsList]), classifier.score(test[componentsList], test['category'])
 
-categories = ["Jazz", "Rock", "Hip Hop"] 
+categories = ["Jazz", "Rock"] 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
