@@ -5,6 +5,9 @@
 # Session Data files
 .RData
 
+# Node modules(use npm install)
+node_modules/
+
 # Example code in package build process
 *-Ex.R
 
@@ -31,3 +34,9 @@ vignettes/*.pdf
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
+
+#ignore the OS X DS_Store file
+.DS_Store
+
+#ignore virtualenv VM
+spotifyDashboardVM

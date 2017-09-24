@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  #app
+    p Welcome, {{ user.display_name }}
+    button(@click="getInfo()") Get user info
+    button(@click="getPlaylists()") View playlists
+    button(@click="getSavedTracks()") View Saved Tracks
+    #playlists(v-show="playlists.length > 0")
+      p playlists
+      svg#chart(v-bind:title="makePlaylistChart()")
+      ul
+        li(v-for="playlist in playlists")
+          a(:href="playlist.href") {{ playlist.name }}
+    #savedTracks(v-show="savedTracks.length > 0")
+      p saved Tracks
+      ul
+        li(v-for="track in savedTracks")
+          a(:href="track.track.href") {{ track.track.name }}
+    form(action="/logout" method="get")
+      input(@click="logout()" type="submit" value="Log out")
+
+  script(src="https://d3js.org/d3.v4.min.js")
+  script(src="/javascripts/charts.js")
+  script(src="/javascripts/home.js")

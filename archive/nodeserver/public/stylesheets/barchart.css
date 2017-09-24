@@ -1,0 +1,11 @@
+#chart rect {
+  fill: #3B4247;
+}
+
+#chart g:hover rect {
+  fill: #A80836;
+}
+
+#chart text {
+  fill: #40AFFF;
+}
