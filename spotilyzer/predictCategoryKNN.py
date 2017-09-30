@@ -122,7 +122,6 @@ def graph3DPlotlyCategoriesDifferentColors(df, features, categories):
 		    )
 		)
 		fig = go.Figure(data=data, layout=layout)
-		py.plot(fig, filename='3D-features-spotify-3pca')
 	else:
 		print("need 3 features to do 3D graph")
 
@@ -157,7 +156,6 @@ def graph2DPlotlyCategoriesDifferentColors(df, features, categories):
 		    )
 		)
 		fig = go.Figure(data=data, layout=layout)
-		py.plot(fig, filename='2D-features-spotify-3pca')
 	else:
 		print("need 2 features to do 2D graph")
 

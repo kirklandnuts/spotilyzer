@@ -122,7 +122,6 @@ def graph3DPlotlyCategoriesDifferentColors(df, features, categories):
 		    )
 		)
 		fig = go.Figure(data=data, layout=layout)
-		py.plot(fig, filename='3D-features-spotify-3pca')
 	else:
 		print("need 3 features to do 3D graph")
 
@@ -157,7 +156,6 @@ def graph2DPlotlyCategoriesDifferentColors(df, features, categories):
 		    )
 		)
 		fig = go.Figure(data=data, layout=layout)
-		py.plot(fig, filename='2D-features-spotify-3pca')
 	else:
 		print("need 2 features to do 2D graph")
 
@@ -205,7 +203,7 @@ def predictCategoryKNN(df, componentsList, k):
 	classifier.fit(train[componentsList], target)
 	return test, classifier.predict(test[componentsList]), classifier.score(test[componentsList], test['category'])
 
-categories = ["Jazz", "Rock"] 
+categories = ["Jazz", "Rock", "Hip-Hop"] 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
@@ -215,8 +213,8 @@ cdf = createCategoriesDataFrame(categories, allFeatures)
 
 pcadf = PCAOnDataFrame(cdf, allFeatures, 2)
 graph2DPlotlyCategoriesDifferentColors(pcadf, ['1','2'], categories)
-#pcadf = PCAOnDataFrame(cdf, allFeatures, 3)
-#graph3DPlotlyCategoriesDifferentColors(pcadf, ['1','2', '3'], categories)
+pcadf = PCAOnDataFrame(cdf, allFeatures, 3)
+graph3DPlotlyCategoriesDifferentColors(pcadf, ['1','2', '3'], categories)
 #testdf, predictions, score = predictCategoryKNN(sid, cdf, allFeatures)
 #testdf, predictions, score = predictCategoryKNN(sid, pcadf, ['1', '2', '3'])
 #correct = 0
