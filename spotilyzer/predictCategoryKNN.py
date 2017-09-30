@@ -196,10 +196,9 @@ def createCategoriesDataFrame(categories, features):
 				preFrameDict[q].append(j[q])
 	df = pd.DataFrame(preFrameDict)
 	#normalize data
-	import pdb 
-	pdb.set_trace()
 	train, test = train_test_split(df, test_size = 0.2, random_state=7)
 	for feature in features:
+<<<<<<< HEAD
 		std_scale = preprocessing.StandardScaler().fit(train[feature])
 		training_set = std_scale.fit_transform(train[feature])
 		test_set =  std_scale.transform(test[feature])
@@ -207,6 +206,12 @@ def createCategoriesDataFrame(categories, features):
 	pdb.set_trace()
 	test_set = pd.DataFrame(test_set, names = features)
 	training_set = pd.DataFrame(training_set, names = features)
+=======
+		training_scale = preprocessing.StandardScaler().fit(train[features])
+		training_set[feature] = pd.DataFrame(training_scale.transform(training_set[feature]))
+		test_scale =  preprocessing.StandardScaler().fit(test[features])
+		test_set[feature] = pd.DataFrame(test_scale.transform(test[features]))
+>>>>>>> 2aeefd767d517bb387d5bc69ff571da4e6da93d0
 	return df.set_index("songid"), training_set, test_set
 
 print(pd.isnull(df))

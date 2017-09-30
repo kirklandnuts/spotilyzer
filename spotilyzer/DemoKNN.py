@@ -159,29 +159,16 @@ def graph2DPlotlyCategoriesDifferentColors(df, features, categories):
 	else:
 		print("need 2 features to do 2D graph")
 
-def PCAOnDataFrame(df, features, components):
-	pca = PCA(n_components=components)
-	import pdb
-	pdb.set_trace()	
-	#std_scale = preprocessing.StandardScaler().fit(train[features])
-	#train = std_scale.fit_transform(train[features])
-	#training_set = pd.DataFrame(train, columns = features)
-	#test =  std_scale.transform(test[features])
-	#test_set = pd.DataFrame(test, columns = features)
-	pca.fit(df[features])
-	newData = pca.transform(df[features])
-	preFrameDict = {}
-	preFrameDict["songid"] = []
-	preFrameDict["category"] = []
-	for i in list(range(1,components+1)):
-		preFrameDict[str(i)] = []
-	for i in list(range(0, len(newData))):
-		preFrameDict["songid"].append(df.index.tolist()[i])
-		preFrameDict["category"].append(df["category"][i])
-		for j in list(range(0,components)):
-			preFrameDict[str(j+1)].append(newData[i][j])
-	newDataFrame = pd.DataFrame(preFrameDict)	
-	return newDataFrame.set_index("songid")
+def PCAOnDataFrame(training_set, test_set, features, components):
+	pca = PCA(n_components=components, random_state=7)
+	pca.fit(training_set[features])
+	training_set_pca = pca.fit_transform(training_set[features])
+	components_col = [x for x in range(0, components)]
+	training_set = pd.DataFrame(training_set_pca, columns = components_col)
+
+	test_set_pca = pca.transform(test_set[features])
+	test_set = pd.DataFrame(test_set_pca, columns = components_col)
+	return training_set, test_set, components_col
 
 def createCategoriesDataFrame(categories, features):
 	preFrameDict = {}
@@ -199,48 +186,51 @@ def createCategoriesDataFrame(categories, features):
 	df = pd.DataFrame(preFrameDict)
 	#normalize data
 	train, test = train_test_split(df, test_size = 0.2, random_state=7)
-	std_scale = preprocessing.StandardScaler().fit(train[features])
-	train = std_scale.fit_transform(train[features])
-	training_set = pd.DataFrame(train, columns = features)
-	test =  std_scale.transform(test[features])
-	test_set = pd.DataFrame(test, columns = features)
-	return df.set_index("songid"), training_set, test_set
-
-def predictCategoryKNN(df, componentsList, k):
-	classifier = KNeighborsClassifier(n_neighbors=k, metric='minkowski')
-	train, test = train_test_split(df, test_size = 0.2, random_state=7)
+	
+	std_scale = preprocessing.MinMaxScaler().fit(train[features])
+	train_trans = std_scale.fit_transform(train[features])
+	training_set = pd.DataFrame(train_trans, columns = features)
 	target = train['category']
-	classifier.fit(train[componentsList], target)
-	return test, classifier.predict(test[componentsList]), test['category'], classifier.score(test[componentsList], test['category'])
+	test_trans =  std_scale.transform(test[features])
+	test_set = pd.DataFrame(test_trans, columns = features)
+	test_targert = test['category']
+	return df.set_index("songid"), training_set, test_set, target, test_targert
+
+def predictCategoryKNN(training_set, test_set,  target, test_targert, componentsList, k):
+	classifier = KNeighborsClassifier(n_neighbors=k, metric='minkowski')
+	classifier.fit(training_set[componentsList], target)
+	return test_set, classifier.predict(test_set[componentsList]), test_targert, classifier.score(test_set[componentsList], test_targert)
 
 categories = ["Jazz", "Rock"] 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
-cdf = createCategoriesDataFrame(categories, allFeatures)
+cdf, training_set_trans, test_set_trans, target, test_targert = createCategoriesDataFrame(categories, allFeatures)
+
+training_set, test_set, components_col = PCAOnDataFrame(training_set_trans, test_set_trans, allFeatures, 2)
+
 #graph2DPlotlyCategoriesDifferentColors(cdf, ['danceability','acousticness'], categories)
 #graph3DPlotlyCategoriesDifferentColors(cdf, ['danceability','acousticness', 'valence'], categories)
 
-pcadf = PCAOnDataFrame(cdf, allFeatures, 2)
-graph2DPlotlyCategoriesDifferentColors(pcadf, ['1','2'], categories)
-pcadf = PCAOnDataFrame(cdf, allFeatures, 3)
-graph3DPlotlyCategoriesDifferentColors(pcadf, ['1','2', '3'], categories)
+#graph2DPlotlyCategoriesDifferentColors(training_set, ['1','2'], categories)
+#pcadf, training_set, test_set = PCAOnDataFrame(training_set_trans, test_set_trans, allFeatures, 3)
+#graph3DPlotlyCategoriesDifferentColors(pcadf, ['1','2', '3'], categories)
 
 #save to csv
-pcadf.to_csv('demo.csv')
-
-#using demo csv
-pcadf = pd.read_csv("demo.csv")
-#Test different K values:
-scores = []
-for k in list(range(1,100)):
-	testdf, predictions, score = predictCategoryKNN(pcadf, ['1', '2', '3'], k)
-	scores.append(score)
-bestK = scores.index(max(score)) 
-print(bestK)
+#pcadf.to_csv('demo.csv')
+#
+##using demo csv
+#pcadf = pd.read_csv("demo.csv")
+##Test different K values:
+#scores = []
+#for k in list(range(1,100)):
+	#testdf, predictions, score = predictCategoryKNN(training_set, ['1', '2', '3'], k)
+	#scores.append(score)
+#bestK = scores.index(max(score)) 
+#print(bestK)
 
 #testing KNN on pcadf
-testdf, predictions, correctValues ,score = predictCategoryKNN(pcadf, ['1', '2', '3'], bestK)
+testdf, predictions, correctValues, score = predictCategoryKNN(training_set, test_set, target, test_targert, components_col, 83)
 
 print(pd.crosstab(predictions, correctValues,
                   rownames=['Predicted Values'],
