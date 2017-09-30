@@ -216,31 +216,27 @@ graph2DPlotlyCategoriesDifferentColors(pcadf, ['1','2'], categories)
 pcadf = PCAOnDataFrame(cdf, allFeatures, 3)
 graph3DPlotlyCategoriesDifferentColors(pcadf, ['1','2', '3'], categories)
 
-#testing KNN on pcadf
-testdf, predictions, correctValues ,score = predictCategoryKNN(pcadf, ['1', '2', '3'], 83)
+#save to csv
+pcadf.to_csv('demo.csv')
 
+import pdb
+pdb.set_trace()
+
+#using demo csv
+pcadf = pd.read_csv("demo.csv")
+#Test different K values:
+scores = []
+for k in list(range(1,100)):
+	testdf, predictions, score = predictCategoryKNN(pcadf, ['1', '2', '3'], k)
+	scores.append(score)
+bestK = scores.index(max(score)) 
+print(bestK)
+
+#testing KNN on pcadf
+testdf, predictions, correctValues ,score = predictCategoryKNN(pcadf, ['1', '2', '3'], bestK)
 
 print(pd.crosstab(predictions, correctValues,
                   rownames=['Predicted Values'],
                   colnames=['Actual Values']))
 
 print("Score: " + str(score))
-
-import pdb
-pdb.set_trace()
-#correct = 0
-#wrong = 0
-#for i in list(range(0, len(predictions))):
-#	if testdf['category'].tolist()[i] == predictions[i]:
-#		correct += 1
-#	else:
-#		wrong += 1
-#	#print(testdf['category'].tolist()[i] + "	" + predictions[i])
-#Test different K values:
-#scores = []
-#for k in list(range(1,100)):
-#	testdf, predictions, score = predictCategoryKNN(pcadf, ['1', '2', '3'], k)
-#	scores.append(score)
-#	print("k-value: " + str(k) + "	" +"score: " + str(score))
-#import pdb
-#pdb.set_trace()
