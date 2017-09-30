@@ -48,7 +48,7 @@ def getSongs(songList):
 					data.append(songData)
 				else:
 					continue
-			print("Got data for song: " + songData["song_title"] + " : " + songData["songid"])
+			print("Got data for song: " + songData["songid"] + " : " + songData["song_title"])
 	else:
 		print("No connection to database")
 	return data
