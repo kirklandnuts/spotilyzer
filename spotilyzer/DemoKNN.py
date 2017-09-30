@@ -161,6 +161,13 @@ def graph2DPlotlyCategoriesDifferentColors(df, features, categories):
 
 def PCAOnDataFrame(df, features, components):
 	pca = PCA(n_components=components)
+	import pdb
+	pdb.set_trace()	
+	#std_scale = preprocessing.StandardScaler().fit(train[features])
+	#train = std_scale.fit_transform(train[features])
+	#training_set = pd.DataFrame(train, columns = features)
+	#test =  std_scale.transform(test[features])
+	#test_set = pd.DataFrame(test, columns = features)
 	pca.fit(df[features])
 	newData = pca.transform(df[features])
 	preFrameDict = {}
@@ -191,10 +198,13 @@ def createCategoriesDataFrame(categories, features):
 				preFrameDict[q].append(j[q])
 	df = pd.DataFrame(preFrameDict)
 	#normalize data
-	for feature in features:
-		std_scale = preprocessing.StandardScaler().fit(df[feature])
-		df[feature] = pd.DataFrame(std_scale.transform(df[feature]))
-	return df.set_index("songid")
+	train, test = train_test_split(df, test_size = 0.2, random_state=7)
+	std_scale = preprocessing.StandardScaler().fit(train[features])
+	train = std_scale.fit_transform(train[features])
+	training_set = pd.DataFrame(train, columns = features)
+	test =  std_scale.transform(test[features])
+	test_set = pd.DataFrame(test, columns = features)
+	return df.set_index("songid"), training_set, test_set
 
 def predictCategoryKNN(df, componentsList, k):
 	classifier = KNeighborsClassifier(n_neighbors=k, metric='minkowski')
@@ -218,9 +228,6 @@ graph3DPlotlyCategoriesDifferentColors(pcadf, ['1','2', '3'], categories)
 
 #save to csv
 pcadf.to_csv('demo.csv')
-
-import pdb
-pdb.set_trace()
 
 #using demo csv
 pcadf = pd.read_csv("demo.csv")

@@ -200,12 +200,16 @@ def createCategoriesDataFrame(categories, features):
 	pdb.set_trace()
 	train, test = train_test_split(df, test_size = 0.2, random_state=7)
 	for feature in features:
-		std_scale = preprocessing.StandardScaler().fit(train[features])
-		training_set = std_scale.fit_transform(train[features])
-		training_set[feature] = pd.DataFrame(std_scale.transform(training_set[feature]))
-		test_set =  std_scale.transform(test[features])
-		test_set[feature] = pd.DataFrame(std_scale.transform(test[features]))
+		std_scale = preprocessing.StandardScaler().fit(train[feature])
+		training_set = std_scale.fit_transform(train[feature])
+		test_set =  std_scale.transform(test[feature])
+	print(training_set.shape)
+	pdb.set_trace()
+	test_set = pd.DataFrame(test_set, names = features)
+	training_set = pd.DataFrame(training_set, names = features)
 	return df.set_index("songid"), training_set, test_set
+
+print(pd.isnull(df))
 
 def predictCategoryKNN(training_set, test_set, componentsList, k):
 	classifier = KNeighborsClassifier(n_neighbors=k, metric='minkowski')
