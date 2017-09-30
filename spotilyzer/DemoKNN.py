@@ -198,12 +198,12 @@ def createCategoriesDataFrame(categories, features):
 
 def predictCategoryKNN(df, componentsList, k):
 	classifier = KNeighborsClassifier(n_neighbors=k, metric='minkowski')
-	train, test = train_test_split(df, test_size = 0.2)
+	train, test = train_test_split(df, test_size = 0.2, random_state=7)
 	target = train['category']
 	classifier.fit(train[componentsList], target)
-	return test, classifier.predict(test[componentsList]), classifier.score(test[componentsList], test['category'])
+	return test, classifier.predict(test[componentsList]), test['category'], classifier.score(test[componentsList], test['category'])
 
-categories = ["Jazz", "Rock", "Hip-Hop"] 
+categories = ["Jazz", "Rock"] 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
@@ -215,8 +215,19 @@ pcadf = PCAOnDataFrame(cdf, allFeatures, 2)
 graph2DPlotlyCategoriesDifferentColors(pcadf, ['1','2'], categories)
 pcadf = PCAOnDataFrame(cdf, allFeatures, 3)
 graph3DPlotlyCategoriesDifferentColors(pcadf, ['1','2', '3'], categories)
-#testdf, predictions, score = predictCategoryKNN(sid, cdf, allFeatures)
-#testdf, predictions, score = predictCategoryKNN(sid, pcadf, ['1', '2', '3'])
+
+#testing KNN on pcadf
+testdf, predictions, correctValues ,score = predictCategoryKNN(pcadf, ['1', '2', '3'], 83)
+
+
+print(pd.crosstab(predictions, correctValues,
+                  rownames=['Predicted Values'],
+                  colnames=['Actual Values']))
+
+print("Score: " + str(score))
+
+import pdb
+pdb.set_trace()
 #correct = 0
 #wrong = 0
 #for i in list(range(0, len(predictions))):
