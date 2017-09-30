@@ -159,42 +159,88 @@ def graph2DPlotlyCategoriesDifferentColors(df, features, categories):
 	else:
 		print("need 2 features to do 2D graph")
 
-def PCAOnDataFrame(df, features, components):
+def PCAOnDataFrame(training_set, test_set, features, components):
 	pca = PCA(n_components=components)
-	pca.fit(df[features])
-	newData = pca.transform(df[features])
-	preFrameDict = {}
-	preFrameDict["songid"] = []
-	preFrameDict["category"] = []
-	for i in list(range(1,components+1)):
-		preFrameDict[str(i)] = []
-	for i in list(range(0, len(newData))):
-		preFrameDict["songid"].append(df.index.tolist()[i])
-		preFrameDict["category"].append(df["category"][i])
-		for j in list(range(0,components)):
-			preFrameDict[str(j+1)].append(newData[i][j])
-	newDataFrame = pd.DataFrame(preFrameDict)	
-	return newDataFrame.set_index("songid")
+	pca.fit(training_set[features])
+	training_set_pca = pca.transform(training_set[features])
+	test_set_pca = pca.fit_transform(test_set[features])
+	pdb.set_trace()
+	def populateDataFrame(df):
+		preFrameDict = {}
+		preFrameDict["songid"] = []
+		preFrameDict["category"] = []
+		for i in list(range(1,components+1)):
+		    preFrameDict[str(i)] = []
+		for i in list(range(0, len(df))):
+		    preFrameDict["songid"].append(df.index.tolist()[i])
+		    preFrameDict["category"].append(df["category"][i])
+		    for j in list(range(0,components)):
+		        preFrameDict[str(j+1)].append(df[i][j])
+		newDataFrame = pd.DataFrame(preFrameDict)
+		return newDataFrame
+	training_set = populateDataFrame(training_set_pca)
+	test_set = populateDataFrame(test_set_pca)
+	return newDataFrame.set_index("songid"), training_set, test_set
 
 def createCategoriesDataFrame(categories, features):
-	preFrameDict = {}
-	for i in features:
-		preFrameDict[i] = []
-	preFrameDict["songid"] = []
-	preFrameDict["category"] = []
-	for i in categories:
-		songs = gd.getSongsInCategory(i)
-		for j in songs:
-			preFrameDict["category"].append(i)
-			preFrameDict["songid"].append(j["songid"])
-			for q in features:
-				preFrameDict[q].append(j[q])
-	df = pd.DataFrame(preFrameDict)
-	#normalize data
-	for feature in features:
-		std_scale = preprocessing.StandardScaler().fit(df[feature])
-		df[feature] = pd.DataFrame(std_scale.transform(df[feature]))
-	return df.set_index("songid")
+    preFrameDict = {}
+    for i in features:
+        preFrameDict[i] = []
+    preFrameDict["songid"] = []
+    preFrameDict["category"] = []
+    for i in categories:
+        songs = gd.getSongsInCategory(i)
+        for j in songs:
+            preFrameDict["category"].append(i)
+            preFrameDict["songid"].append(j["songid"])
+            for q in features:
+                preFrameDict[q].append(j[q])
+    df = pd.DataFrame(preFrameDict)
+    #normalize data
+    train, test = train_test_split(df, test_size = 0.2, random_state=7)
+    for feature in features:
+        training_scale = preprocessing.StandardScaler().fit(train[feature])
+        train[feature] = pd.DataFrame(training_scale.transform(train[feature]))
+        test_scale =  preprocessing.StandardScaler().fit(test[feature])
+        test[feature] = pd.DataFrame(test_scale.transform(test[feature]))
+    return df.set_index("songid"), train, test
+
+##def PCAOnDataFrame(df, features, components):
+#	pca = PCA(n_components=components)
+#	pca.fit(df[features])
+#	newData = pca.transform(df[features])
+#	preFrameDict = {}
+#	preFrameDict["songid"] = []
+#	preFrameDict["category"] = []
+#	for i in list(range(1,components+1)):
+#		preFrameDict[str(i)] = []
+#	for i in list(range(0, len(newData))):
+#		preFrameDict["songid"].append(df.index.tolist()[i])
+#		preFrameDict["category"].append(df["category"][i])
+#		for j in list(range(0,components)):
+#			preFrameDict[str(j+1)].append(newData[i][j])
+#	newDataFrame = pd.DataFrame(preFrameDict)	
+#	return newDataFrame.set_index("songid")
+
+#def createCategoriesDataFrame(categories, features):
+#	preFrameDict = {}
+#	for i in features:
+#		preFrameDict[i] = []
+#	preFrameDict["songid"] = []
+#	preFrameDict["category"] = []
+#	for i in categories:
+#		songs = gd.getSongsInCategory(i)
+#		for j in songs:
+#			preFrameDict["category"].append(i)
+#			preFrameDict["songid"].append(j["songid"])
+#			for q in features:
+#				preFrameDict[q].append(j[q])
+#	df = pd.DataFrame(preFrameDict)
+#	#normalize data
+#	for feature in features:
+#		std_scale = preprocessing.StandardScaler().fit(df[feature])
+#		df[feature] = pd.DataFrame(std_scale.transform(df[feature]))
+#	return df.set_index("songid")
 
 def predictCategoryKNN(df, componentsList, k):
 	classifier = KNeighborsClassifier(n_neighbors=k, metric='minkowski')
@@ -203,17 +249,19 @@ def predictCategoryKNN(df, componentsList, k):
 	classifier.fit(train[componentsList], target)
 	return test, classifier.predict(test[componentsList]), test['category'], classifier.score(test[componentsList], test['category'])
 
+
 categories = ["Jazz", "Rock"] 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
-cdf = createCategoriesDataFrame(categories, allFeatures)
+cdf, training_set_trans, test_set_trans = createCategoriesDataFrame(categories, allFeatures)
+pcadf, training_set, test_set = PCAOnDataFrame(training_set_trans, test_set_trans, allFeatures, 2)
+
 #graph2DPlotlyCategoriesDifferentColors(cdf, ['danceability','acousticness'], categories)
 #graph3DPlotlyCategoriesDifferentColors(cdf, ['danceability','acousticness', 'valence'], categories)
 
-pcadf = PCAOnDataFrame(cdf, allFeatures, 2)
 graph2DPlotlyCategoriesDifferentColors(pcadf, ['1','2'], categories)
-pcadf = PCAOnDataFrame(cdf, allFeatures, 3)
+pcadf, training_set, test_set = PCAOnDataFrame(training_set_trans, test_set_trans, allFeatures, 3)
 graph3DPlotlyCategoriesDifferentColors(pcadf, ['1','2', '3'], categories)
 
 #save to csv

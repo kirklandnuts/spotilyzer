@@ -196,15 +196,12 @@ def createCategoriesDataFrame(categories, features):
 				preFrameDict[q].append(j[q])
 	df = pd.DataFrame(preFrameDict)
 	#normalize data
-	import pdb 
-	pdb.set_trace()
 	train, test = train_test_split(df, test_size = 0.2, random_state=7)
 	for feature in features:
-		std_scale = preprocessing.StandardScaler().fit(train[features])
-		training_set = std_scale.fit_transform(train[features])
-		training_set[feature] = pd.DataFrame(std_scale.transform(training_set[feature]))
-		test_set =  std_scale.transform(test[features])
-		test_set[feature] = pd.DataFrame(std_scale.transform(test[features]))
+		training_scale = preprocessing.StandardScaler().fit(train[features])
+		training_set[feature] = pd.DataFrame(training_scale.transform(training_set[feature]))
+		test_scale =  preprocessing.StandardScaler().fit(test[features])
+		test_set[feature] = pd.DataFrame(test_scale.transform(test[features]))
 	return df.set_index("songid"), training_set, test_set
 
 def predictCategoryKNN(training_set, test_set, componentsList, k):
