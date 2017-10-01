@@ -14,7 +14,8 @@ import itertools
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
-
+from sklearn.metrics import roc_curve # ROC Curves
+from sklearn.metrics import auc # Calculating AUC for ROC's!
 import plotly.plotly as py
 import plotly.graph_objs as go
 
@@ -233,9 +234,6 @@ training_set, test_set, components_col = PCAOnDataFrame(training_set_trans, test
 testdf, predictions, correctValues, score = predictCategoryKNN(training_set, test_set, target, test_targert, components_col, 83)
 
 
-#cv_df = pd.DataFrame(correctValues)
-#
-#pd_df = pd.DataFrame(predictions)
 #
 #out_csv = pd.concat([cv_df, pd_df])
 #
@@ -249,3 +247,37 @@ print(pd.crosstab(predictions, correctValues,
                   colnames=['Actual Values']))
 
 print("Score: " + str(score))
+
+cv_df = pd.DataFrame(correctValues)
+#
+pd_df = pd.DataFrame(predictions)
+
+pred_bin = pd_df[0] .map({'Jazz':1, 'Rock':0})
+
+corr_bin = cv_df['category'].map({'Jazz':1, 'Rock':0})
+
+
+fpr3, tpr3, _ = roc_curve(pred_bin, corr_bin)
+auc_knn = auc(fpr3, tpr3)
+
+f, ax = plt.subplots(figsize=(11, 11))
+	
+
+plt.plot(fpr3, tpr3,label='KNN ROC Curve (area = {0: .3f})'\
+    .format(auc_knn), 
+         color = 'purple', 
+         linestyle=':', 
+         linewidth=3)
+
+ax.set_facecolor('#fafafa')
+plt.plot([0, 1], [0, 1], 'k--', lw=2)
+plt.plot([0, 0], [1, 0], 'k--', lw=2, color = 'black')
+plt.plot([1, 0], [1, 1], 'k--', lw=2, color = 'black')
+plt.xlim([-0.01, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('ROC Curve Comparison For All Models')
+plt.legend(loc="lower right")
+
+plt.show()
