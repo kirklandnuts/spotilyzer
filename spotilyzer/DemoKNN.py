@@ -232,6 +232,18 @@ training_set, test_set, components_col = PCAOnDataFrame(training_set_trans, test
 #testing KNN on pcadf
 testdf, predictions, correctValues, score = predictCategoryKNN(training_set, test_set, target, test_targert, components_col, 83)
 
+
+#cv_df = pd.DataFrame(correctValues)
+#
+#pd_df = pd.DataFrame(predictions)
+#
+#out_csv = pd.concat([cv_df, pd_df])
+#
+#import pdb
+#pdb.set_trace()
+
+#out_csv.to_csv('test.csv')
+
 print(pd.crosstab(predictions, correctValues,
                   rownames=['Predicted Values'],
                   colnames=['Actual Values']))
