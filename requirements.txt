@@ -4,13 +4,19 @@ async-timeout==1.2.1
 brewer2mpl==1.4.1
 chardet==3.0.2
 cycler==0.10.0
+decorator==4.1.2
 ggplot==0.11.5
+ipython-genutils==0.2.0
+jsonschema==2.6.0
+jupyter-core==4.3.0
 matplotlib==2.0.2
 multidict==2.1.5
+nbformat==4.4.0
 numpy==1.12.1
 packaging==16.8
 pandas==0.20.1
 patsy==0.4.1
+plotly==2.0.15
 psycopg2==2.7.1
 pyparsing==2.2.0
 python-dateutil==2.6.0
@@ -20,4 +26,5 @@ scikit-learn==0.18.1
 scipy==0.19.0
 six==1.10.0
 statsmodels==0.8.0
+traitlets==4.3.2
 yarl==0.10.2
