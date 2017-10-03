@@ -48,7 +48,7 @@ def getSongs(songList):
 					data.append(songData)
 				else:
 					continue
-			print("Got data for song: " + songData["song_title"] + " : " + songData["songid"])
+			print("Got data for song: " + songData["songid"] + " : " + songData["song_title"])
 	else:
 		print("No connection to database")
 	return data
@@ -215,14 +215,14 @@ def __getSongFeatures(sid, access_header):
 	resp = requests.get(url, headers=access_header)
 	songFeatures = resp.json()
 	try:
+		songFeatures["duration"] = songFeatures["duration_ms"]
+		songFeatures["songid"] = songFeatures["id"]
 		del songFeatures["type"]
 		del songFeatures["uri"]
 		del songFeatures["track_href"]
 		del songFeatures["analysis_url"]
 		del songFeatures["duration_ms"]
 		del songFeatures["id"]
-		songFeatures["duration"] = songFeatures["duration_ms"]
-		songFeatures["songid"] = songFeatures["id"]
 		return songFeatures
 	except:
 		print("nothing to delete")

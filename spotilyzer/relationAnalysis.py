@@ -141,19 +141,8 @@ def graph3DPlaylistsDifferentColors(df, features, playlists):
 	else:
 		print("need 3 features to do 3D graph")
 
-
-#pcadf = PCAOnDataFrame(df, allFeatures, 2)
-#graph2DPlaylistsDifferentColors(pcadf, ['1','2'], playlists)
-#pcadf = PCAOnDataFrame(df, allFeatures, 3)
-#graph3DPlaylistsDifferentColors(pcadf, ['1','2', '3'], playlists)
-#graph3DPlaylistsDifferentColors(df, ['popularity','danceability', 'loudness'], playlists)
-#graph3DPlaylistsDifferentColors(df, ['acousticness','instrumentalness', 'valence'], playlists)
-
 pcadf = PCAOnCategories(df, allFeatures, playlists, 2)
 graph2DPlaylistsDifferentColors(pcadf, ['1','2'], playlists[0:10])
 
 pcadf = PCAOnCategories(df, allFeatures, playlists, 3)
 graph3DPlaylistsDifferentColors(pcadf, ['1','2','3'], playlists[0:10])
-
-#pcadf = PCAOnDataFrame(df, allFeatures, 3)
-#graph3DPlaylistsDifferentColors(pcadf, ['1','2', '3'], playlists[0:5])
