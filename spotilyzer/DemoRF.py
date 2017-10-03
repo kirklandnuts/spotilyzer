@@ -208,7 +208,7 @@ def predictCategoryRF(training_set, test_set,  target, test_targert, componentsL
 	classifier.fit(training_set[componentsList], target)
 	return test_set, classifier.predict(test_set[componentsList]), test_targert, classifier.score(test_set[componentsList], test_targert)
 
-categories = ["Jazz", "Rock", "Hip-Hop"] 
+categories = ["Jazz", "Rock", "Hip-Hop", "Indie", "Workout"] 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
@@ -237,7 +237,7 @@ cdf, training_set, test_set, target, test_targert = createCategoriesDataFrame(ca
 #print(bestK)
 
 #testing KNN on pcadf
-testdf, predictions, correctValues, score = predictCategoryRF(training_set, test_set, target, test_targert, allFeatures, 100)
+testdf, predictions, correctValues, score = predictCategoryRF(training_set, test_set, target, test_targert, allFeatures, 5000)
 
 
 #
@@ -254,36 +254,36 @@ print(pd.crosstab(predictions, correctValues,
 
 print("Score: " + str(score))
 
-cv_df = pd.DataFrame(correctValues)
+#cv_df = pd.DataFrame(correctValues)
+##
+#pd_df = pd.DataFrame(predictions)
 #
-pd_df = pd.DataFrame(predictions)
-
-pred_bin = pd_df[0] .map({'Jazz':1, 'Rock':0})
-
-corr_bin = cv_df['category'].map({'Jazz':1, 'Rock':0})
-
-
-fpr3, tpr3, _ = roc_curve(pred_bin, corr_bin)
-auc_knn = auc(fpr3, tpr3)
-
-f, ax = plt.subplots(figsize=(11, 11))
-	
-
-plt.plot(fpr3, tpr3,label='KNN ROC Curve (area = {0: .3f})'\
-    .format(auc_knn), 
-         color = 'purple', 
-         linestyle=':', 
-         linewidth=3)
-
-ax.set_facecolor('#fafafa')
-plt.plot([0, 1], [0, 1], 'k--', lw=2)
-plt.plot([0, 0], [1, 0], 'k--', lw=2, color = 'black')
-plt.plot([1, 0], [1, 1], 'k--', lw=2, color = 'black')
-plt.xlim([-0.01, 1.0])
-plt.ylim([0.0, 1.05])
-plt.xlabel('False Positive Rate')
-plt.ylabel('True Positive Rate')
-plt.title('ROC Curve Comparison For All Models')
-plt.legend(loc="lower right")
-
+#pred_bin = pd_df[0] .map({'Jazz':1, 'Rock':0})
+#
+#corr_bin = cv_df['category'].map({'Jazz':1, 'Rock':0})
+#
+#
+#fpr3, tpr3, _ = roc_curve(pred_bin, corr_bin)
+#auc_knn = auc(fpr3, tpr3)
+#
+#f, ax = plt.subplots(figsize=(11, 11))
+#	
+#
+#plt.plot(fpr3, tpr3,label='KNN ROC Curve (area = {0: .3f})'\
+#    .format(auc_knn), 
+#         color = 'purple', 
+#         linestyle=':', 
+#         linewidth=3)
+#
+#ax.set_facecolor('#fafafa')
+#plt.plot([0, 1], [0, 1], 'k--', lw=2)
+#plt.plot([0, 0], [1, 0], 'k--', lw=2, color = 'black')
+#plt.plot([1, 0], [1, 1], 'k--', lw=2, color = 'black')
+#plt.xlim([-0.01, 1.0])
+#plt.ylim([0.0, 1.05])
+#plt.xlabel('False Positive Rate')
+#plt.ylabel('True Positive Rate')
+#plt.title('ROC Curve Comparison For All Models')
+#plt.legend(loc="lower right")
+#
 plt.show()

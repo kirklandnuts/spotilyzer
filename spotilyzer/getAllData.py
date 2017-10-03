@@ -4,4 +4,8 @@ allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speec
                  "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
 accessHeader = gd.getAccessHeader()
-categories = gd.__getCategories(accessHeader)
+categories = list(gd.__getCategories(accessHeader).keys())
+
+import pdb
+pdb.set_trace()
+
