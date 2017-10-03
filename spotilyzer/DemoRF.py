@@ -12,6 +12,7 @@ from sklearn.decomposition import PCA
 from matplotlib import style
 import itertools
 import numpy as np
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_curve # ROC Curves
@@ -202,13 +203,18 @@ def predictCategoryKNN(training_set, test_set,  target, test_targert, components
 	classifier.fit(training_set[componentsList], target)
 	return test_set, classifier.predict(test_set[componentsList]), test_targert, classifier.score(test_set[componentsList], test_targert)
 
+def predictCategoryRF(training_set, test_set,  target, test_targert, componentsList, estimators):
+	classifier = RandomForestClassifier(n_estimators=estimators)
+	classifier.fit(training_set[componentsList], target)
+	return test_set, classifier.predict(test_set[componentsList]), test_targert, classifier.score(test_set[componentsList], test_targert)
+
 categories = ["Jazz", "Rock"] 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
-cdf, training_set_trans, test_set_trans, target, test_targert = createCategoriesDataFrame(categories, allFeatures)
+cdf, training_set, test_set, target, test_targert = createCategoriesDataFrame(categories, allFeatures)
 
-training_set, test_set, components_col = PCAOnDataFrame(training_set_trans, test_set_trans, allFeatures, 2)
+#training_set, test_set, components_col = PCAOnDataFrame(training_set_trans, test_set_trans, allFeatures, 2)
 
 #graph2DPlotlyCategoriesDifferentColors(cdf, ['danceability','acousticness'], categories)
 #graph3DPlotlyCategoriesDifferentColors(cdf, ['danceability','acousticness', 'valence'], categories)
@@ -231,7 +237,7 @@ training_set, test_set, components_col = PCAOnDataFrame(training_set_trans, test
 #print(bestK)
 
 #testing KNN on pcadf
-testdf, predictions, correctValues, score = predictCategoryKNN(training_set, test_set, target, test_targert, components_col, 83)
+testdf, predictions, correctValues, score = predictCategoryRF(training_set, test_set, target, test_targert, allFeatures, 100)
 
 
 #
