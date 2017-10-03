@@ -208,7 +208,7 @@ def predictCategoryRF(training_set, test_set,  target, test_targert, componentsL
 	classifier.fit(training_set[componentsList], target)
 	return test_set, classifier.predict(test_set[componentsList]), test_targert, classifier.score(test_set[componentsList], test_targert)
 
-categories = ["Jazz", "Rock"] 
+categories = ["Jazz", "Rock", "Hip-Hop"] 
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
