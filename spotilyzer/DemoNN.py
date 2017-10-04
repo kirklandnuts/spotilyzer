@@ -52,9 +52,19 @@ def predictCategoryKNN(training_set, test_set,  target, test_targert, components
 def predictCategoryNN(training_set, test_set,  target, test_targert, componentsList):
 	scaler = StandardScaler()
 	scaler.fit(training_set[componentsList])
-	fc = [tf.feature_column.numeric_column("x", shape=[12])]
 	training_set[componentsList] = scaler.transform(training_set[componentsList])
 	test_set[componentsList] = scaler.transform(test_set[componentsList])
+	fc = skflow.infer_real_valued_columns_from_input(training_set[componentsList])
+	# Jazz = 1
+	# Rock = 2
+	training_set.category = training_set.category.replace('Jazz', 1)
+	training_set.category = training_set.category.replace('Rock', 2)
+	test_set.replace('Jazz', 1)
+	test_set.replace('Rock', 2)
+	target = training_set['category']
+	test_target = test_set['category']
+	import pdb
+	pdb.set_trace()
 	mlp = skflow.DNNClassifier(hidden_units=[10, 20, 10], feature_columns=fc, n_classes=3)
 	mlp.fit(training_set[componentsList], target)
 	return test_set, mlp.predict(test_set[componentsList]), test_targert, mlp.score(test_set[componentsList], test_targert)
