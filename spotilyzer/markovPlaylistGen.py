@@ -88,4 +88,4 @@ ndf = normalizeDf(df)
 wa = createWeightArray(ndf.ix[:300])
 rw = randomWalk(wa)
 sl = toSongList(rw,ndf)
-print(sl)
+ 
