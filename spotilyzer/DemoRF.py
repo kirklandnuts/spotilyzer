@@ -27,7 +27,7 @@ def predictCategoryRF(training_set, test_set,  target, test_targert, componentsL
 	return test_set, classifier.predict(test_set[componentsList]), test_targert, classifier.score(test_set[componentsList], test_targert)
 
 
-categories = ['Jazz', 'Hip-Hop', 'Romance', 'Soul', 'Metal']
+categories = ['Jazz', 'Metal'] #'Hip-Hop', 'Metal', 'Electronic/Dance', 'Pop', 'Indie']
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
@@ -47,7 +47,7 @@ test_set = pd.concat(te_list)
 target = training_set['category']
 test_target = test_set['category']
 
-testdf, predictions, correctValues, score = predictCategoryRF(training_set, test_set, target, test_target, allFeatures, 1000)
+testdf, predictions, correctValues, score = predictCategoryRF(training_set, test_set, target, test_target, allFeatures, 9001)
 
 print(pd.crosstab(predictions, correctValues,
                   rownames=['Predicted Values'],
