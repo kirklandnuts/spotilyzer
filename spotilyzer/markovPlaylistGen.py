@@ -1,4 +1,3 @@
-import getData as gd
 import requests
 import pandas as pd
 from sklearn import preprocessing
@@ -7,24 +6,13 @@ import numpy as np
 from scipy.spatial.distance import pdist, squareform
 import random
 
-#Creates data frame where song features are stored
-def createDataFrame(afpd, features):
-	preFrameDict = {}
-	for i in features:
-		preFrameDict[i] = []
-	preFrameDict["songid"] = []
-	for i in sorted(afpd.keys()):
-		for j in afpd[i]:
-			preFrameDict["songid"].append(j["songid"])
-			for q in features:
-				preFrameDict[q].append(j[q])
-	df = pd.DataFrame(preFrameDict)
-	#normalize data
-    #May have to be changed for future distance functions
+#Normalize data frame where song features are stored
+def normalizeDf(df):
 	min_max_scaler = preprocessing.MinMaxScaler()
-	for i in features:
+	for i in allFeatures: #Change for general df
 		df[i] = pd.DataFrame(min_max_scaler.fit_transform(df[i]))
 	return df.set_index("songid")
+
 
 #Creates an n*n array that corresponds to weights on how close 2 songs are
 #The ith row and jth column corresponds to relation from the ith song to the jth song
@@ -36,7 +24,6 @@ def createWeightArray(df):
             weightArray[i][j] = songWeight(df.ix[i],df.ix[j])
             if (i == j):
                 weightArray[i][j] = 0
-
     return weightArray
 
 
@@ -54,14 +41,14 @@ def randomWalk(weightArray,startIndex=0,k=100,r=0):
     walkPath = np.zeros(k)
     walkPath[0] = startIndex
     for i  in range(1,k):
-        walkWeights = weightArray[walkPath[i-1]]
+        walkWeights = weightArray[int(walkPath[i-1])]
         #Remove last r songs
         for j in range(max(i-r,0),i):
             walkWeights[walkPath[j]] = 0
         walkPath[i] = weightedChoice(walkWeights)
     return walkPath
 
-
+#Defines a choce function given weights. TODO make more varied weight functions
 def weightedChoice(weights):
     totalWeight = np.sum(weights)
     if totalWeight == 0:
@@ -75,21 +62,30 @@ def weightedChoice(weights):
     return len(weights) - 1
 
 
-access_header = gd.getAccessHeader()
+#Creates a song list given a random walk on df
+def toSongList(randomWalk, df):
+	songList = []
+	for i in range(len(randomWalk)):
+		songList += [df.ix[int(randomWalk[i])].name]
+	return songList
 
-featuredPlaylists = requests.get("https://api.spotify.com/v1/browse/featured-playlists", headers=access_header).json()["playlists"]["items"]
-allFeaturedPlaylistData = {}
-for i in featuredPlaylists:
-	tracks = requests.get(i["href"] + "/tracks", headers=access_header).json()["items"]
-	tracksList = []
-	for j in tracks:
-		tracksList.append(j["track"]["id"])
-	allFeaturedPlaylistData[i["id"]] = gd.getSongs(tracksList)
+# featuredPlaylists = requests.get("https://api.spotify.com/v1/browse/featured-playlists", headers=access_header).json()["playlists"]["items"]
+# allFeaturedPlaylistData = {}
+# for i in featuredPlaylists:
+# 	tracks = requests.get(i["href"] + "/tracks", headers=access_header).json()["items"]
+# 	tracksList = []
+# 	for j in tracks:
+# 		tracksList.append(j["track"]["id"])
+# 	allFeaturedPlaylistData[i["id"]] = gd.getSongs(tracksList)
 
 allFeatures = ["danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
-playlists = sorted(list(allFeaturedPlaylistData.keys()))
-df = createDataFrame(allFeaturedPlaylistData, allFeatures)
-wa = createWeightArray(df.ix[:300])
+df = pd.read_csv('song-data-unique.csv')
+del df['category']
+
+ndf = normalizeDf(df)
+wa = createWeightArray(ndf.ix[:300])
 rw = randomWalk(wa)
+sl = toSongList(rw,ndf)
+print(sl)
