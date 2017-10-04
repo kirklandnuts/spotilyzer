@@ -160,6 +160,23 @@ def graph2DPlotlyCategoriesDifferentColors(df, features, categories):
 	else:
 		print("need 2 features to do 2D graph")
 
+def PCAOnDataFrameOld(df, features, components):
+    pca = PCA(n_components=components)
+    pca.fit(df[features])
+    newData = pca.transform(df[features])
+    preFrameDict = {}
+    preFrameDict["songid"] = []
+    preFrameDict["category"] = []
+    for i in list(range(1,components+1)):
+        preFrameDict[str(i)] = []
+    for i in list(range(0, len(newData))):
+        preFrameDict["songid"].append(df.index.tolist()[i])
+        preFrameDict["category"].append(df["category"][i])
+        for j in list(range(0,components)):
+            preFrameDict[str(j+1)].append(newData[i][j])
+    newDataFrame = pd.DataFrame(preFrameDict)
+    return newDataFrame.set_index("songid")
+
 def PCAOnDataFrame(training_set, test_set, features, components):
 	pca = PCA(n_components=components, random_state=7)
 	pca.fit(training_set[features])
