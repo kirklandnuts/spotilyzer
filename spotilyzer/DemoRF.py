@@ -204,7 +204,7 @@ def predictCategoryKNN(training_set, test_set,  target, test_targert, components
 	return test_set, classifier.predict(test_set[componentsList]), test_targert, classifier.score(test_set[componentsList], test_targert)
 
 def predictCategoryRF(training_set, test_set,  target, test_targert, componentsList, estimators):
-	classifier = RandomForestClassifier(n_estimators=estimators)
+	classifier = RandomForestClassifier(max_features=None, n_estimators=estimators)
 	classifier.fit(training_set[componentsList], target)
 	return test_set, classifier.predict(test_set[componentsList]), test_targert, classifier.score(test_set[componentsList], test_targert)
 
@@ -237,7 +237,7 @@ cdf, training_set, test_set, target, test_targert = createCategoriesDataFrame(ca
 #print(bestK)
 
 #testing KNN on pcadf
-testdf, predictions, correctValues, score = predictCategoryRF(training_set, test_set, target, test_targert, allFeatures, 5000)
+testdf, predictions, correctValues, score = predictCategoryRF(training_set, test_set, target, test_targert, allFeatures, 10000)
 
 
 #
