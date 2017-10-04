@@ -26,12 +26,24 @@ def predictCategoryRF(training_set, test_set,  target, test_targert, componentsL
 	classifier.fit(training_set[componentsList], target)
 	return test_set, classifier.predict(test_set[componentsList]), test_targert, classifier.score(test_set[componentsList], test_targert)
 
+
+categories = ['Jazz', 'Hip-Hop', 'Romance', 'Soul', 'Metal']
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
-
 test_set = pd.read_csv('song-data-te.csv')
 training_set = pd.read_csv('song-data-tr.csv')
+training_group = training_set.groupby(['category'])
+test_group = test_set.groupby(['category'])
+
+tr_list = []
+te_list = []
+
+for genre in categories:
+	tr_list.append(training_group.get_group(genre))
+	te_list.append(test_group.get_group(genre))
+training_set = pd.concat(tr_list)
+test_set = pd.concat(te_list)
 target = training_set['category']
 test_target = test_set['category']
 
