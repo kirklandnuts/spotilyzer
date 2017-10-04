@@ -34,7 +34,9 @@ def getSongs(songList):
 	data = [] #using a list because we want to preserve order
 	if con is not None:
 		con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+		i = 0
 		for songID in songList:
+			i += 1
 			if __dbHasSong(con, songID):
 				songData = __querySong(songID, con)
 				data.append(songData) #append the feature dctionary for the song
@@ -48,7 +50,7 @@ def getSongs(songList):
 					data.append(songData)
 				else:
 					continue
-			print("Got data for song: " + songData["songid"] + " : " + songData["song_title"])
+			print("[" + str(i) + "/" + str(len(songList)) + "]" + "Got data for song: " + songData["songid"] + " : " + songData["song_title"])
 	else:
 		print("No connection to database")
 	return data
