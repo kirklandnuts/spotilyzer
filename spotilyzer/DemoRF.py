@@ -26,16 +26,34 @@ def predictCategoryRF(training_set, test_set,  target, test_targert, componentsL
 	classifier.fit(training_set[componentsList], target)
 	return test_set, classifier.predict(test_set[componentsList]), test_targert, classifier.score(test_set[componentsList], test_targert)
 
+def predictCategoryKNN(training_set, test_set,  target, test_targert, componentsList, k):
+    classifier = KNeighborsClassifier(n_neighbors=k, metric='minkowski')
+    classifier.fit(training_set[componentsList], target)
+    return test_set, classifier.predict(test_set[componentsList]), test_targert, classifier.score(test_set[componentsList], test_targert)
+
+
+categories = ['Jazz', 'Rock', 'Hip-Hop', 'Metal', 'Electronic/Dance', 'Pop', 'Indie']
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
-
 test_set = pd.read_csv('song-data-te.csv')
 training_set = pd.read_csv('song-data-tr.csv')
+training_group = training_set.groupby(['category'])
+test_group = test_set.groupby(['category'])
+
+tr_list = []
+te_list = []
+
+for genre in categories:
+	tr_list.append(training_group.get_group(genre))
+	te_list.append(test_group.get_group(genre))
+training_set = pd.concat(tr_list)
+test_set = pd.concat(te_list)
 target = training_set['category']
 test_target = test_set['category']
 
-testdf, predictions, correctValues, score = predictCategoryRF(training_set, test_set, target, test_target, allFeatures, 1000)
+testdf, predictions, correctValues, score = predictCategoryRF(training_set, test_set, target, test_target, allFeatures, 5000)
+#testdf, predictions, correctValues, score = predictCategoryKNN(training_set, test_set, target, test_target, allFeatures, 83)
 
 print(pd.crosstab(predictions, correctValues,
                   rownames=['Predicted Values'],
