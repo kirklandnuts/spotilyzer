@@ -63,9 +63,7 @@ def predictCategoryNN(training_set, test_set,  target, test_targert, componentsL
 	test_set.replace('Rock', 2)
 	target = training_set['category']
 	test_target = test_set['category']
-	import pdb
-	pdb.set_trace()
-	mlp = skflow.DNNClassifier(hidden_units=[10, 20, 10], feature_columns=fc, n_classes=3)
+	mlp = skflow.DNNClassifier(hidden_units=[10, 20, 10], feature_columns=fc, n_classes=2)
 	mlp.fit(training_set[componentsList], target)
 	return test_set, mlp.predict(test_set[componentsList]), test_targert, mlp.score(test_set[componentsList], test_targert)
 
