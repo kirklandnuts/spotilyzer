@@ -2,6 +2,8 @@
 ######################
 #Kaizen Towfiq
 
+import skflow
+import tensorflow as tf
 import getData as gd
 import requests
 import matplotlib.pyplot as plt
@@ -38,12 +40,22 @@ def predictCategoryKNN(training_set, test_set,  target, test_targert, components
 	classifier.fit(training_set[componentsList], target)
 	return test_set, classifier.predict(test_set[componentsList]), test_targert, classifier.score(test_set[componentsList], test_targert)
 
+#def predictCategoryNN(training_set, test_set,  target, test_targert, componentsList):
+#	scaler = StandardScaler()
+#	scaler.fit(training_set[componentsList])
+#	training_set[componentsList] = scaler.transform(training_set[componentsList])
+#	test_set[componentsList] = scaler.transform(test_set[componentsList])
+#	mlp = MLPClassifier(hidden_layer_sizes=(13,13,13), max_iter=500)
+#	mlp.fit(training_set[componentsList], target)
+#	return test_set, mlp.predict(test_set[componentsList]), test_targert, mlp.score(test_set[componentsList], test_targert)
+
 def predictCategoryNN(training_set, test_set,  target, test_targert, componentsList):
 	scaler = StandardScaler()
 	scaler.fit(training_set[componentsList])
+	fc = [tf.feature_column.numeric_column("x", shape=[12])]
 	training_set[componentsList] = scaler.transform(training_set[componentsList])
 	test_set[componentsList] = scaler.transform(test_set[componentsList])
-	mlp = MLPClassifier(hidden_layer_sizes=(13,13,13),max_iter=500)
+	mlp = skflow.DNNClassifier(hidden_units=[10, 20, 10], feature_columns=fc, n_classes=3)
 	mlp.fit(training_set[componentsList], target)
 	return test_set, mlp.predict(test_set[componentsList]), test_targert, mlp.score(test_set[componentsList], test_targert)
 
@@ -62,13 +74,14 @@ te_list = []
 for genre in categories:
 	tr_list.append(training_group.get_group(genre))
 	te_list.append(test_group.get_group(genre))
+
 training_set = pd.concat(tr_list)
 test_set = pd.concat(te_list)
 target = training_set['category']
 test_target = test_set['category']
 
-#testdf, predictions, correctValues, score = predictCategoryNN(training_set, test_set, target, test_target, allFeatures)
-testdf, predictions, correctValues, score = predictCategoryKNN(training_set, test_set, target, test_target, allFeatures, 83)
+testdf, predictions, correctValues, score = predictCategoryNN(training_set, test_set, target, test_target, allFeatures)
+#testdf, predictions, correctValues, score = predictCategoryKNN(training_set, test_set, target, test_target, allFeatures, 83)
 
 print(pd.crosstab(predictions, correctValues,
                   rownames=['Predicted Values'],
