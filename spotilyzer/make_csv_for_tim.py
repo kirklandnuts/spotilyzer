@@ -21,11 +21,10 @@ import plotly.graph_objs as go
 
 
 categories = ['Jazz', 'Rock', 'Hip-Hop', 'Metal', 'Electronic/Dance', 'Pop']
-allFeatures = ["popularity", "danceability", "energy", "loudness", "speechiness", "acousticness",
+allFeatures = ["popularity", "danceability", "energy", "loudness", "speechiness", "acousticness",\
                  "instrumentalness", "liveness", "valence", "tempo"]
 
 df = pd.read_csv('song-data-unique.csv')
-
 
 song_ids = df.songid.tolist()
 
@@ -36,11 +35,11 @@ artists = []
 names = []
 categories = []
 
-for s in song_data:
-	sids.append(s['songid'])
-	names.append(s['song_title'])
-	artists.append(['artistids'])
-	categories.append(df[df.songid==s['songid']])
+for sd in song_data:
+	sids.append(sd['songid'])
+	names.append(sd['song_title'])
+	artists.append(sd['artistids'])
+	categories.append(df[df.songid==sd['songid']].category.tolist()[0])
 
 preFrameDict = {'songid':sids,
 				'artist':artists,
@@ -50,3 +49,5 @@ preFrameDict = {'songid':sids,
 fdf = pd.DataFrame(preFrameDict)
 
 fdf.to_csv('for_timmy.csv')
+import pdb
+pdb.set_trace()
