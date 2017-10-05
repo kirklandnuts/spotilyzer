@@ -40,32 +40,32 @@ def predictCategoryKNN(training_set, test_set,  target, test_targert, components
 	classifier.fit(training_set[componentsList], target)
 	return test_set, classifier.predict(test_set[componentsList]), test_targert, classifier.score(test_set[componentsList], test_targert)
 
-#def predictCategoryNN(training_set, test_set,  target, test_targert, componentsList):
-#	scaler = StandardScaler()
-#	scaler.fit(training_set[componentsList])
-#	training_set[componentsList] = scaler.transform(training_set[componentsList])
-#	test_set[componentsList] = scaler.transform(test_set[componentsList])
-#	mlp = MLPClassifier(hidden_layer_sizes=(13,13,13), max_iter=500)
-#	mlp.fit(training_set[componentsList], target)
-#	return test_set, mlp.predict(test_set[componentsList]), test_targert, mlp.score(test_set[componentsList], test_targert)
-
 def predictCategoryNN(training_set, test_set,  target, test_targert, componentsList):
 	scaler = StandardScaler()
 	scaler.fit(training_set[componentsList])
 	training_set[componentsList] = scaler.transform(training_set[componentsList])
 	test_set[componentsList] = scaler.transform(test_set[componentsList])
-	fc = skflow.infer_real_valued_columns_from_input(training_set[componentsList])
-	# Jazz = 1
-	# Rock = 2
-	training_set.category = training_set.category.replace('Jazz', 1)
-	training_set.category = training_set.category.replace('Rock', 2)
-	test_set.replace('Jazz', 1)
-	test_set.replace('Rock', 2)
-	target = training_set['category']
-	test_target = test_set['category']
-	mlp = skflow.DNNClassifier(hidden_units=[10, 20, 10], feature_columns=fc, n_classes=2)
+	mlp = MLPClassifier(hidden_layer_sizes=(13,13,13), max_iter=500)
 	mlp.fit(training_set[componentsList], target)
 	return test_set, mlp.predict(test_set[componentsList]), test_targert, mlp.score(test_set[componentsList], test_targert)
+
+#def predictCategoryNN(training_set, test_set,  target, test_targert, componentsList):
+#	scaler = StandardScaler()
+#	scaler.fit(training_set[componentsList])
+#	training_set[componentsList] = scaler.transform(training_set[componentsList])
+#	test_set[componentsList] = scaler.transform(test_set[componentsList])
+#	fc = skflow.infer_real_valued_columns_from_input(training_set[componentsList])
+#	# Jazz = 1
+#	# Rock = 2
+#	training_set.category = training_set.category.replace('Jazz', 1)
+#	training_set.category = training_set.category.replace('Rock', 2)
+#	test_set.replace('Jazz', 1)
+#	test_set.replace('Rock', 2)
+#	target = training_set['category']
+#	test_target = test_set['category']
+#	mlp = skflow.DNNClassifier(hidden_units=[10, 20, 10], feature_columns=fc, n_classes=2)
+#	mlp.fit(training_set[componentsList], target)
+#	return test_set, mlp.predict(test_set[componentsList]), test_targert, mlp.score(test_set[componentsList], test_targert)
 
 categories = ['Jazz', 'Rock']#, 'Hip-Hop', 'Metal', 'Electronic/Dance', 'Pop', 'Indie']
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
