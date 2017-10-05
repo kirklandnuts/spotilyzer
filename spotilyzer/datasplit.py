@@ -27,8 +27,8 @@ te_list = []
 
 for genre in genre_names:
     gdf = genres.get_group(genre)
-    gdf_upsampled = upsample(gdf, n_want)
-    tr, te = train_test_split(gdf_upsampled, train_size = 0.8)
+    tr, te = train_test_split(gdf, train_size = 0.8)
+    tr = upsample(tr, n_want)
     tr_list.append(tr)
     te_list.append(te)
 
