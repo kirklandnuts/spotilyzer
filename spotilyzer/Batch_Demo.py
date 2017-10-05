@@ -12,8 +12,8 @@ import getData as gd
 ACCESS_HEADER = gd.getAccessHeader()
 
 def songDataFrame(songid):
-	features = ["danceability", "energy", "key", "loudness", "speechiness", "acousticness",\
-			"instrumentalness", "liveness", "valence", "tempo", "time_signature"]
+	features = ["popularity", "danceability", "energy", "loudness", "speechiness", "acousticness",\
+			"instrumentalness", "liveness", "valence", "tempo"]
 	data = gd.getSongs([songid])[0]
 	pre_frame_d = {}
 	for f in features:
@@ -52,7 +52,7 @@ song_ids = getPlaylistSongIDs(ACCESS_HEADER)
 
 #song ids from test set
 test_set = pd.read_csv('song-data-te.csv')
-categories = ['Jazz', 'Hip-Hop', 'Metal', 'Electronic/Dance', 'Pop']
+categories = ['Jazz', 'Rock', 'Hip-Hop', 'Metal', 'Electronic/Dance', 'Pop']
 
 test_group = test_set.groupby(['category'])
 
