@@ -37,8 +37,8 @@ def predictCategoryKNN(training_set, test_set,  target, test_targert, components
 
 
 categories = ['Jazz', 'Hip-Hop', 'Metal', 'Electronic/Dance', 'Pop']
-allFeatures = ["danceability", "energy", "key", "loudness", "speechiness", "acousticness",
-				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
+allFeatures = ["popularity", "danceability", "energy", "loudness", "speechiness", "acousticness",
+				 "instrumentalness", "liveness", "valence", "tempo"]
 
 test_set = pd.read_csv('song-data-te.csv')
 training_set = pd.read_csv('song-data-tr.csv')
