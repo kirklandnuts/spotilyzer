@@ -7,10 +7,10 @@ import pickle
 import getData as gd
 #USAGE: python Demo.py songid model
 #input songid
-#output genre 
+#output genre
 
 
-SONGID = sys.argv[1]
+SONGID = sys.argv[2]
 ACCESS_HEADER = gd.getAccessHeader()
 
 def songDataFrame(songid):
@@ -36,11 +36,11 @@ def printResults(df, clf):
 def PCAOnDataFrame(df, training_set, features, components):
 	pca = PCA(n_components=components, random_state=7)
 	pca.fit(training_set[features])
-	components_col = [x for x in range(0, components)]	
+	components_col = [x for x in range(0, components)]
 	training_set_pca = pca.fit_transform(training_set[features])
 	sdf = pca.transform(df[features])
 	sdf = pd.DataFrame(sdf, columns=components_col)
-	return sdf 
+	return sdf
 
 
 categories = ['Jazz', 'Rock', 'Hip-Hop', 'Metal', 'Electronic/Dance', 'Pop']
@@ -65,8 +65,8 @@ target = training_set['jazz']
 test_target = test_set['jazz']
 
 
-fileObject = open(sys.argv[2],'rb')  
-classifier = pickle.load(fileObject)  
+fileObject = open(sys.argv[1],'rb')
+classifier = pickle.load(fileObject)
 
 
 song_df = songDataFrame(SONGID)
