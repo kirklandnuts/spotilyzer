@@ -8,8 +8,6 @@ import getData as gd
 #input songid
 #output genre 
 
-
-SONGID = sys.argv[1]
 ACCESS_HEADER = gd.getAccessHeader()
 
 def songDataFrame(songid):
@@ -46,6 +44,8 @@ def printResults(df, clf):
 
 fileObject = open(sys.argv[2],'rb')  
 classifier = pickle.load(fileObject)  
-
-song_df = songDataFrame(SONGID)
-printResults(song_df, classifier)
+song_ids = getPlaylistSongIDs(ACCESS_HEADER)
+for sid in song_ids:
+	if sid is not None:
+		song_df = songDataFrame(sid)
+		printResults(song_df, classifier)
