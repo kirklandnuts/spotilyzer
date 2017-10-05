@@ -42,7 +42,7 @@ def printResults(df, clf):
 		print("Prediction " + str(count) + ":"  + connected[ordered_keys[k]])
 	print("="*100)
 
-fileObject = open(sys.argv[2],'rb')  
+fileObject = open(sys.argv[1],'rb')  
 classifier = pickle.load(fileObject)  
 song_ids = getPlaylistSongIDs(ACCESS_HEADER)
 for sid in song_ids:
