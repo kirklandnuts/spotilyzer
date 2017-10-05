@@ -6,6 +6,7 @@ import numpy as np
 from scipy.spatial.distance import pdist, squareform
 import random
 
+
 #Normalize data frame where song features are stored
 def normalizeDf(df):
 	min_max_scaler = preprocessing.MinMaxScaler()
@@ -31,14 +32,14 @@ def createWeightArray(df):
 #Gives a weight for song1 -> song2 based off of their distance. Song 1 and 2 are arrays of numbers.
 #TODO add different weight functions
 def songWeight(song1,song2):
-    dist = pdist([song1,song2],'minkowski',1)[0] #Taxicab
+    dist = pdist([song1,song2],'minkowski',1)[0] #taxicab
     return max(1.5-dist,0)
 
 
 #Gives a random walk over k steps. Will not repeat the last r responses.
 #Array needs to be n*n and r<n.
 def randomWalk(weightArray,startIndex=0,k=100,r=0):
-    walkPath = np.zeros(k)
+    walkPath = np.zeros((k,), dtype=np.int)
     walkPath[0] = startIndex
     for i  in range(1,k):
         walkWeights = weightArray[int(walkPath[i-1])]
@@ -83,9 +84,16 @@ allFeatures = ["danceability", "energy", "key", "loudness", "speechiness", "acou
 
 df = pd.read_csv('song-data-unique.csv')
 del df['category']
+del df['popularity']
 
 ndf = normalizeDf(df)
-wa = createWeightArray(ndf.ix[:300])
-rw = randomWalk(wa)
+wa = createWeightArray(ndf.ix[:150])
+rw = randomWalk(wa, r = 10)
 sl = toSongList(rw,ndf)
- 
+
+print(sl)
+print(rw)
+
+print("mean: ", np.mean(wa))
+print("variance: ", np.var(wa))
+print("elements > 0: ", len(wa[wa > 0]))
