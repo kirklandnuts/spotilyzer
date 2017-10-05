@@ -79,14 +79,17 @@ def toSongList(randomWalk, df):
 # 		tracksList.append(j["track"]["id"])
 # 	allFeaturedPlaylistData[i["id"]] = gd.getSongs(tracksList)
 
+
+#To pass in data, pass in a df with song ids and normalized data
 allFeatures = ["danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 
 df = pd.read_csv('song-data-unique.csv')
 del df['category']
 del df['popularity']
-
 ndf = normalizeDf(df)
+
+#Getting some demo code to run
 wa = createWeightArray(ndf.ix[:150])
 rw = randomWalk(wa, r = 10)
 sl = toSongList(rw,ndf)
