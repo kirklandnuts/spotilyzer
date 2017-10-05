@@ -1,4 +1,5 @@
 import pdb
+from random import shuffle
 import requests
 import sys
 import pandas as pd
@@ -40,12 +41,30 @@ def printResults(df, clf):
 	for k in list(range(0,len(classes))):
 		count += 1
 		if k < len(ordered_keys):
-			print("Prediction " + str(count) + ":"  + connected[ordered_keys[k]])
+			print("Prediction " + str(count) + ":"  + connected[ordered_keys[k]] + " Probability " + str(ordered_keys[k]))
 	print("="*100)
 
 fileObject = open(sys.argv[1],'rb')  
 classifier = pickle.load(fileObject)  
+
+#song ids from playlist
 song_ids = getPlaylistSongIDs(ACCESS_HEADER)
+
+#song ids from test set
+test_set = pd.read_csv('song-data-te.csv')
+categories = ['Jazz', 'Hip-Hop', 'Metal', 'Electronic/Dance', 'Pop']
+
+test_group = test_set.groupby(['category'])
+
+te_list = []
+
+for genre in categories:
+    te_list.append(test_group.get_group(genre))
+test_set = pd.concat(te_list)
+test_target = test_set['category']
+song_ids = test_set['songid'].tolist()
+shuffle(song_ids)
+
 for sid in song_ids:
 	if sid is not None:
 		song_df = songDataFrame(sid)
