@@ -36,7 +36,7 @@ def predictCategoryKNN(training_set, test_set,  target, test_targert, components
     return test_set, classifier.predict(test_set[componentsList]), test_targert, classifier.score(test_set[componentsList], test_targert)
 
 
-categories = ['Jazz', 'Rock', 'Hip-Hop', 'Metal', 'Electronic/Dance', 'Pop', 'Indie']
+categories = ['Jazz', 'Hip-Hop', 'Metal', 'Electronic/Dance', 'Pop']
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 

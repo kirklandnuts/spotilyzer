@@ -37,9 +37,10 @@ def printResults(df, clf):
 		connected[probs[i]] = classes[i]
 	ordered_keys = sorted(connected.keys(), reverse=True)
 	count = 0
-	for k in list(range(0,3)):
+	for k in list(range(0,len(classes))):
 		count += 1
-		print("Prediction " + str(count) + ":"  + connected[ordered_keys[k]])
+		if k < len(ordered_keys):
+			print("Prediction " + str(count) + ":"  + connected[ordered_keys[k]])
 	print("="*100)
 
 fileObject = open(sys.argv[1],'rb')  
