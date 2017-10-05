@@ -25,10 +25,6 @@ def songDataFrame(songid):
 def printResults(df, clf):
 	classes = clf.classes_
 	prediction = classifier.predict(song_df)
-	connected = {}
-	for i in list(range(0,len(classes))):
-		connected[probs[i]] = classes[i]
-	ordered_keys = sorted(connected.keys(), reverse=True)
 	if prediction == 'Jazz':
 		print("This is Jazz")
 	else:
