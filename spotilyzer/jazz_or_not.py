@@ -24,13 +24,14 @@ def songDataFrame(songid):
 	return df
 
 def printResults(df, clf):
+	print("="*75)
 	classes = clf.classes_
 	prediction = classifier.predict(song_df)[0]
 	if prediction:
 		print("This is Jazz")
 	else:
 		print("This is not Jazz")
-	print("="*100)
+	print("="*75)
 
 
 def PCAOnDataFrame(df, training_set, features, components):
