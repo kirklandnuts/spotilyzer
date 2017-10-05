@@ -4,6 +4,7 @@
 
 import getData as gd
 import requests
+import pickle
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import pandas as pd
@@ -24,6 +25,9 @@ import plotly.graph_objs as go
 def predictCategoryRF(training_set, test_set,  target, test_targert, componentsList, estimators):
 	classifier = RandomForestClassifier(max_features=None, n_estimators=estimators)
 	classifier.fit(training_set[componentsList], target)
+	file_Name = "RF.pickle"
+	fileObject = open(file_Name,'wb')
+	pickle.dump(classifier,fileObject)   
 	return test_set, classifier.predict(test_set[componentsList]), test_targert, classifier.score(test_set[componentsList], test_targert)
 
 def predictCategoryKNN(training_set, test_set,  target, test_targert, componentsList, k):
@@ -32,7 +36,7 @@ def predictCategoryKNN(training_set, test_set,  target, test_targert, components
     return test_set, classifier.predict(test_set[componentsList]), test_targert, classifier.score(test_set[componentsList], test_targert)
 
 
-categories = ['Jazz', 'Rock', 'Hip-Hop', 'Metal', 'Electronic/Dance', 'Pop', 'Indie']
+categories = ['Jazz', 'Hip-Hop', 'Metal', 'Electronic/Dance', 'Pop']
 allFeatures = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
 				 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 

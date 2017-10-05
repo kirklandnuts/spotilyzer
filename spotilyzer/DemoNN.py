@@ -2,28 +2,16 @@
 ######################
 #Kaizen Towfiq
 
-import skflow
-import tensorflow as tf
 import getData as gd
-import requests
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 import pandas as pd
 from sklearn import preprocessing
-from sklearn.decomposition import PCA
 from sklearn.neural_network import MLPClassifier
-from matplotlib import style
-import itertools
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
-
+from sknn.mlp import Classifier, Layer
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import roc_curve # ROC Curves
-from sklearn.metrics import auc # Calculating AUC for ROC's!
-import plotly.plotly as py
-import plotly.graph_objs as go
 
 
 def predictCategoryRF(training_set, test_set,  target, test_targert, componentsList, estimators):
@@ -45,9 +33,17 @@ def predictCategoryNN(training_set, test_set,  target, test_targert, componentsL
 	scaler.fit(training_set[componentsList])
 	training_set[componentsList] = scaler.transform(training_set[componentsList])
 	test_set[componentsList] = scaler.transform(test_set[componentsList])
-	mlp = MLPClassifier(hidden_layer_sizes=(13,13,13), max_iter=500)
-	mlp.fit(training_set[componentsList], target)
-	return test_set, mlp.predict(test_set[componentsList]), test_targert, mlp.score(test_set[componentsList], test_targert)
+	nn = Classifier(
+	layers=[
+	Layer("Sigmoid", units=100),
+	Layer("Softmax")],
+	learning_rate=0.001,
+	n_iter=25)
+	nn.fit(training_set[componentsList].as_matrix(), target.as_matrix())
+	return nn.predict(test_set[componentsList].as_matrix()), pd.DataFrame(test_targert), nn.score(test_set[componentsList].as_matrix(), test_targert.as_matrix())
+	#mlp = MLPClassifier(hidden_layer_sizes=(13,13,13), max_iter=500)
+	#mlp.fit(training_set[componentsList], target)
+	#return test_set, mlp.predict(test_set[componentsList]), test_targert, mlp.score(test_set[componentsList], test_targert)
 
 #def predictCategoryNN(training_set, test_set,  target, test_targert, componentsList):
 #	scaler = StandardScaler()
@@ -88,11 +84,7 @@ test_set = pd.concat(te_list)
 target = training_set['category']
 test_target = test_set['category']
 
-testdf, predictions, correctValues, score = predictCategoryNN(training_set, test_set, target, test_target, allFeatures)
+predictions, correctValues, score = predictCategoryNN(training_set, test_set, target, test_target, allFeatures)
 #testdf, predictions, correctValues, score = predictCategoryKNN(training_set, test_set, target, test_target, allFeatures, 83)
-
-print(pd.crosstab(predictions, correctValues,
-                  rownames=['Predicted Values'],
-                  colnames=['Actual Values']))
 
 print("Score: " + str(score))
