@@ -12,7 +12,7 @@ import getData as gd
 ACCESS_HEADER = gd.getAccessHeader()
 
 def songDataFrame(songid):
-	features = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",\
+	features = ["danceability", "energy", "key", "loudness", "speechiness", "acousticness",\
 			"instrumentalness", "liveness", "valence", "tempo", "time_signature"]
 	data = gd.getSongs([songid])[0]
 	pre_frame_d = {}
