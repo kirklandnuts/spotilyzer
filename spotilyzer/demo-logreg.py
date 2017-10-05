@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn import linear_model, metrics
 from sklearn.grid_search import GridSearchCV
+import pickle
 
 
 features = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
@@ -43,7 +44,7 @@ if __name__ == '__main__':
 
     # subset data
     # full ['Pop', 'Electronic/Dance', 'Hip-Hop', 'Indie', 'Metal', 'Jazz']
-    genres = ['Pop', 'Electronic/Dance', 'Metal', 'Jazz']
+    genres = ['Pop', 'Electronic/Dance', 'Hip-Hop' ,'Metal', 'Jazz']
     tr, te = subset_genre(tr, te, genres)
 
     # coarse-tuning
@@ -71,7 +72,9 @@ if __name__ == '__main__':
     Copt = clf2.best_params_['C']
     clf_final = linear_model.LogisticRegression(random_state=101, C=Copt)
     clf_final.fit(tr[features], tr.category)
-
+    file_name = './LR.pickle'
+    file_object = open(file_name, 'wb')
+    pickle.dump(clf_final, file_object)
     # predict
     pred = clf_final.predict(te[features])
     score(pred, te.category)
