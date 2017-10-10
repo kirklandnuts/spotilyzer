@@ -24,14 +24,16 @@ def songDataFrame(songid):
 	return df
 
 def printResults(df, clf):
-	print("="*75)
+	print("="*25)
 	classes = clf.classes_
 	prediction = classifier.predict(song_df)[0]
+	proba = classifier.predict_proba(song_df)[0]
+	print(proba)
 	if prediction:
 		print("This is Jazz")
 	else:
 		print("This is not Jazz")
-	print("="*75)
+	print("="*25, "\n")
 
 
 def PCAOnDataFrame(df, training_set, features, components):
@@ -71,6 +73,5 @@ classifier = pickle.load(fileObject)
 
 
 song_df = songDataFrame(SONGID)
-song_df = PCAOnDataFrame(song_df, training_set, allFeatures, 3)
 
 printResults(song_df, classifier)

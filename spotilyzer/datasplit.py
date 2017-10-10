@@ -10,7 +10,6 @@ def upsample(subdf, n):
 df = pd.read_csv('jazz_or_not.csv')
 df = df.drop_duplicates(df.columns.difference(['category']), keep = False)
 
-
 genres = df.groupby(['category'])
 genre_names = list(genres.groups.keys())
 
