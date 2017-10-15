@@ -3,14 +3,13 @@ import getData as gd
 import sys
 import pickle
 
-SONGID = sys.argv[2]
 ACCESS_HEADER = gd.getAccessHeader()
 
 
 '''
 USAGE:
 
-$ python jazz_or_not.py <MODEL.pickle> <song_id>
+$ python jazz_or_not.py <path to MODEL.pickle> <song_id>
 '''
 
 def songDataFrame(songid):
@@ -36,7 +35,11 @@ def printResults(df, clf):
 	print("="*25, "\n")
 
 if __name__ == '__main__':
+    if len(sys.argv) == 3:
 	fileObject = open(sys.argv[1],'rb')
+        SONGID = sys.argv[2]
 	classifier = pickle.load(fileObject)
 	song_df = songDataFrame(SONGID)
 	printResults(song_df, classifier)
+    else:
+        print("incorrect usage")
