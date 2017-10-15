@@ -1,4 +1,6 @@
 import pandas as pd
+import argparse
+from sklearn.model_selection import train_test_split
 
 
 def split_data(df, tr_size):
@@ -71,55 +73,55 @@ def split_stats(origin_data, compare_data, origin_data_name):
 
 
 def dataset_stats(raw_data, train_data, test_data):
-	'''
-	PURPOSE
-	Wrapper function around split_stats to report statistics on multiple dataset fields
-	INPUT
-	raw_data    DataFrame, original (pre-split) df
-	train_data  DataFrame, train df
-	test_data   DataFrame, test df
-	OUTPUT
-	printed summary of results
-	'''
+    '''
+    PURPOSE
+    Wrapper function around split_stats to report statistics on multiple dataset fields
+    INPUT
+    raw_data    DataFrame, original (pre-split) df
+    train_data  DataFrame, train df
+    test_data   DataFrame, test df
+    OUTPUT
+    printed summary of results
+    '''
 
-	frequency_by_field(raw_data, 'RAW DATA', 'category')
-	frequency_by_field(train_data, 'TRAIN DATA', 'category')
-	frequency_by_field(test_data, 'TEST DATA', 'category')
-	split_stats(raw_data, raw_data, 'RAW DATA')
-	split_stats(train_data, raw_data, 'TRAIN DATA')
+    frequency_by_field(raw_data, 'RAW DATA', 'category')
+    frequency_by_field(train_data, 'TRAIN DATA', 'category')
+    frequency_by_field(test_data, 'TEST DATA', 'category')
+    split_stats(raw_data, raw_data, 'RAW DATA')
+    split_stats(train_data, raw_data, 'TRAIN DATA')
     split_stats(test_data, raw_data, 'TEST DATA')
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='split data into test and train',)
-	parser.add_argument('raw_data')
-	parser.add_argument('-f', '--frac_train', default=0.8,
+    parser.add_argument('raw_data')
+    parser.add_argument('-f', '--frac_train', default=0.8,
                     help = 'designate how much of the data is to be used as train data')
 
-	# read args
-	args = parser.parse_args()
-	data_path = args.raw_data
-	frac_train = float(args.frac_train)
+    # read args
+    args = parser.parse_args()
+    data_path = args.raw_data
+    frac_train = float(args.frac_train)
 
     # output args
-	print('data_path={}'.format(data_path))
-	print('frac_train={}'.format(frac_train))
+    print('data_path={}'.format(data_path))
+    print('frac_train={}'.format(frac_train))
 
     # construct output filepaths
-	tr_outpath = data_path[:-4] + '_tr.csv'
-	te_outpath = data_path[:-4] + '_te.csv'
+    tr_outpath = data_path[:-4] + '_tr.csv'
+    te_outpath = data_path[:-4] + '_te.csv'
 
     # load data
-	raw_data = pd.read_csv(data_path)
+    raw_data = pd.read_csv(data_path)
 
-	# split data
-	tr, te = split_data(raw_data, frac_train)
+    # split data
+    tr, te = split_data(raw_data, frac_train)
 
-	# output data
-	te.to_csv(te_outpath, index = False)
-	tr.to_csv(tr_outpath, index = False)
+    # output data
+    te.to_csv(te_outpath, index = False)
+    tr.to_csv(tr_outpath, index = False)
 
-	# output stats
+    # output stats
     dataset_stats(raw_data, tr, te)
 
     # output paths
