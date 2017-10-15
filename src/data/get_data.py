@@ -343,7 +343,7 @@ GENRES = ['Pop', 'Electronic/Dance', 'Hip-Hop', 'Rock', 'Indie', 'R&B', 'Metal',
 
 if __name__ == "__main__":
     ACCESS_HEADER = getAccessHeader() 
-    categories = list(__getCategories(ACCESS_HEADER).keys())[0:10]
+    categories = list(__getCategories(ACCESS_HEADER).keys())
     preFrameDict = {}
     for i in FEATURES:
         preFrameDict[i] = []

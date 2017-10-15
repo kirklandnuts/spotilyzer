@@ -106,9 +106,10 @@ def PCAOnDataFrame(df, features, components):
                         preFrameDict[str(j+1)].append(newData[i][j])
         newDataFrame = pd.DataFrame(preFrameDict)
         #normalize data
-        min_max_scaler = preprocessing.MinMaxScaler()
         for i in list(range(1,components+1)):
-                newDataFrame[str(i)] = pd.DataFrame(min_max_scaler.fit_transform(newDataFrame[str(i)]))
+                min_max_scaler = preprocessing.MinMaxScaler()
+                min_max_scaler.fit(newDataFrame[str(i)])
+                newDataFrame[str(i)] = pd.DataFrame(min_max_scaler.transform(newDataFrame[str(i)]))
         return newDataFrame.set_index("songid")
 
 if __name__ == '__main__':
