@@ -8,6 +8,7 @@ import psycopg2
 import pandas as pd
 from psycopg2 import connect
 import sys
+import os
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 DBUSER = "spotilyzer"
@@ -16,8 +17,15 @@ DBNAME = "spotilyzerdb"
 
 #user functions
 def getSongs(songList):
-	#INPUT: takes a list of song id's
-	#OUTPUT: returns a list
+    '''
+    PURPOSE
+    Returns a list where each element contains a dictionary full fo song data for one song
+    INPUT
+    songList    List, a list of song ids
+    OUTPUT
+    data        List, a list of dictionaries, each dictionary has the data for a given songid
+    
+    '''
 	con = None
 	try:
 		con = connect(dbname=DBNAME, user=DBUSER, host='localhost', password=DBPASS)
@@ -58,6 +66,15 @@ def getSongs(songList):
 	return data
 
 def getSongsInCategory(category):
+    '''
+    PURPOSE
+    Get songs within a given category
+    INPUT
+    categroy    String, a spotify category
+    OUTPUT
+    data        List, a list equivalent to the list returned in getSongs, but all songs are from the
+                        same category
+    '''
 	con = None
 	try:
 		con = connect(dbname=DBNAME, user=DBUSER, host='localhost', password=DBPASS)
@@ -88,6 +105,14 @@ def getSongsInCategory(category):
 	return data
 
 def getAllSongsInDB():
+    '''
+    PURPOSE
+    retrieve all songs from the database
+    INPUT
+    N/A
+    OUTPUT
+    songs       List, a list of dictionaries, each dictionary has the data for one song in the db
+    '''
 	con = None
 	try:
 		con = connect(dbname=DBNAME, user=DBUSER, host='localhost', password=DBPASS)
@@ -127,16 +152,16 @@ def getAllSongsInDB():
 
 	return songs
 
-def getArtists(artistList):
-	return
-
-def getAlbums(albumList):
-	return
-
 def getAccessHeader():
+    '''
+    PURPOSE
+    returns the access header of our app to access the API
+    INPUT
+    OUTPUT
+    '''
 	TOKEN_URL = "https://accounts.spotify.com/api/token"
-	CLIENT_ID = "fa7e7c8d114a487c81a31a32dd0c0ef5"
-	CLIENT_SECRET = "7df74727c0a846b1ba7bf042f9421f6c"
+        CLIENT_ID = os.environ.get('SPOTILYZER_CLIENT_ID')
+        CLIENT_SECRET = os.environ.get('SPOTILYZER_SECRET_KEY')
 	DATA = {"grant_type":"client_credentials"}
 	temp1 = CLIENT_ID+":"+CLIENT_SECRET
 	temp2 = temp1.encode('utf-8','strict')
@@ -148,7 +173,6 @@ def getAccessHeader():
 	access_header = {"Authorization":"Bearer "+access_token}
 	return access_header
 
-#Helper functions
 def __insertSong(songData, con):
 	cur = con.cursor()
 	sd = songData
