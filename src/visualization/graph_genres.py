@@ -102,7 +102,7 @@ if __name__ == '__main__':
         features = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
                                  "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
         components = sys.argv[1]
-        df = pd.read_csb('../data/song_data_cleaned.csv')
+        df = pd.read_csv('../data/song_data_cleaned.csv')
         pcadf = PCAOnDataFrame(df, features, components)
         if components == 2:
             graph2DPlotlyCategoriesDifferentColors(pcadf, features, ['1', '2', '3'])
