@@ -6,6 +6,13 @@ import pickle
 SONGID = sys.argv[2]
 ACCESS_HEADER = gd.getAccessHeader()
 
+
+'''
+USAGE:
+
+$ python jazz_or_not.py <MODEL.pickle> <song_id>
+'''
+
 def songDataFrame(songid):
 	features = ["popularity", "danceability", "energy", "loudness", "speechiness", "acousticness",\
 			"instrumentalness", "liveness", "valence", "tempo"]
