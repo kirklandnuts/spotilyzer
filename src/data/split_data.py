@@ -87,6 +87,7 @@ def dataset_stats(raw_data, train_data, test_data):
     frequency_by_field(raw_data, 'RAW DATA', 'category')
     frequency_by_field(train_data, 'TRAIN DATA', 'category')
     frequency_by_field(test_data, 'TEST DATA', 'category')
+    print('==== DATA SPLIT STATS')
     split_stats(raw_data, raw_data, 'RAW DATA')
     split_stats(train_data, raw_data, 'TRAIN DATA')
     split_stats(test_data, raw_data, 'TEST DATA')
@@ -104,8 +105,8 @@ if __name__ == "__main__":
     frac_train = float(args.frac_train)
 
     # output args
-    print('data_path={}'.format(data_path))
-    print('frac_train={}'.format(frac_train))
+    print('data_path: {}'.format(data_path))
+    print('frac_train: {}'.format(frac_train))
 
     # construct output filepaths
     tr_outpath = data_path[:-4] + '_tr.csv'
@@ -125,5 +126,5 @@ if __name__ == "__main__":
     dataset_stats(raw_data, tr, te)
 
     # output paths
-    print('Training data outputted to {}'.format(tr_outpath))
-    print('Testing data outputted to {}'.format(te_outpath))
+    print('\nTraining data outputted to {}'.format(tr_outpath))
+    print('Testing data outputted to {}\n'.format(te_outpath))
