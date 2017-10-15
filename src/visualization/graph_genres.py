@@ -4,6 +4,18 @@ import sys
 from sklearn import preprocessing
 from sklearn.decomposition import PCA
 
+'''
+Usage:
+plotly must be set up for the graphing to work
+------------------------------------------------
+$ python graph_genres.py 2
+
+         - OR -
+
+$ python graph_genres.py 3 
+------------------------------------------------
+'''
+
 def graph3DPlotlyCategoriesDifferentColors(df, features, categories):
     if len(features) == 3:
         traces = []
