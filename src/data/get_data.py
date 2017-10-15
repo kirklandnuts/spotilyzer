@@ -5,6 +5,7 @@ import base64
 import pdb
 import re
 import psycopg2
+import pandas as pd
 from psycopg2 import connect
 import sys
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
@@ -342,21 +343,25 @@ GENRES = ['Pop', 'Electronic/Dance', 'Hip-Hop', 'Rock', 'Indie', 'R&B', 'Metal',
 
 if __name__ == "__main__":
     ACCESS_HEADER = getAccessHeader() 
-    categories = list(__getCategories(ACCESS_HEADER).keys())
+    categories = list(__getCategories(ACCESS_HEADER).keys())[0:10]
     preFrameDict = {}
     for i in FEATURES:
         preFrameDict[i] = []
     preFrameDict["songid"] = []
+    preFrameDict["song_title"] = []
+    preFrameDict["artist_name"] = []
     preFrameDict["category"] = []
     for i in categories:
         print("==== Getting data for songs from category " + i)
         songs = getSongsInCategory(i)
         for j in songs:
             preFrameDict["category"].append(i)
+            preFrameDict["song_title"].append(j['song_title'])
+            preFrameDict["artist_name"].append(j['artist_name'])
             preFrameDict["songid"].append(j["songid"])
             for q in FEATURES:
                 preFrameDict[q].append(j[q])
     df = pd.DataFrame(preFrameDict)
     df = df[COLUMNS]
     df = df[df.category.isin(categories)]
-    df.to_csv('./song_data.csv', index = False)
+    df.to_csv('../../data/song_data.csv', index = False)

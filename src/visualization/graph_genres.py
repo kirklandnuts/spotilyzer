@@ -94,12 +94,12 @@ def PCAOnDataFrame(df, features, components):
         newData = pca.transform(df[features])
         preFrameDict = {}
         preFrameDict["songid"] = []
-        preFrameDict["playlist"] = []
+        preFrameDict["category"] = []
         for i in list(range(1,components+1)):
                 preFrameDict[str(i)] = []
         for i in list(range(0, len(newData))):
                 preFrameDict["songid"].append(df.index.tolist()[i])
-                preFrameDict["playlist"].append(df["playlist"][i])
+                preFrameDict["category"].append(df["category"][i])
                 for j in list(range(0,components)):
                         preFrameDict[str(j+1)].append(newData[i][j])
         newDataFrame = pd.DataFrame(preFrameDict)
@@ -113,13 +113,15 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         features = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
                                  "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
-        components = sys.argv[1]
-        df = pd.read_csv('../data/song_data_cleaned.csv')
-        pcadf = PCAOnDataFrame(df, features, components)
+        components = int(sys.argv[1])
+        df = pd.read_csv('../../data/song_data_cleaned.csv')
+        categories = df.category.unique().tolist()
         if components == 2:
-            graph2DPlotlyCategoriesDifferentColors(pcadf, features, ['1', '2', '3'])
+            pcadf = PCAOnDataFrame(df, features, 2)
+            graph2DPlotlyCategoriesDifferentColors(pcadf, ['1', '2', '3'], categories)
         elif components == 3:
-            graph3DPlotlyCategoriesDifferentColors(pcadf, features, ['1', '2', '3'])
+            pcadf = PCAOnDataFrame(df, features, 3)
+            graph3DPlotlyCategoriesDifferentColors(pcadf, ['1', '2', '3'], categories)
         else:
             print("only graphing 2 dimensions or 3 dimensions")
     else:
