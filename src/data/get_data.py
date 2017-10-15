@@ -1,4 +1,5 @@
 #The purpose of this module is to handle the retrieval of all necessary data for the analysis programs
+#Contributors: Kaizen Towfiq
 import requests
 import base64
 import pdb
@@ -50,7 +51,7 @@ def getSongs(songList):
 					data.append(songData)
 				else:
 					continue
-			print("[" + str(i) + "/" + str(len(songList)) + "]" + "Got data for song: " + songData["songid"] + " : " + songData["song_title"])
+			print("[" + str(i) + "/" + str(len(songList)) + "]" + "Got data for song: (" + songData["songid"] + ") " + songData["song_title"] + " by " + songData['artist_name'])
 	else:
 		print("No connection to database")
 	return data
@@ -119,6 +120,7 @@ def getAllSongsInDB():
 			sd["valence"] = songQuery[16]
 			sd["tempo"] = songQuery[17]
 			sd["time_signature"] = songQuery[18]
+			sd["artist_name"] = songQuery[19]
 			songs.append(sd)
 		cur.close()
 
@@ -153,39 +155,40 @@ def __insertSong(songData, con):
 	for i in sd.keys():
 		if sd[i] is None:
 			sd[i] = 0
-	values = "('%s', '{%s}', '%s', '%s', '{%s}', %d, %d, %f, %f, %d, %f, %d, %f, %f, %f, %f, %f, %f, %d)" % \
-				(sd["songid"], ','.join(sd["artistids"]), sd["albumid"], sd["song_title"], ','.join(sd["available_markets"]),sd["duration"], sd["popularity"], sd["danceability"], sd["energy"], sd["key"], sd["loudness"], sd["mode"], sd["speechiness"], sd["acousticness"], sd["instrumentalness"], sd["liveness"], sd["valence"], sd["tempo"], sd["time_signature"])
-	insertCommand = "INSERT INTO songs (songid, artistids, albumid, song_title, available_markets, duration, popularity, danceability, energy, key, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, time_signature) VALUES " + values
+	values = "('%s', '{%s}', '%s', '%s', '{%s}', %d, %d, %f, %f, %d, %f, %d, %f, %f, %f, %f, %f, %f, %d, '%s')" % \
+				(sd["songid"], ','.join(sd["artistids"]), sd["albumid"], sd["song_title"], ','.join(sd["available_markets"]),sd["duration"], sd["popularity"], sd["danceability"], sd["energy"], sd["key"], sd["loudness"], sd["mode"], sd["speechiness"], sd["acousticness"], sd["instrumentalness"], sd["liveness"], sd["valence"], sd["tempo"], sd["time_signature"], sd['artist_name'].replace("'",""))
+	insertCommand = "INSERT INTO songs (songid, artistids, albumid, song_title, available_markets, duration, popularity, danceability, energy, key, loudness, mode, speechiness, acousticness, instrumentalness, liveness, valence, tempo, time_signature, artist_name) VALUES " + values
 	cur.execute(insertCommand)
 	cur.close()
 
 def __querySong(sid, con):
-	cur = con.cursor()
-	query = "SELECT * FROM songs WHERE songid='" + sid + "'"
-	cur.execute(query)
-	songQuery = cur.fetchone()
-	sd = {}
-	sd["songid"] = songQuery[0]
-	sd["artistids"] = songQuery[1]
-	sd["albumid"] = songQuery[2]
-	sd["song_title"] = songQuery[3]
-	sd["available_markets"] = songQuery[4]
-	sd["duration"] = songQuery[5]
-	sd["popularity"] = songQuery[6]
-	sd["danceability"] = songQuery[7]
-	sd["energy"] = songQuery[8]
-	sd["key"] = songQuery[9]
-	sd["loudness"] = songQuery[10]
-	sd["mode"] = songQuery[11]
-	sd["speechiness"] = songQuery[12]
-	sd["acousticness"] = songQuery[13]
-	sd["instrumentalness"] = songQuery[14]
-	sd["liveness"] = songQuery[15]
-	sd["valence"] = songQuery[16]
-	sd["tempo"] = songQuery[17]
-	sd["time_signature"] = songQuery[18]
-	cur.close()
-	return sd
+    cur = con.cursor()
+    query = "SELECT * FROM songs WHERE songid='" + sid + "'"
+    cur.execute(query)
+    songQuery = cur.fetchone()
+    sd = {}
+    sd["songid"] = songQuery[0]
+    sd["artistids"] = songQuery[1]
+    sd["albumid"] = songQuery[2]
+    sd["song_title"] = songQuery[3]
+    sd["available_markets"] = songQuery[4]
+    sd["duration"] = songQuery[5]
+    sd["popularity"] = songQuery[6]
+    sd["danceability"] = songQuery[7]
+    sd["energy"] = songQuery[8]
+    sd["key"] = songQuery[9]
+    sd["loudness"] = songQuery[10]
+    sd["mode"] = songQuery[11]
+    sd["speechiness"] = songQuery[12]
+    sd["acousticness"] = songQuery[13]
+    sd["instrumentalness"] = songQuery[14]
+    sd["liveness"] = songQuery[15]
+    sd["valence"] = songQuery[16]
+    sd["tempo"] = songQuery[17]
+    sd["time_signature"] = songQuery[18]
+    sd["artist_name"] = songQuery[19]
+    cur.close()
+    return sd
 
 def __getCategories(access_header):
 	url = "https://api.spotify.com/v1/browse/categories"
@@ -213,22 +216,22 @@ def __getPlaylistSongIDs(pid, access_header):
 	return songIDs
 
 def __getSongFeatures(sid, access_header):
-	url = "https://api.spotify.com/v1/audio-features/" + sid
-	resp = requests.get(url, headers=access_header)
-	songFeatures = resp.json()
-	try:
-		songFeatures["duration"] = songFeatures["duration_ms"]
-		songFeatures["songid"] = songFeatures["id"]
-		del songFeatures["type"]
-		del songFeatures["uri"]
-		del songFeatures["track_href"]
-		del songFeatures["analysis_url"]
-		del songFeatures["duration_ms"]
-		del songFeatures["id"]
-		return songFeatures
-	except:
-		print("nothing to delete")
-		return None
+    url = "https://api.spotify.com/v1/audio-features/" + sid
+    resp = requests.get(url, headers=access_header)
+    songFeatures = resp.json()
+    try:
+        songFeatures["duration"] = songFeatures["duration_ms"]
+        songFeatures["songid"] = songFeatures["id"]
+        del songFeatures["type"]
+        del songFeatures["uri"]
+        del songFeatures["track_href"]
+        del songFeatures["analysis_url"]
+        del songFeatures["duration_ms"]
+        del songFeatures["id"]
+        return songFeatures
+    except:
+        print("nothing to delete")
+        return None
 
 def __getSongAnalysis(sid, access_header):
 	url = "https://api.spotify.com/v1/audio-analysis/" + sid
@@ -237,19 +240,20 @@ def __getSongAnalysis(sid, access_header):
 	return songAnalysis
 
 def __getTrack(sid, access_header):
-	url = "https://api.spotify.com/v1/tracks/" + sid
-	resp = requests.get(url, headers=access_header)
-	trackInfo = resp.json()
-	track = {}
-	track["song_title"] = trackInfo["name"]
-	#currently only getting the first artist, may need to change later to handle multiple
-	track["artistids"] = []
-	for i in trackInfo["artists"]:
-		track["artistids"].append(i["id"])
-	track["albumid"] = trackInfo["album"]["id"]
-	track["available_markets"] = trackInfo["available_markets"]
-	track["popularity"] = trackInfo["popularity"]
-	return track
+    url = "https://api.spotify.com/v1/tracks/" + sid
+    resp = requests.get(url, headers=access_header)
+    trackInfo = resp.json()
+    track = {}
+    track["song_title"] = trackInfo["name"]
+    #currently only getting the first artist, may need to change later to handle multiple
+    track["artistids"] = []
+    track["artist_name"] = trackInfo['album']['artists'][0]['name']
+    for i in trackInfo["artists"]:
+        track["artistids"].append(i["id"])
+    track["albumid"] = trackInfo["album"]["id"]
+    track["available_markets"] = trackInfo["available_markets"]
+    track["popularity"] = trackInfo["popularity"]
+    return track
 
 def __dbHasSong(con, sid):
 	con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
@@ -260,12 +264,13 @@ def __dbHasSong(con, sid):
 	return row is not None
 
 def __createDB():
-	con = connect(dbname='postgres', user=DBUSER, host='localhost', password=DBPASS)
-	con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-	cur = con.cursor()
-	cur.execute('CREATE DATABASE ' + DBNAME)
-	cur.close()
-	con.close()
+    print("==== Instantiating database")
+    con = connect(dbname='postgres', user=DBUSER, host='localhost', password=DBPASS)
+    con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+    cur = con.cursor()
+    cur.execute('CREATE DATABASE ' + DBNAME)
+    cur.close()
+    con.close()
 
 def __createSongsTable():
 	con = connect(dbname=DBNAME, user=DBUSER, host='localhost', password=DBPASS)
@@ -288,7 +293,9 @@ def __createSongsTable():
 			instrumentalness double precision,
 			liveness double precision,
 			valence double precision,
-			tempo double precision,time_signature int)"""
+			tempo double precision,
+                        time_signature int,
+                        artist_name varchar NOT NULL)"""
 	cur.execute(query)
 	cur.close()
 	con.close()
@@ -325,3 +332,31 @@ def __createAlbumsTable():
 	cur.execute(query)
 	cur.close()
 	con.close()
+
+FEATURES = ["popularity", "danceability", "energy", "key", "loudness", "speechiness", "acousticness",
+                                 "instrumentalness", "liveness", "valence", "tempo", "time_signature"]
+COLUMNS = ["songid", "song_title", "artist_name", "popularity", "danceability", "energy", "key", \
+            "loudness", "speechiness", "acousticness", "instrumentalness", "liveness", \
+            "valence", "tempo", "time_signature", "category"]
+GENRES = ['Pop', 'Electronic/Dance', 'Hip-Hop', 'Rock', 'Indie', 'R&B', 'Metal', 'Soul', 'Romance', 'Jazz']
+
+if __name__ == "__main__":
+    ACCESS_HEADER = getAccessHeader() 
+    categories = list(__getCategories(ACCESS_HEADER).keys())
+    preFrameDict = {}
+    for i in FEATURES:
+        preFrameDict[i] = []
+    preFrameDict["songid"] = []
+    preFrameDict["category"] = []
+    for i in categories:
+        print("==== Getting data for songs from category " + i)
+        songs = getSongsInCategory(i)
+        for j in songs:
+            preFrameDict["category"].append(i)
+            preFrameDict["songid"].append(j["songid"])
+            for q in FEATURES:
+                preFrameDict[q].append(j[q])
+    df = pd.DataFrame(preFrameDict)
+    df = df[COLUMNS]
+    df = df[df.category.isin(categories)]
+    df.to_csv('./song_data.csv', index = False)

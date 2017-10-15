@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 ######################
 
-import getData as gd
+import get_data as gd
 import requests
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -108,6 +108,79 @@ def graph3DPlaylistsDifferentColors(df, features, playlists):
 		plt.show()
 	else:
 		print("need 3 features to do 3D graph")
+
+
+def graph3DPlotlyCategoriesDifferentColors(df, features, categories):
+    if len(features) == 3:
+        traces = []
+        for i in list(range(0,len(categories))):
+            pdf = df[df["category"] == categories[i]]
+            x = pdf[features[0]]
+            y = pdf[features[1]]
+            z = pdf[features[2]]
+            traces.append(go.Scatter3d(
+                x=x,
+                y=y,
+                z=z,
+                name=categories[i],
+                mode='markers',
+                marker=dict(
+                    size=12,
+                    line=dict(
+                        color='rgba(217, 217, 217, 0.14)',
+                        width=0.5
+                    ),
+                    opacity=0.8
+                )
+            ))
+        data = traces
+        layout = go.Layout(
+            margin=dict(
+                l=0,
+                r=0,
+                b=0,
+                t=0
+            )
+        )
+        fig = go.Figure(data=data, layout=layout)
+        py.plot(fig)
+    else:
+        print("need 3 features to do 3D graph")
+
+def graph2DPlotlyCategoriesDifferentColors(df, features, categories):
+    if len(features) == 2:
+        traces = []
+        for i in list(range(0,len(categories))):
+            pdf = df[df["category"] == categories[i]]
+            x = pdf[features[0]]
+            y = pdf[features[1]]
+            traces.append(go.Scatter(
+                x=x,
+                y=y,
+                name=categories[i],
+                mode='markers',
+                marker=dict(
+                    size=12,
+                    line=dict(
+                        color='rgba(217, 217, 217, 0.14)',
+                        width=0.5
+                    ),
+                    opacity=0.8
+                )
+            ))
+        data = traces
+        layout = go.Layout(
+            margin=dict(
+                l=0,
+                r=0,
+                b=0,
+                t=0
+            )
+        )
+        fig = go.Figure(data=data, layout=layout)
+        py.plot(fig)
+    else:
+        print("need 2 features to do 2D graph")
 
 def PCAOnDataFrame(df, features, components):
 	pca = PCA(n_components=components)
