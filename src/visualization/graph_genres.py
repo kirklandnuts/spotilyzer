@@ -3,6 +3,8 @@ import numpy as np
 import sys
 from sklearn import preprocessing
 from sklearn.decomposition import PCA
+import plotly.plotly as py
+import plotly.graph_objs as go
 
 '''
 Usage:
@@ -118,7 +120,7 @@ if __name__ == '__main__':
         categories = df.category.unique().tolist()
         if components == 2:
             pcadf = PCAOnDataFrame(df, features, 2)
-            graph2DPlotlyCategoriesDifferentColors(pcadf, ['1', '2', '3'], categories)
+            graph2DPlotlyCategoriesDifferentColors(pcadf, ['1', '2'], categories)
         elif components == 3:
             pcadf = PCAOnDataFrame(df, features, 3)
             graph3DPlotlyCategoriesDifferentColors(pcadf, ['1', '2', '3'], categories)
