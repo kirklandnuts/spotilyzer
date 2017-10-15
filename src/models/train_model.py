@@ -22,7 +22,7 @@ $ python train_model.py LR
 def create_RF_model(training_set, test_set,  target, test_targert, componentsList, estimators):
 	classifier = RandomForestClassifier(max_features=None, n_estimators=estimators)
 	classifier.fit(training_set[componentsList], target)
-	file_Name = "RF.pickle"
+	file_Name = "../../models/RF.pickle"
 	fileObject = open(file_Name,'wb')
 	pickle.dump(classifier,fileObject)   
 	fileObject.close()
